@@ -230,6 +230,8 @@
     <Compile Include="ViewModels\Menus\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Menus\SoftwareViewModel.cs" />
     <Compile Include="ViewModels\Preview\AppTreeViewModel.cs" />
+    <Compile Include="ViewModels\Preview\ErrorInfoViewModel.cs" />
+    <Compile Include="ViewModels\Preview\PreflightViewModel.cs" />
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\_IPreview.cs" />
     <Compile Include="ViewModels\Preview\_NoPreviewViewModel.cs" />
@@ -347,8 +349,14 @@
     <Compile Include="Views\Preview\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preview\ErrorInfoView.xaml.cs">
+      <DependentUpon>ErrorInfoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preview\InfoView.xaml.cs">
       <DependentUpon>InfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\PreflightView.xaml.cs">
+      <DependentUpon>PreflightView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\_NoPreviewView.xaml.cs">
       <DependentUpon>_NoPreviewView.xaml</DependentUpon>
@@ -554,7 +562,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Preview\ErrorInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Preview\InfoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preview\PreflightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -578,6 +594,8 @@
     <Resource Include="Images\back.ico" />
     <Resource Include="Images\cancel.ico" />
     <Resource Include="Images\refresh.ico" />
+    <Resource Include="Images\fail.ico" />
+    <Resource Include="Images\pass.ico" />
     <Content Include="Images\style.css" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -42,7 +42,7 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator.Subscribe(this);
         }
 
-        private object _previewBox = new Preview.InfoViewModel();
+        private object _previewBox = new Preview.PreflightViewModel();
         public object PreviewBox
         {
             get { return _previewBox; }

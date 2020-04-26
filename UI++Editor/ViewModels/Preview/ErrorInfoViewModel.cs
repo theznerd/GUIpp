@@ -9,12 +9,12 @@ using UI__Editor.Views.Menus.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
-    class InfoViewModel : PropertyChangedBase, IPreview
+    class ErrorInfoViewModel : PropertyChangedBase, IPreview
     {
         public bool PreviewRefreshButtonVisible { get { return false; } }
         public bool PreviewBackButtonVisible { get { return false; } }
         public bool PreviewCancelButtonVisible { get { return true; } }
-        public bool PreviewAcceptButtonVisible { get { return true; } }
+        public bool PreviewAcceptButtonVisible { get { return false; } }
 
         private string title = "Welcome";
         public string Title

@@ -1,0 +1,110 @@
+﻿<UserControl x:Class="UI__Editor.Views.Preview.PreflightView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI__Editor.Views.Preview"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label x:Name="Title" FontSize="32" Margin="5,8,10,-3">Preflight Checks</Label>
+        <Grid Grid.Row="1" Margin="25,0,15,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+                <RowDefinition Height="29" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="36" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PF1" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="0">WLAN Disconnected</Label>
+            <Border Grid.Row="0" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF1Icon" ImageSource="pack://application:,,,/Images/fail.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF2" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="1">Not on battery</Label>
+            <Border Grid.Row="1" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF2Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF3" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="2">Minimum memory > 1GB</Label>
+            <Border Grid.Row="2" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF3Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF4" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="3">CPU Supports Windows 8+</Label>
+            <Border Grid.Row="3" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF4Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF5" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="4">WLAN Disconnected</Label>
+            <Border Grid.Row="4" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF5Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF6" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="5">Not on battery</Label>
+            <Border Grid.Row="5" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF6Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF7" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="6">Not on battery</Label>
+            <Border Grid.Row="6" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF7Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF8" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="7">Not on battery</Label>
+            <Border Grid.Row="7" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF8Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF9" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="8">WLAN Disconnected</Label>
+            <Border Grid.Row="8" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF9Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF10" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="9">Not on battery</Label>
+            <Border Grid.Row="9" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF10Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF11" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="10">Not on battery</Label>
+            <Border Grid.Row="10" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF11Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+            <Label x:Name="PF12" Padding="0" VerticalContentAlignment="Center" FontSize="16" Grid.Row="11">Not on battery</Label>
+            <Border Grid.Row="11" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center">
+                <Border.Background>
+                    <ImageBrush x:Name="PF12Icon" ImageSource="pack://application:,,,/Images/pass.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,24,24" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                </Border.Background>
+            </Border>
+        </Grid>
+        <Label x:Name="ResultText" Margin="25,0,0,0" Padding="0" Grid.Row="2" Foreground="Red" FontSize="16" Height="29" VerticalAlignment="Center">Please check and correct the failed checks above.</Label>
+    </Grid>
+</UserControl>
