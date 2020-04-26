@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="UI__Editor.Views.Menus.Actions.WMIReadView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI__Editor.Views.Menus.Actions"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Margin="10,5">Type:</Label>
+        <ComboBox x:Name="WMIReadType" SelectedItem="{Binding SelectedWMIReadType}" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
+            <ComboBoxItem Content="Class" />
+            <ComboBoxItem Content="Query" />
+        </ComboBox>
+        <Label Margin="10,5" Grid.Row="1">Variable:</Label>
+        <TextBox x:Name="WMIReadVariable" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="2">Default Value:</Label>
+        <TextBox x:Name="WMIReadDefaultValue" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="3">Namespace:</Label>
+        <TextBox x:Name="WMIReadNamespace" Margin="0,5" Grid.Row="3" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label x:Name="WMIReadClassLabel1" Margin="10,5" Grid.Row="4">Class:</Label>
+        <TextBox x:Name="WMIReadClass" Margin="0,5" Grid.Row="4" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label x:Name="WMIReadClassLabel2" Margin="10,5" Grid.Row="5">Key Qualifier:</Label>
+        <TextBox x:Name="WMIReadKeyQualifier" Margin="0,5" Grid.Row="5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label x:Name="WMIReadQueryLabel" Margin="10,5" Grid.Row="6">Query:</Label>
+        <TextBox x:Name="WMIReadQuery" Margin="0,5" Grid.Row="6" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="7">Property:</Label>
+        <TextBox x:Name="WMIReadProperty" Margin="0,5" Grid.Row="7" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="8">Condition:</Label>
+        <TextBox x:Name="ConditionString" Grid.Row="8" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+    </Grid>
+</UserControl>
