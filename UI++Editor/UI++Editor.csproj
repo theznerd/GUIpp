@@ -182,13 +182,6 @@
     <Compile Include="EventAggregators\ChangeUI.cs" />
     <Compile Include="EventAggregators\SendMessage.cs" />
     <Compile Include="EventAggregators\XmlUpdater.cs" />
-    <Compile Include="HtmlConverter\HtmlCssParser.cs" />
-    <Compile Include="HtmlConverter\HtmlFromXamlConverter.cs" />
-    <Compile Include="HtmlConverter\HtmlLexicalAnalyzer.cs" />
-    <Compile Include="HtmlConverter\HtmlParser.cs" />
-    <Compile Include="HtmlConverter\HtmlSchema.cs" />
-    <Compile Include="HtmlConverter\HtmlTokenType.cs" />
-    <Compile Include="HtmlConverter\HtmlToXamlConverter.cs" />
     <Compile Include="ViewModels\Menus\Actions\ActionGroupViewModel.cs" />
     <Compile Include="ViewModels\Menus\Actions\AppTreeViewModel.cs" />
     <Compile Include="ViewModels\Menus\Actions\Children\CheckBoxInputViewModel.cs" />
@@ -231,6 +224,7 @@
     <Compile Include="ViewModels\Menus\SoftwareViewModel.cs" />
     <Compile Include="ViewModels\Preview\AppTreeViewModel.cs" />
     <Compile Include="ViewModels\Preview\ErrorInfoViewModel.cs" />
+    <Compile Include="ViewModels\Preview\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\Preview\PreflightViewModel.cs" />
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\_IPreview.cs" />
@@ -349,8 +343,26 @@
     <Compile Include="Views\Preview\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preview\Children\CheckBoxInput.xaml.cs">
+      <DependentUpon>CheckBoxInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\Children\ChoiceInput.xaml.cs">
+      <DependentUpon>ChoiceInput.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\Children\InputInfo.xaml.cs">
+      <DependentUpon>InputInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\Children\TextInput.xaml.cs">
+      <DependentUpon>TextInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preview\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\InputView.xaml.cs">
+      <DependentUpon>InputView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Preview\UserAuthView.xaml.cs">
+      <DependentUpon>UserAuthView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\InfoView.xaml.cs">
       <DependentUpon>InfoView.xaml</DependentUpon>
@@ -562,7 +574,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Preview\Children\CheckBoxInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preview\Children\ChoiceInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preview\Children\InputInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Preview\Children\TextInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Preview\ErrorInfoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Preview\InputView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Preview\UserAuthView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

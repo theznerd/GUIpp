@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UI__Editor.Views.Preview"
-             xmlns:tv="clr-namespace:UI__Editor.Converters"
+             xmlns:tv="clr-namespace:UI__Editor.Converters" xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -68,23 +68,26 @@
                             </Grid.RowDefinitions>
 
                             <!-- Insert Lines -->
-                            <Rectangle x:Name="HorLn" Margin="14,1,0,0" Height="1" StrokeDashCap="Square" StrokeDashArray="0,2" StrokeDashOffset="1" Stroke="#888888" SnapsToDevicePixels="True"/>
-                            <Rectangle x:Name="VerLn" Width="1" StrokeDashCap="Square" StrokeDashArray="0,2" Stroke="#888888" Margin="0,0,1,0" Grid.RowSpan="2" SnapsToDevicePixels="true" Fill="White"/>
+                            <Rectangle x:Name="HorLn" Margin="10,1,0,0" Height="1" StrokeDashCap="Square" StrokeDashArray="0,2" StrokeDashOffset="1" Stroke="#888888" SnapsToDevicePixels="True"/>
+                            <Rectangle x:Name="VerLn" Width="1" StrokeDashCap="Square" StrokeDashArray="0,2" Stroke="#888888" Margin="0,0,1,0" Grid.RowSpan="2" SnapsToDevicePixels="True" Fill="White"/>
 
                             <!-- Insert Toggle Button -->
-                            <ToggleButton Margin="0,0,0,0" x:Name="Expander" Style="{StaticResource TreeViewToggle}" IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" ClickMode="Press" />
+                            <ToggleButton Margin="0,0,0,0" x:Name="Expander" 
+                                          Style="{StaticResource TreeViewToggle}" 
+                                          IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" 
+                                          ClickMode="Press" />
 
                             <!-- Content -->
                             <Border Name="Bd" Grid.Column="1" Margin="0,3,0,0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                                 <StackPanel Orientation="Horizontal">
                                     <Image Stretch="None">
                                         <Image.Source>
-                                            <CroppedBitmap Source="H:\Personal OneDrive\OneDrive\_Code\C#\UI++Editor\UI++Editor\Images\checkStyle.png" SourceRect="16,0,16,16" />
+                                            <CroppedBitmap Source="pack://application:,,,/Images/checkStyle.png" SourceRect="16,0,16,16" />
                                         </Image.Source>
                                     </Image>
                                     <Image Margin="0,0,4,0" Width="18">
                                         <Image.Source>
-                                            <CroppedBitmap Source="H:\Personal OneDrive\OneDrive\_Code\C#\UI++Editor\UI++Editor\Images\appStyle.png" SourceRect="36,0,18,18" />
+                                            <CroppedBitmap Source="pack://application:,,,/Images/appStyle.png" SourceRect="36,0,18,18" />
                                         </Image.Source>
                                     </Image>
                                     <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" MinWidth="20">
@@ -107,6 +110,15 @@
                                 <Setter TargetName="VerLn" Property="Height" Value="{Binding RelativeSource={RelativeSource Self}, Path=Parent.ActualHeight, Converter={StaticResource FirstItemTreeViewHeightConverter}}"/>
                                 <Setter TargetName="VerLn" Property="VerticalAlignment" Value="Bottom" />
                             </DataTrigger>
+                            <Trigger Property="ItemsControl.HasItems">
+                                <Setter TargetName="Expander" Property="UIElement.Visibility" Value="{x:Static Visibility.Hidden}" />
+                                <Trigger.Value>
+                                    <s:Boolean>False</s:Boolean>
+                                </Trigger.Value>
+                            </Trigger>
+                            <Trigger Property="IsExpanded" Value="false">
+                                <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -119,21 +131,26 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Label x:Name="Title" FontSize="32" Margin="5,8,10,5">Please choose your software</Label>
-        <TreeView x:Name="TreeView" Grid.Row="1" Margin="30,0,10,40" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" >
-            <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" IsExpanded="True" />
+        <TreeView x:Name="TreeView" Grid.Row="1" Margin="30,0,10,40" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0"  >
+            <TreeViewItem Header="Hello" IsExpanded="False">
+                <TreeViewItem Header="Hello" />
+                <TreeViewItem Header="Hello" />
+                <TreeViewItem Header="Hello" />
+                <TreeViewItem Header="Hello" />
+                <TreeViewItem Header="Hello" />
+                <TreeViewItem Header="Hello" />
             </TreeViewItem>
             <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" IsExpanded="True" />
+                <TreeViewItem Header="Hello" />
             </TreeViewItem>
             <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" IsExpanded="True" />
+                <TreeViewItem Header="Hello" />
             </TreeViewItem>
             <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" IsExpanded="True" />
+                <TreeViewItem Header="Hello" />
             </TreeViewItem>
             <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" IsExpanded="True" />
+                <TreeViewItem Header="Hello" />
             </TreeViewItem>
         </TreeView>
     </Grid>

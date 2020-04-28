@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using RichTextBlockSample.HtmlConverter;
 using UI__Editor.Views.Menus.Actions;
 
 namespace UI__Editor.ViewModels.Preview
