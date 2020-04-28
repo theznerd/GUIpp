@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29424.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI++Editor", "UI++Editor\UI++Editor.csproj", "{1BD21D56-CAC9-48AD-9B67-5A291AB4C2A7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "(G)UI++", "UI++Editor\(G)UI++.csproj", "{1BD21D56-CAC9-48AD-9B67-5A291AB4C2A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
