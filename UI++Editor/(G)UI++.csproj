@@ -191,12 +191,54 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Classes\ActionClasses\DefaultValues.cs" />
+    <Compile Include="Classes\ActionClasses\Info.cs" />
+    <Compile Include="Classes\ActionClasses\ErrorInfo.cs" />
+    <Compile Include="Classes\ActionClasses\ExternalCall.cs" />
+    <Compile Include="Classes\ActionClasses\FileRead.cs" />
+    <Compile Include="Classes\ActionClasses\Input.cs" />
+    <Compile Include="Classes\ActionClasses\Preflight.cs" />
+    <Compile Include="Classes\ActionClasses\RegWrite.cs" />
+    <Compile Include="Classes\ActionClasses\RegRead.cs" />
+    <Compile Include="Classes\ActionGroup.cs" />
+    <Compile Include="Classes\Actions.cs" />
+    <Compile Include="Classes\ActionClasses\AppTree.cs" />
+    <Compile Include="Classes\ActionClasses\_Template.cs" />
+    <Compile Include="Classes\Package.cs" />
+    <Compile Include="Classes\ChoiceList.cs" />
+    <Compile Include="Classes\ChoiceInput.cs" />
+    <Compile Include="Classes\Choice.cs" />
+    <Compile Include="Classes\Check.cs" />
+    <Compile Include="Classes\Case.cs" />
+    <Compile Include="Classes\CheckboxInput.cs" />
+    <Compile Include="Classes\SoftwareRef.cs" />
+    <Compile Include="Classes\Variable.cs" />
+    <Compile Include="Classes\Field.cs" />
+    <Compile Include="Classes\InputInfo.cs" />
+    <Compile Include="Classes\Match.cs" />
+    <Compile Include="Classes\Property.cs" />
+    <Compile Include="Classes\Set.cs" />
+    <Compile Include="Classes\Software.cs" />
+    <Compile Include="Classes\SoftwareGroup.cs" />
+    <Compile Include="Classes\SoftwareListRef.cs" />
+    <Compile Include="Classes\SoftwareSets.cs" />
+    <Compile Include="Classes\Text.cs" />
+    <Compile Include="Classes\TextInput.cs" />
+    <Compile Include="Classes\UIpp.cs" />
+    <Compile Include="Classes\_Template.cs" />
+    <Compile Include="Interfaces\IAction.cs" />
+    <Compile Include="Interfaces\IChoice.cs" />
+    <Compile Include="Interfaces\IElement.cs" />
+    <Compile Include="Classes\Application.cs" />
     <Compile Include="Controllers\BrowserBehavior.cs" />
     <Compile Include="Controllers\XMLToViewModel.cs" />
     <Compile Include="Converters\TreeViewLineConverter.cs" />
     <Compile Include="EventAggregators\ChangeUI.cs" />
     <Compile Include="EventAggregators\SendMessage.cs" />
     <Compile Include="EventAggregators\XmlUpdater.cs" />
+    <Compile Include="Interfaces\IInput.cs" />
+    <Compile Include="Interfaces\ISoftware.cs" />
+    <Compile Include="Interfaces\ISoftwareRef.cs" />
     <Compile Include="ViewModels\Menus\Actions\ActionGroupViewModel.cs" />
     <Compile Include="ViewModels\Menus\Actions\AppTreeViewModel.cs" />
     <Compile Include="ViewModels\Menus\Actions\Children\CheckBoxInputViewModel.cs" />
@@ -238,7 +280,13 @@
     <Compile Include="ViewModels\Menus\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Menus\SoftwareViewModel.cs" />
     <Compile Include="ViewModels\Preview\AppTreeViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\TextInputViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\InputInfoViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\ChoiceInputViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\CheckBoxInputViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\_IChild.cs" />
     <Compile Include="ViewModels\Preview\ErrorInfoViewModel.cs" />
+    <Compile Include="ViewModels\Preview\InputViewModel.cs" />
     <Compile Include="ViewModels\Preview\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\Preview\PreflightViewModel.cs" />
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
@@ -358,17 +406,17 @@
     <Compile Include="Views\Preview\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\CheckBoxInput.xaml.cs">
-      <DependentUpon>CheckBoxInput.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\CheckBoxInputView.xaml.cs">
+      <DependentUpon>CheckBoxInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\ChoiceInput.xaml.cs">
-      <DependentUpon>ChoiceInput.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\ChoiceInputView.xaml.cs">
+      <DependentUpon>ChoiceInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\InputInfo.xaml.cs">
-      <DependentUpon>InputInfo.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\InputInfoView.xaml.cs">
+      <DependentUpon>InputInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\TextInput.xaml.cs">
-      <DependentUpon>TextInput.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\TextInputView.xaml.cs">
+      <DependentUpon>TextInputView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
@@ -589,19 +637,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\CheckBoxInput.xaml">
+    <Page Include="Views\Preview\Children\CheckBoxInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\ChoiceInput.xaml">
+    <Page Include="Views\Preview\Children\ChoiceInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\InputInfo.xaml">
+    <Page Include="Views\Preview\Children\InputInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\TextInput.xaml">
+    <Page Include="Views\Preview\Children\TextInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -633,9 +681,7 @@
   <ItemGroup>
     <Resource Include="Images\UI++2.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\appStyle.png" />
     <Resource Include="Images\checkStyle.png" />

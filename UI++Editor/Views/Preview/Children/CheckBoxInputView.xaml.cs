@@ -18,9 +18,9 @@ namespace UI__Editor.Views.Preview.Children
     /// <summary>
     /// Interaction logic for CheckBoxInput.xaml
     /// </summary>
-    public partial class CheckBoxInput : UserControl
+    public partial class CheckBoxInputView : UserControl
     {
-        public CheckBoxInput()
+        public CheckBoxInputView()
         {
             InitializeComponent();
         }

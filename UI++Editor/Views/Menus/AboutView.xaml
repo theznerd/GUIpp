@@ -19,13 +19,13 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Image Source="pack://application:,,,/UI++Editor.ico" Width="100" Height="100" />
-        <Label FontFamily="Segoe UI" Grid.Row="1" FontSize="24" HorizontalAlignment="Center">UI++ GUI Designer</Label>
+        <Image Source="pack://application:,,,/(G)UI++.ico" Width="100" Height="100" />
+        <Label FontFamily="Segoe UI" Grid.Row="1" FontSize="24" HorizontalAlignment="Center">(G)UI++</Label>
         <Label FontFamily="Segoe UI Light" Padding="0" FontSize="14" HorizontalAlignment="Center" Grid.Row="2">Version: 1.0</Label>
         <Label FontFamily="Segoe UI Light" Padding="0" FontSize="14" HorizontalAlignment="Center" Grid.Row="3">Written By: Nathan Ziehnert (@theznerd)</Label>
-        <Label FontFamily="Segoe UI Light" Padding="0" FontSize="14" HorizontalAlignment="Center" Grid.Row="4" Margin="0,20,0,0">Developed to assist in creation of UI++ workflows.</Label>
+        <Label FontFamily="Segoe UI Light" Padding="0" FontSize="14" HorizontalAlignment="Center" Grid.Row="4" Margin="0,20,0,0">Developed to assist in creation of UI++ XML files.</Label>
         <TextBlock FontFamily="Segoe UI Light" Padding="0,20" Width="600" FontSize="14" HorizontalAlignment="Center" TextAlignment="Center"  Grid.Row="5" TextWrapping="Wrap">
-            Copyright (c) 2019 - The Z-Nerd<LineBreak/>
+            Copyright (c) 2019<LineBreak/>
             <LineBreak/>
             Permission is hereby granted, free of charge, to any person obtaining a copy
             of this software and associated documentation files (the "Software"), to deal

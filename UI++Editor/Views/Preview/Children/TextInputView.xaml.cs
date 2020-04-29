@@ -18,9 +18,9 @@ namespace UI__Editor.Views.Preview.Children
     /// <summary>
     /// Interaction logic for TextInput.xaml
     /// </summary>
-    public partial class TextInput : UserControl
+    public partial class TextInputView : UserControl
     {
-        public TextInput()
+        public TextInputView()
         {
             InitializeComponent();
         }

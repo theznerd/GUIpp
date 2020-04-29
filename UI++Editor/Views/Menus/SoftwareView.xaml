@@ -6,7 +6,38 @@
              xmlns:local="clr-namespace:UI__Editor.Views.Menus"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="30" HorizontalAlignment="Center">Currently in XML</Label>
+        <ListBox x:Name="XMLSoftware" Grid.Row="1" Margin="5" BorderBrush="Black" BorderThickness="1"></ListBox>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2">
+            <Button x:Name="AddSoftware" FontSize="14" Margin="5">Add from Scanned</Button>
+            <Button x:Name="AddSoftwareManual" FontSize="14" Margin="5">Add Manual</Button>
+            <Button x:Name="EditSoftware" FontSize="14" Margin="5">Edit</Button>
+            <Button x:Name="RemoveSoftware" FontSize="14" Margin="5">Remove</Button>
+        </StackPanel>
+
+        <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="30" Grid.Column="1" HorizontalAlignment="Center">ConfigMgr Info</Label>
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <Label FontFamily="Segoe UI Light" Padding="10,5,0,0" FontSize="20">ConfigMgr Server</Label>
+            <Label FontFamily="Segoe UI Light" x:Name="ConfigMgrServer" Padding="30,5,0,10" FontSize="15">tplab.znerd.dev (TPL)</Label>
+            <Label FontFamily="Segoe UI Light" Padding="10,5,0,0" FontSize="20">Last Synchronization</Label>
+            <Label FontFamily="Segoe UI Light" x:Name="LastSynchronization" Padding="30,5,0,10" FontSize="15">April 28th, 2020 11:39:38 AM</Label>
+            <Label FontFamily="Segoe UI Light" Padding="10,5,0,0" FontSize="20">Data File</Label>
+            <Label FontFamily="Segoe UI Light" x:Name="DataFile" Padding="30,5,0,10" FontSize="15">c:\ProgramData\GUI++\SynchronizedSoftware.xml</Label>
+            <Label FontFamily="Segoe UI Light" Padding="10,5,0,0" FontSize="20">Available Applications</Label>
+            <Label FontFamily="Segoe UI Light" x:Name="AvailableApplications" Padding="30,5,0,10" FontSize="15">104</Label>
+            <Label FontFamily="Segoe UI Light" Padding="10,5,0,0" FontSize="20">Available Packages</Label>
+            <Label FontFamily="Segoe UI Light" x:Name="AvailablePackages" Padding="30,5,0,10" FontSize="15">38</Label>
+        </StackPanel>
     </Grid>
 </UserControl>
