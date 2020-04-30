@@ -19,6 +19,7 @@ namespace UI__Editor.Classes.ActionClasses
         public string Size { get; set; } // default is regular | regular, tall, and extratall
         public bool? Expanded { get; set; } // default is true
         public SoftwareSets Sets { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -33,6 +34,7 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute title = d.CreateAttribute("Title");
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute expanded = d.CreateAttribute("Expanded");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
@@ -43,6 +45,7 @@ namespace UI__Editor.Classes.ActionClasses
             title.Value = Title;
             size.Value = Size;
             expanded.Value = Expanded.ToString();
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -73,6 +76,10 @@ namespace UI__Editor.Classes.ActionClasses
             if (null != Expanded)
             {
                 output.Attributes.Append(expanded);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             // Append Child

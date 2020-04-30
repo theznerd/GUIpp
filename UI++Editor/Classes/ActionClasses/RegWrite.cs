@@ -18,6 +18,7 @@ namespace UI__Editor.Classes.ActionClasses
         public string ValueType { get; set; }
         public string Value { get; set; } // required
         public string Content { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -31,6 +32,7 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute reg64 = d.CreateAttribute("Reg64");
             XmlAttribute valueType = d.CreateAttribute("ValueType");
             XmlAttribute value = d.CreateAttribute("Value");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
@@ -40,6 +42,7 @@ namespace UI__Editor.Classes.ActionClasses
             reg64.Value = Reg64.ToString();
             valueType.Value = ValueType;
             value.Value = Value;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -61,6 +64,10 @@ namespace UI__Editor.Classes.ActionClasses
                 output.Attributes.Append(valueType);
             }
             output.Attributes.Append(value);
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             output.InnerText = Content;
 

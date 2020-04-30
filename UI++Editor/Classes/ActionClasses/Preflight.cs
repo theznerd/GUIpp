@@ -20,6 +20,7 @@ namespace UI__Editor.Classes.ActionClasses
         public int? Timeout { get; set; } // default is 0, no timeout
         public string TimeoutAction { get; set; } // default is Continue | Continue, ContinueOnWarning, Cance, or custom (cancel + exitcode)
         public ObservableCollection<Check> Checks { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -34,6 +35,7 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute timeout = d.CreateAttribute("Timeout");
             XmlAttribute timeoutAction = d.CreateAttribute("TimeoutAction");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
@@ -44,6 +46,7 @@ namespace UI__Editor.Classes.ActionClasses
             size.Value = Size;
             timeout.Value = Timeout.ToString();
             timeoutAction.Value = TimeoutAction;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -75,9 +78,13 @@ namespace UI__Editor.Classes.ActionClasses
             {
                 output.Attributes.Append(timeoutAction);
             }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             // Append Children
-            foreach(Check check in Checks)
+            foreach (Check check in Checks)
             {
                 output.AppendChild(check.GenerateXML());
             }

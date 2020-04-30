@@ -20,6 +20,7 @@ namespace UI__Editor.Classes.ActionClasses
         public int? Timeout { get; set; } // default is 0, no timeout
         public string TimeoutAction { get; set; } // default is continue | continue, cancel, return code (Cancel + custom exit code)
         public string Content { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -35,6 +36,7 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute title = d.CreateAttribute("Title");
             XmlAttribute timeout = d.CreateAttribute("Timeout");
             XmlAttribute timeoutAction = d.CreateAttribute("TimeoutAction");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
@@ -46,6 +48,7 @@ namespace UI__Editor.Classes.ActionClasses
             title.Value = Title;
             timeout.Value = Timeout.ToString();
             timeoutAction.Value = TimeoutAction;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -76,6 +79,10 @@ namespace UI__Editor.Classes.ActionClasses
             if (!string.IsNullOrEmpty(TimeoutAction))
             {
                 output.Attributes.Append(timeoutAction);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             // Set Content

@@ -13,6 +13,7 @@ namespace UI__Editor.Classes
     {
         public string Name { get; set; } // required
         public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; } // SoftwareGroup, SoftwareRef
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -20,14 +21,20 @@ namespace UI__Editor.Classes
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Set", null);
             XmlAttribute name = d.CreateAttribute("Name");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             name.Value = Name;
+            condition.Value = Condition;
 
             // Append Children
-            foreach(ISoftwareRef softwareRef in SoftwareRefs)
+            foreach (ISoftwareRef softwareRef in SoftwareRefs)
             {
                 output.AppendChild(softwareRef.GenerateXML());
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

@@ -9,8 +9,9 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes
 {
-    public class Actions : IElement
+    public class Actions : IElement, IRootElement
     {
+        public string RootElementType { get; } = "Actions";
         public ObservableCollection<IAction> actions;
 
         public XmlNode GenerateXML()

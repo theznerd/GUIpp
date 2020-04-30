@@ -14,6 +14,7 @@ namespace UI__Editor.Classes
         public string Variable { get; set; } // required
         public string Version { get; set; }
         public string VersionOperator { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -24,12 +25,14 @@ namespace UI__Editor.Classes
             XmlAttribute variable = d.CreateAttribute("Variable");
             XmlAttribute version = d.CreateAttribute("Version");
             XmlAttribute versionOperator = d.CreateAttribute("VersionOperator");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             displayName.Value = DisplayName;
             variable.Value = Variable;
             version.Value = Version;
             versionOperator.Value = VersionOperator;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(displayName);
@@ -41,6 +44,10 @@ namespace UI__Editor.Classes
             if (!string.IsNullOrEmpty(VersionOperator))
             {
                 output.Attributes.Append(versionOperator);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

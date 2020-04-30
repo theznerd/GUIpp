@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,11 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class DefaultValues : IElement, IAction
+    public class Vars : IElement, IAction
     {
-        public string Type { get; } = "DefaultValues";
-        public bool? ShowProgress { get; set; }
-        public string ValueTypes { get; set; } // required, default is All
+        public string Type { get; } = "Vars";
+        public string Direction { get; set; } // default is Save | Save/Load
+        public string Filename { get; set; } // defaults to %temp%\ui++vars.dat
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -21,23 +22,26 @@ namespace UI__Editor.Classes.ActionClasses
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
-            XmlAttribute showProgress = d.CreateAttribute("ShowProgress");
-            XmlAttribute valueTypes = d.CreateAttribute("ValueTypes");
+            XmlAttribute direction = d.CreateAttribute("Direction");
+            XmlAttribute filename = d.CreateAttribute("Filename");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
-            showProgress.Value = ShowProgress.ToString();
-            valueTypes.Value = ValueTypes;
+            direction.Value = Direction;
+            filename.Value = Filename;
             condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
-            if(null != ShowProgress)
+            if (!string.IsNullOrEmpty(Direction))
             {
-                output.Attributes.Append(showProgress);
+                output.Attributes.Append(direction);
             }
-            output.Attributes.Append(valueTypes);
+            if (!string.IsNullOrEmpty(Filename))
+            {
+                output.Attributes.Append(filename);
+            }
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);

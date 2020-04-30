@@ -14,6 +14,7 @@ namespace UI__Editor.Classes.ActionClasses
         public int? MaxRunTime { get; set; }
         public string Title { get; set; } // Shown in log and progress bar
         public string Content { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -23,11 +24,13 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute maxRunTime = d.CreateAttribute("MaxRunTime");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
             maxRunTime.Value = MaxRunTime.ToString();
             title.Value = Title;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -38,6 +41,10 @@ namespace UI__Editor.Classes.ActionClasses
             if (!string.IsNullOrEmpty(Title))
             {
                 output.Attributes.Append(title);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             // Append Content

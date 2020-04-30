@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace UI__Editor.Interfaces
 {
-    public interface ISoftware : IElement
+    public interface IRootElement : IElement
     {
-        string Id { get; set; }
-        string Label { get; set; }
-        string IncludeID { get; set; }
+        string RootElementType { get; }
     }
 }

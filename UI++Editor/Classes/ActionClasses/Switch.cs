@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,12 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class DefaultValues : IElement, IAction
+    public class Switch : IElement, IAction
     {
-        public string Type { get; } = "DefaultValues";
-        public bool? ShowProgress { get; set; }
-        public string ValueTypes { get; set; } // required, default is All
+        public string Type { get; } = "Switch";
+        public bool? DontEval { get; set; } // default is false
+        public string OnValue { get; set; } // required
+        public ObservableCollection<Case> Cases { get; set; }
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -21,26 +23,32 @@ namespace UI__Editor.Classes.ActionClasses
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
-            XmlAttribute showProgress = d.CreateAttribute("ShowProgress");
-            XmlAttribute valueTypes = d.CreateAttribute("ValueTypes");
+            XmlAttribute onValue = d.CreateAttribute("OnValue");
+            XmlAttribute dontEval = d.CreateAttribute("DontEval");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
-            showProgress.Value = ShowProgress.ToString();
-            valueTypes.Value = ValueTypes;
+            onValue.Value = OnValue;
+            dontEval.Value = DontEval.ToString();
             condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
-            if(null != ShowProgress)
+            output.Attributes.Append(onValue);
+            if(null != DontEval)
             {
-                output.Attributes.Append(showProgress);
+                output.Attributes.Append(dontEval);
             }
-            output.Attributes.Append(valueTypes);
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);
+            }
+
+            // Append Children
+            foreach (Case c in Cases)
+            {
+                output.AppendChild(c.GenerateXML());
             }
 
             return output;

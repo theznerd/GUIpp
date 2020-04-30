@@ -14,6 +14,7 @@ namespace UI__Editor.Classes
         public bool? Hidden { get; set; } // default is false
         public bool? Default { get; set; } // default is false
         public bool? Required { get; set; } // default is false
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -24,12 +25,14 @@ namespace UI__Editor.Classes
             XmlAttribute hidden = d.CreateAttribute("Hidden");
             XmlAttribute _default = d.CreateAttribute("Default");
             XmlAttribute required = d.CreateAttribute("Required");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             id.Value = Id;
             hidden.Value = Hidden.ToString();
             _default.Value = Default.ToString();
             required.Value = Required.ToString();
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(id);
@@ -44,6 +47,10 @@ namespace UI__Editor.Classes
             if (null != Required)
             {
                 output.Attributes.Append(required);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

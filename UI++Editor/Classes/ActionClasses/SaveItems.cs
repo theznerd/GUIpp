@@ -8,11 +8,11 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class DefaultValues : IElement, IAction
+    public class SaveItems : IElement, IAction
     {
-        public string Type { get; } = "DefaultValues";
-        public bool? ShowProgress { get; set; }
-        public string ValueTypes { get; set; } // required, default is All
+        public string Type { get; } = "SaveItems";
+        public string Items { get; set; } // required
+        public string Path { get; set; } // required
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -21,23 +21,20 @@ namespace UI__Editor.Classes.ActionClasses
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
-            XmlAttribute showProgress = d.CreateAttribute("ShowProgress");
-            XmlAttribute valueTypes = d.CreateAttribute("ValueTypes");
+            XmlAttribute items = d.CreateAttribute("Items");
+            XmlAttribute path = d.CreateAttribute("Path");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
-            showProgress.Value = ShowProgress.ToString();
-            valueTypes.Value = ValueTypes;
+            items.Value = Items;
+            path.Value = Path;
             condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
-            if(null != ShowProgress)
-            {
-                output.Attributes.Append(showProgress);
-            }
-            output.Attributes.Append(valueTypes);
+            output.Attributes.Append(items);
+            output.Attributes.Append(path);
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);

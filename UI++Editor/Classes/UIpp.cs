@@ -17,8 +17,9 @@ namespace UI__Editor.Classes
         public bool? Flat { get; set; }
         public string Icon { get; set; }
         public string Title { get; set; }
+        public string RootXMLPath { get; set; }
 
-        public ObservableCollection<IElement> Elements { get; set; }
+        public ObservableCollection<IRootElement> Elements { get; set; } = new ObservableCollection<IRootElement>();
 
         public XmlNode GenerateXML()
         {
@@ -31,6 +32,7 @@ namespace UI__Editor.Classes
             XmlAttribute flat = d.CreateAttribute("Flat");
             XmlAttribute icon = d.CreateAttribute("Icon");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute rootXMLPath = d.CreateAttribute("RootXMLPath");
 
             // Assign attribute valutes
             alwaysOnTop.Value = AlwaysOnTop.ToString();
@@ -39,6 +41,7 @@ namespace UI__Editor.Classes
             flat.Value = Flat.ToString();
             icon.Value = Icon;
             title.Value = Title;
+            rootXMLPath.Value = RootXMLPath;
 
             // Append attributes
             if(null != AlwaysOnTop)
@@ -65,9 +68,13 @@ namespace UI__Editor.Classes
             {
                 output.Attributes.Append(title);
             }
+            if (!string.IsNullOrEmpty(RootXMLPath))
+            {
+                output.Attributes.Append(rootXMLPath);
+            }
 
             // Append Children
-            foreach(IElement element in Elements)
+            foreach (IElement element in Elements)
             {
                 output.AppendChild(element.GenerateXML());
             }

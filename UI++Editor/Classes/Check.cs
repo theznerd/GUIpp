@@ -19,6 +19,7 @@ namespace UI__Editor.Classes
         public string Text { get; set; } // required
         public string WarnCondition { get; set; }
         public string WarnDescription { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -31,6 +32,7 @@ namespace UI__Editor.Classes
             XmlAttribute text = d.CreateAttribute("Text");
             XmlAttribute warnCondition = d.CreateAttribute("WarnCondition");
             XmlAttribute warnDescription = d.CreateAttribute("WarnDescription");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             checkCondition.Value = CheckCondition;
@@ -39,6 +41,7 @@ namespace UI__Editor.Classes
             text.Value = Text;
             warnCondition.Value = WarnCondition;
             warnDescription.Value = WarnDescription;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(checkCondition);
@@ -58,6 +61,10 @@ namespace UI__Editor.Classes
             if (!string.IsNullOrEmpty(WarnDescription))
             {
                 output.Attributes.Append(warnDescription);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

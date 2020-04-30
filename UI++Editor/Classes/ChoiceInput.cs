@@ -21,6 +21,7 @@ namespace UI__Editor.Classes
         public bool Sort { get; set; } = true;
         public string Variable { get; set; } // required
         public ObservableCollection<IChoice> Choices { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -35,6 +36,7 @@ namespace UI__Editor.Classes
             XmlAttribute required = d.CreateAttribute("Required");
             XmlAttribute sort = d.CreateAttribute("Sort");
             XmlAttribute variable = d.CreateAttribute("Variable"); // required
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute values
             alternateValue.Value = AlternateValue;
@@ -45,9 +47,10 @@ namespace UI__Editor.Classes
             required.Value = Required.ToString();
             sort.Value = Sort.ToString();
             variable.Value = Variable;
+            condition.Value = Condition;
 
             // Append Attributes
-            if(!string.IsNullOrEmpty(AlternateValue))
+            if (!string.IsNullOrEmpty(AlternateValue))
             {
                 output.Attributes.Append(alternateValue);
             }
@@ -64,9 +67,13 @@ namespace UI__Editor.Classes
             }
             output.Attributes.Append(sort);
             output.Attributes.Append(variable);
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             // Append Children
-            foreach(IChoice choice in Choices)
+            foreach (IChoice choice in Choices)
             {
                 output.AppendChild(choice.GenerateXML());
             }

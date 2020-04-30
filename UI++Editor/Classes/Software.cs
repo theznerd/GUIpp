@@ -9,8 +9,9 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes
 {
-    public class Software : IElement
+    public class Software : IElement, IRootElement
     {
+        public string RootElementType { get; } = "Software";
         public ObservableCollection<ISoftware> Softwares { get; set; }
 
         public XmlNode GenerateXML()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +9,12 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class DefaultValues : IElement, IAction
+    public class WMIWrite : IElement, IAction
     {
-        public string Type { get; } = "DefaultValues";
-        public bool? ShowProgress { get; set; }
-        public string ValueTypes { get; set; } // required, default is All
+        public string Type { get; } = "WMIWrite";
+        public string Class { get; set; } // required
+        public string Namespace { get; set; } // default is root\cimv2
+        public ObservableCollection<Property> Properties { get; set; }
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -21,26 +23,32 @@ namespace UI__Editor.Classes.ActionClasses
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
-            XmlAttribute showProgress = d.CreateAttribute("ShowProgress");
-            XmlAttribute valueTypes = d.CreateAttribute("ValueTypes");
+            XmlAttribute _class = d.CreateAttribute("Class");
+            XmlAttribute _namespace = d.CreateAttribute("Namespace");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
-            showProgress.Value = ShowProgress.ToString();
-            valueTypes.Value = ValueTypes;
+            _class.Value = Class;
+            _namespace.Value = Namespace;
             condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
-            if(null != ShowProgress)
+            output.Attributes.Append(_class);
+            if (!string.IsNullOrEmpty(Namespace))
             {
-                output.Attributes.Append(showProgress);
+                output.Attributes.Append(_namespace);
             }
-            output.Attributes.Append(valueTypes);
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);
+            }
+
+            // Append Children
+            foreach(Property property in Properties)
+            {
+                output.AppendChild(property.GenerateXML());
             }
 
             return output;

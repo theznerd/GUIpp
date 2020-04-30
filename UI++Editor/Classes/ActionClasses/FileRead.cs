@@ -15,6 +15,7 @@ namespace UI__Editor.Classes.ActionClasses
         public bool? DeleteLine { get; set; }
         public string FileName { get; set; } // required
         public string Variable { get; set; } // required
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -25,12 +26,14 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute deleteLine = d.CreateAttribute("DeleteLine");
             XmlAttribute fileName = d.CreateAttribute("FileName");
             XmlAttribute variable = d.CreateAttribute("Variable");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
             deleteLine.Value = DeleteLine.ToString();
             fileName.Value = FileName;
             variable.Value = Variable;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -40,6 +43,10 @@ namespace UI__Editor.Classes.ActionClasses
             }
             output.Attributes.Append(fileName);
             output.Attributes.Append(variable);
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             return output;
         }

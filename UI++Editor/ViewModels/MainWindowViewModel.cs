@@ -5,12 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Threading.Tasks;
+using UI__Editor.Classes;
+using UI__Editor.Controllers;
+using System.Windows.Controls;
 
 namespace UI__Editor.ViewModels
 {
     public class MainWindowViewModel : PropertyChangedBase, IHandle<EventAggregators.SendMessage>, IHandle<EventAggregators.XmlUpdater>
     {
         public IEventAggregator _eventAggregator = new EventAggregator();
+        public UIpp uipp;
 
         Menus.AboutViewModel _aboutViewModel;
         Menus.ActionsViewModel _actionsViewModel;
@@ -24,10 +28,10 @@ namespace UI__Editor.ViewModels
             NewXML();
             _aboutViewModel = new Menus.AboutViewModel();
             _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
-            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator);
+            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _loadSaveViewModel = new Menus.LoadSaveViewModel(_eventAggregator);
             _settingsViewModel = new Menus.SettingsViewModel();
-            _softwareViewModel = new Menus.SoftwareViewModel();
+            _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
             _eventAggregator.Subscribe(this);
         }
 
@@ -138,25 +142,38 @@ namespace UI__Editor.ViewModels
 
         private void NewXML()
         {
+            uipp = new UIpp();
             _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
-            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator);
-            _loadedXML = new XmlDocument();
-            XmlNode headerNode = _loadedXML.CreateXmlDeclaration("1.0", "UTF-8", null);
-            XmlNode rootNode = _loadedXML.CreateElement("UIpp");
-            _loadedXML.AppendChild(headerNode);
-            _loadedXML.AppendChild(rootNode);
+            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
         }
 
-        private XmlDocument _loadedXML;
         private void LoadXML(string path)
         {
-            _loadedXML = new XmlDocument();
-            _loadedXML.Load(path);
+            // Load XML
+            XmlDocument load = new XmlDocument();
+            load.Load(path);
+
+            // Convert XML to UIpp
+            uipp = XMLToClassModel.GenerateUIpp(load);
+
+            // Reload Children
+            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
+            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
+            _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _softwareViewModel.RefreshSoftwareList();
+            _configurationViewModel.RefreshConfiguration();
         }
 
         private void SaveXML(string path)
         {
-            _loadedXML.Save(path);
+            // Convert UIpp to XML
+            var xml = new XmlDocument();
+            XmlDeclaration dec = xml.CreateXmlDeclaration("1.0", "UTF-8", null);
+            XmlNode rootNode = uipp.GenerateXML();
+            XmlNode importNode = xml.ImportNode(rootNode, true);
+            xml.AppendChild(importNode); // add UIpp
+            xml.InsertBefore(dec, importNode); // add the declaration
+            xml.Save(path);
         }
     }
 }

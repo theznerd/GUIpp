@@ -21,6 +21,7 @@ namespace UI__Editor.Classes
         public string RegEx { get; set; }
         public string Required { get; set; } // default is true, True,False,Yes,No
         public string Variable { get; set; } // required
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -38,6 +39,7 @@ namespace UI__Editor.Classes
             XmlAttribute regEx = d.CreateAttribute("RegEx");
             XmlAttribute required = d.CreateAttribute("Required");
             XmlAttribute variable = d.CreateAttribute("Variable");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             adValidate.Value = ADValidate.ToString();
@@ -51,9 +53,10 @@ namespace UI__Editor.Classes
             regEx.Value = RegEx;
             required.Value = Required;
             variable.Value = Variable;
+            condition.Value = Condition;
 
             // Append Attributes
-            if(null != ADValidate)
+            if (null != ADValidate)
             {
                 output.Attributes.Append(adValidate);
             }
@@ -96,6 +99,10 @@ namespace UI__Editor.Classes
             if (!string.IsNullOrEmpty(Variable))
             {
                 output.Attributes.Append(variable);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

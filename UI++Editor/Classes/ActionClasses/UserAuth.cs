@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,16 +8,16 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class Input : IElement, IAction
+    public class UserAuth : IElement, IAction
     {
-        public string Type { get; } = "Input";
-        public bool? ShowBack { get; set; } // default is false
-        public bool? ShowCancel { get; set; } // default is false
-        public bool? ADValidate { get; set; } // default is false
-        public string Name { get; set; }
-        public string Size { get; set; } // default is Regular | Regular, Tall
+        public string Type { get; } = "UserAuth";
+        public string Attributes { get;set; }
+        public bool? DisableCancel { get; set; } // default is false
+        public string Domain { get; set; }
+        public string Group { get; set; }
         public string Title { get; set; }
-        public ObservableCollection<IInput> Inputs { get; set; }
+        public int? MaxRetryCount { get; set; } // no default
+        public bool? ShowBack { get; set; }
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -28,21 +27,23 @@ namespace UI__Editor.Classes.ActionClasses
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute showBack = d.CreateAttribute("ShowBack");
-            XmlAttribute showCancel = d.CreateAttribute("ShowCancel");
-            XmlAttribute adValidate = d.CreateAttribute("ADValidate");
-            XmlAttribute name = d.CreateAttribute("Name");
-            XmlAttribute size = d.CreateAttribute("Size");
+            XmlAttribute disableCancel = d.CreateAttribute("DisableCancel");
+            XmlAttribute attributes = d.CreateAttribute("Attributes");
+            XmlAttribute domain = d.CreateAttribute("Domain");
+            XmlAttribute group = d.CreateAttribute("Group");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute maxRetryCount = d.CreateAttribute("MaxRetryCount");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
             showBack.Value = ShowBack.ToString();
-            showCancel.Value = ShowCancel.ToString();
-            adValidate.Value = ADValidate.ToString();
-            name.Value = Name;
-            size.Value = Size;
+            disableCancel.Value = DisableCancel.ToString();
+            attributes.Value = Attributes;
+            domain.Value = Domain;
+            group.Value = Group;
             title.Value = Title;
+            maxRetryCount.Value = MaxRetryCount.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -51,21 +52,25 @@ namespace UI__Editor.Classes.ActionClasses
             {
                 output.Attributes.Append(showBack);
             }
-            if(null != ShowCancel)
+            if(null != DisableCancel)
             {
-                output.Attributes.Append(showCancel);
+                output.Attributes.Append(disableCancel);
             }
-            if (null != ADValidate)
+            if(null != MaxRetryCount)
             {
-                output.Attributes.Append(adValidate);
+                output.Attributes.Append(maxRetryCount);
             }
-            if (!string.IsNullOrEmpty(Name))
+            if (!string.IsNullOrEmpty(Attributes))
             {
-                output.Attributes.Append(name);
+                output.Attributes.Append(attributes);
             }
-            if (!string.IsNullOrEmpty(Size))
+            if (!string.IsNullOrEmpty(Domain))
             {
-                output.Attributes.Append(size);
+                output.Attributes.Append(domain);
+            }
+            if (!string.IsNullOrEmpty(Group))
+            {
+                output.Attributes.Append(group);
             }
             if (!string.IsNullOrEmpty(Title))
             {
@@ -74,12 +79,6 @@ namespace UI__Editor.Classes.ActionClasses
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);
-            }
-
-            // Append Children
-            foreach (IInput input in Inputs)
-            {
-                output.AppendChild(input.GenerateXML());
             }
 
             return output;

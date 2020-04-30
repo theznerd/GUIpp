@@ -17,6 +17,7 @@ namespace UI__Editor.Classes.ActionClasses
         public string InfoImage { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -29,6 +30,7 @@ namespace UI__Editor.Classes.ActionClasses
             XmlAttribute image = d.CreateAttribute("Image");
             XmlAttribute infoImage = d.CreateAttribute("InfoImage");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
@@ -37,6 +39,7 @@ namespace UI__Editor.Classes.ActionClasses
             image.Value = Image;
             infoImage.Value = InfoImage;
             title.Value = Title;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -59,6 +62,10 @@ namespace UI__Editor.Classes.ActionClasses
             if (!string.IsNullOrEmpty(Title))
             {
                 output.Attributes.Append(title);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             // Set Content

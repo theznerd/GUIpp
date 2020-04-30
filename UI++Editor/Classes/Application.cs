@@ -10,7 +10,7 @@ namespace UI__Editor.Classes
 {
     public class Application : IElement, ISoftware
     {
-        public string ID { get; set; } // required
+        public string Id { get; set; } // required
         public string IncludeID { get; set; }
         public string Label { get; set; } // required
         public string Name { get; set; } // required
@@ -20,13 +20,13 @@ namespace UI__Editor.Classes
             // Create XML Node and Attributes
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Application", null);
-            XmlAttribute id = d.CreateAttribute("ID");
+            XmlAttribute id = d.CreateAttribute("Id");
             XmlAttribute includeID = d.CreateAttribute("IncludeID");
             XmlAttribute label = d.CreateAttribute("Label");
             XmlAttribute name = d.CreateAttribute("Name");
 
             // Set Attribute Values
-            id.Value = ID;
+            id.Value = Id;
             includeID.Value = IncludeID;
             label.Value = Label;
             name.Value = Name;

@@ -16,6 +16,7 @@ namespace UI__Editor.Classes
         public string Option { get; set; } // required
         public string Value { get; set; }
         public string AlternateValue { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -25,11 +26,13 @@ namespace UI__Editor.Classes
             XmlAttribute option = d.CreateAttribute("Option");
             XmlAttribute value = d.CreateAttribute("Value");
             XmlAttribute alternateValue = d.CreateAttribute("AlternateValue");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             option.Value = Option;
             value.Value = Value;
             alternateValue.Value = AlternateValue;
+            condition.Value = Condition;
 
             // Append Attribute
             output.Attributes.Append(option);
@@ -40,6 +43,10 @@ namespace UI__Editor.Classes
             if(!string.IsNullOrEmpty(AlternateValue))
             {
                 output.Attributes.Append(alternateValue);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

@@ -16,6 +16,7 @@ namespace UI__Editor.Classes
         public string Label { get; set; } // required
         public bool? Required { get; set; } // default is false
         public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; }
+        public string Condition { get; set; }
 
         public XmlNode GenerateXML()
         {
@@ -26,15 +27,17 @@ namespace UI__Editor.Classes
             XmlAttribute id = d.CreateAttribute("Id");
             XmlAttribute label = d.CreateAttribute("Label");
             XmlAttribute required = d.CreateAttribute("Required");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign Attribute Values
             _default.Value = Default.ToString();
             id.Value = Id;
             label.Value = Label;
             required.Value = Required.ToString();
+            condition.Value = Condition;
 
             // Append Attributes
-            if(null != Default)
+            if (null != Default)
             {
                 output.Attributes.Append(_default);
             }
@@ -44,9 +47,13 @@ namespace UI__Editor.Classes
             {
                 output.Attributes.Append(required);
             }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             // Append Children
-            foreach(ISoftwareRef softwareRef in SoftwareRefs)
+            foreach (ISoftwareRef softwareRef in SoftwareRefs)
             {
                 output.AppendChild(softwareRef.GenerateXML());
             }

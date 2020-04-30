@@ -8,15 +8,16 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes.ActionClasses
 {
-    public class RegRead : IElement, IAction
+    public class WMIRead : IElement, IAction
     {
-        public string Type { get; } = "RegRead";
+        public string Type { get; } = "WMIRead";
+        public string Class { get; set; } // required
         public string Default { get; set; }
-        public string Hive { get; set; } // Default is HKLM
-        public string Key { get; set; } // Required
-        public bool? Reg64 { get; set; } // Default is true
+        public string KeyQualifier { get; set; }
+        public string Namespace { get; set; } // defualt is root\cimv2
+        public string Property { get; set; } // required
         public string Variable { get; set; } // required
-        public string Value { get; set; } // required
+        public string Query { get; set; } // required
         public string Condition { get; set; }
 
         public XmlNode GenerateXML()
@@ -25,41 +26,44 @@ namespace UI__Editor.Classes.ActionClasses
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
+            XmlAttribute _class = d.CreateAttribute("Class");
             XmlAttribute _default = d.CreateAttribute("Default");
-            XmlAttribute hive = d.CreateAttribute("Hive");
-            XmlAttribute key = d.CreateAttribute("Key");
-            XmlAttribute reg64 = d.CreateAttribute("Reg64");
+            XmlAttribute keyQualifier = d.CreateAttribute("KeyQualifier");
+            XmlAttribute _namespace = d.CreateAttribute("Namespace");
+            XmlAttribute property = d.CreateAttribute("Property");
             XmlAttribute variable = d.CreateAttribute("Variable");
-            XmlAttribute value = d.CreateAttribute("Value");
+            XmlAttribute query = d.CreateAttribute("Query");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
             type.Value = Type;
-            _default.Value = Default;
-            hive.Value = Hive;
-            key.Value = Key;
-            reg64.Value = Reg64.ToString();
+            _class.Value = Class;
+            property.Value = Property;
             variable.Value = Variable;
-            value.Value = Value;
+            query.Value = Query;
+            _default.Value = Default;
+            keyQualifier.Value = KeyQualifier;
+            _namespace.Value = Namespace;
             condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(type);
+            output.Attributes.Append(_class);
+            output.Attributes.Append(property);
+            output.Attributes.Append(variable);
+            output.Attributes.Append(query);
             if (!string.IsNullOrEmpty(Default))
             {
                 output.Attributes.Append(_default);
             }
-            if (!string.IsNullOrEmpty(Hive))
+            if (!string.IsNullOrEmpty(KeyQualifier))
             {
-                output.Attributes.Append(hive);
+                output.Attributes.Append(keyQualifier);
             }
-            output.Attributes.Append(key);
-            if(null != Reg64)
+            if (!string.IsNullOrEmpty(Namespace))
             {
-                output.Attributes.Append(reg64);
+                output.Attributes.Append(_namespace);
             }
-            output.Attributes.Append(variable);
-            output.Attributes.Append(value);
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);

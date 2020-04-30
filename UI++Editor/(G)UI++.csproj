@@ -200,6 +200,15 @@
     <Compile Include="Classes\ActionClasses\Preflight.cs" />
     <Compile Include="Classes\ActionClasses\RegWrite.cs" />
     <Compile Include="Classes\ActionClasses\RegRead.cs" />
+    <Compile Include="Classes\ActionClasses\SaveItems.cs" />
+    <Compile Include="Classes\ActionClasses\Switch.cs" />
+    <Compile Include="Classes\ActionClasses\SoftwareDiscovery.cs" />
+    <Compile Include="Classes\ActionClasses\TSVarList.cs" />
+    <Compile Include="Classes\ActionClasses\TSVar.cs" />
+    <Compile Include="Classes\ActionClasses\UserAuth.cs" />
+    <Compile Include="Classes\ActionClasses\Vars.cs" />
+    <Compile Include="Classes\ActionClasses\WMIRead.cs" />
+    <Compile Include="Classes\ActionClasses\WMIWrite.cs" />
     <Compile Include="Classes\ActionGroup.cs" />
     <Compile Include="Classes\Actions.cs" />
     <Compile Include="Classes\ActionClasses\AppTree.cs" />
@@ -226,6 +235,7 @@
     <Compile Include="Classes\TextInput.cs" />
     <Compile Include="Classes\UIpp.cs" />
     <Compile Include="Classes\_Template.cs" />
+    <Compile Include="Controllers\XMLToClassModel.cs" />
     <Compile Include="Interfaces\IAction.cs" />
     <Compile Include="Interfaces\IChoice.cs" />
     <Compile Include="Interfaces\IElement.cs" />
@@ -237,6 +247,7 @@
     <Compile Include="EventAggregators\SendMessage.cs" />
     <Compile Include="EventAggregators\XmlUpdater.cs" />
     <Compile Include="Interfaces\IInput.cs" />
+    <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
     <Compile Include="ViewModels\Menus\Actions\ActionGroupViewModel.cs" />
