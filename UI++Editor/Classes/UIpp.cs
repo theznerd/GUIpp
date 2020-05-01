@@ -74,9 +74,11 @@ namespace UI__Editor.Classes
             }
 
             // Append Children
-            foreach (IElement element in Elements)
+            foreach (IRootElement element in Elements)
             {
-                output.AppendChild(element.GenerateXML());
+                XmlNode e = element.GenerateXML();
+                XmlNode en = d.ImportNode(e, true);
+                output.AppendChild(en);
             }
 
             return output;

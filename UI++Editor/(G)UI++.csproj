@@ -236,6 +236,7 @@
     <Compile Include="Classes\UIpp.cs" />
     <Compile Include="Classes\_Template.cs" />
     <Compile Include="Controllers\XMLToClassModel.cs" />
+    <Compile Include="Converters\AvailableApplicationsListConverter.cs" />
     <Compile Include="Interfaces\IAction.cs" />
     <Compile Include="Interfaces\IChoice.cs" />
     <Compile Include="Interfaces\IElement.cs" />
@@ -245,7 +246,6 @@
     <Compile Include="Converters\TreeViewLineConverter.cs" />
     <Compile Include="EventAggregators\ChangeUI.cs" />
     <Compile Include="EventAggregators\SendMessage.cs" />
-    <Compile Include="EventAggregators\XmlUpdater.cs" />
     <Compile Include="Interfaces\IInput.cs" />
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />

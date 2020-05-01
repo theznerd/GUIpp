@@ -22,7 +22,9 @@ namespace UI__Editor.Classes
 
             foreach(ISoftware software in Softwares)
             {
-                output.AppendChild(software.GenerateXML());
+                XmlNode s = software.GenerateXML();
+                XmlNode sn = d.ImportNode(s, true);
+                output.AppendChild(sn);
             }
 
             return output;

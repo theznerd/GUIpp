@@ -92,8 +92,7 @@ namespace UI__Editor.Controllers
                         Id = app.GetAttribute("Id"),
                         IncludeID = app.GetAttribute("IncludeID"),
                         Label = app.GetAttribute("Label"),
-                        Name = app.GetAttribute("Name"),
-                        PkgId = app.GetAttribute("PkgId"),
+                        PkgId = app.GetAttribute("PkgID"),
                         ProgramName = app.GetAttribute("ProgramName")
                     };
                     applications.Add(p);

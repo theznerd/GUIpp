@@ -11,7 +11,7 @@ namespace UI__Editor.ViewModels.Menus
     public class ConfigurationViewModel : PropertyChangedBase
     {
         private IEventAggregator _eventAggregator;
-        public UIpp UIpp;
+        private UIpp UIpp;
 
         public ConfigurationViewModel(IEventAggregator ea, UIpp uipp)
         {

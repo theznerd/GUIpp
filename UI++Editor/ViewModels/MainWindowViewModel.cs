@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace UI__Editor.ViewModels
 {
-    public class MainWindowViewModel : PropertyChangedBase, IHandle<EventAggregators.SendMessage>, IHandle<EventAggregators.XmlUpdater>
+    public class MainWindowViewModel : PropertyChangedBase, IHandle<EventAggregators.SendMessage>
     {
         public IEventAggregator _eventAggregator = new EventAggregator();
         public UIpp uipp;
@@ -27,11 +27,13 @@ namespace UI__Editor.ViewModels
         {
             NewXML();
             _aboutViewModel = new Menus.AboutViewModel();
-            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
+            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _loadSaveViewModel = new Menus.LoadSaveViewModel(_eventAggregator);
             _settingsViewModel = new Menus.SettingsViewModel();
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _configurationViewModel.RefreshConfiguration();
+            _softwareViewModel.RefreshSoftwareList();
             _eventAggregator.Subscribe(this);
         }
 
@@ -135,16 +137,15 @@ namespace UI__Editor.ViewModels
             }
         }
 
-        public void Handle(EventAggregators.XmlUpdater x)
-        {
-
-        }
-
         private void NewXML()
         {
             uipp = new UIpp();
-            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
+            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
+            _settingsViewModel = new Menus.SettingsViewModel();
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
+            _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _configurationViewModel.RefreshConfiguration();
+            _softwareViewModel.RefreshSoftwareList();
         }
 
         private void LoadXML(string path)
@@ -157,7 +158,7 @@ namespace UI__Editor.ViewModels
             uipp = XMLToClassModel.GenerateUIpp(load);
 
             // Reload Children
-            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator);
+            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
             _softwareViewModel.RefreshSoftwareList();

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,40 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Classes
 {
-    public class Application : IElement, ISoftware
+    public class Application : PropertyChangedBase, IElement, ISoftware
     {
-        public string Id { get; set; } // required
+        private string _Id;
+        public string Id // required
+        {
+            get { return _Id; }
+            set
+            {
+                _Id = value;
+                NotifyOfPropertyChange(() => Id);
+            }
+        }
         public string IncludeID { get; set; }
-        public string Label { get; set; } // required
-        public string Name { get; set; } // required
+        private string _Label;
+        public string Label // required
+        {
+            get { return _Label; }
+            set
+            {
+                _Label = value;
+                NotifyOfPropertyChange(() => Label);
+            }
+        }
+        private string _Name;
+        public string Name // required
+        {
+            get { return _Name; }
+            set
+            {
+                _Name = value;
+                NotifyOfPropertyChange(() => Name);
+            }
+        }
+        public string Type { get { return this.GetType().Name; } }
 
         public XmlNode GenerateXML()
         {

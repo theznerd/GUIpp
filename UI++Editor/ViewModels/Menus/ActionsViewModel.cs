@@ -5,12 +5,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.Classes;
 using UI__Editor.ViewModels;
 
 namespace UI__Editor.ViewModels.Menus
 {
     public class ActionsViewModel : PropertyChangedBase, IHandle<EventAggregators.ChangeUI>
     {
+        private UIpp UIpp;
+
         private enum WindowWidths
         {
             WithSidebar = 532,
@@ -36,10 +39,11 @@ namespace UI__Editor.ViewModels.Menus
         }
 
         private IEventAggregator _eventAggregator;
-        public ActionsViewModel(IEventAggregator ea)
+        public ActionsViewModel(IEventAggregator ea, UIpp uipp)
         {
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
+            UIpp = uipp;
         }
 
         private object _previewBox = new Preview.UserAuthViewModel();
