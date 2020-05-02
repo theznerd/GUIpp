@@ -8,9 +8,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button x:Name="NewButton" Margin="5" FontSize="20" Padding="20,5">New File</Button>
-            <Button x:Name="LoadButton" Margin="5" FontSize="20" Padding="20,5">Load File</Button>
-            <Button x:Name="SaveButton" Margin="5" FontSize="20" Padding="20,5">Save File</Button>
+            <Button x:Name="NewButton" Margin="5" FontSize="20" Height="100" Width="200" Padding="20,5">New File</Button>
+            <Button x:Name="LoadButton" Margin="5" FontSize="20" Height="100" Width="200" Padding="20,5">Load File</Button>
+            <Button x:Name="SaveButton" Margin="5" FontSize="20" Height="100" Width="200" Padding="20,5">Save File</Button>
         </StackPanel>
     </Grid>
 </UserControl>

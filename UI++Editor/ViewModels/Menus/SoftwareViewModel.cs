@@ -14,7 +14,7 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.ViewModels.Menus
 {
-    class SoftwareViewModel : PropertyChangedBase
+    public class SoftwareViewModel : PropertyChangedBase
     {
         private UIpp UIpp;
         XmlDocument SynchronizationInfo;
@@ -73,7 +73,16 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
-        public CollectionViewSource AvailableSoftwareViewSource { get; set; }
+        private CollectionViewSource _AvailableSoftwareViewSource;
+        public CollectionViewSource AvailableSoftwareViewSource
+        {
+            get { return _AvailableSoftwareViewSource; }
+            set
+            {
+                _AvailableSoftwareViewSource = value;
+                 NotifyOfPropertyChange(() => AvailableSoftwareViewSource);
+            }
+        }
         private string _SASearcher;
         public string SASearcher
         {

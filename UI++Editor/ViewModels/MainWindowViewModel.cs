@@ -32,6 +32,7 @@ namespace UI__Editor.ViewModels
             _loadSaveViewModel = new Menus.LoadSaveViewModel(_eventAggregator);
             _settingsViewModel = new Menus.SettingsViewModel();
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _settingsViewModel.svm = _softwareViewModel;
             _configurationViewModel.RefreshConfiguration();
             _softwareViewModel.RefreshSoftwareList();
             _eventAggregator.Subscribe(this);
@@ -60,6 +61,7 @@ namespace UI__Editor.ViewModels
                             break;
                         case "_softwareViewModel":
                             ContentControl = _softwareViewModel;
+                            _softwareViewModel.RefreshSynchronizationData();
                             break;
                         default:
                             break;
@@ -144,6 +146,7 @@ namespace UI__Editor.ViewModels
             _settingsViewModel = new Menus.SettingsViewModel();
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _settingsViewModel.svm = _softwareViewModel;
             _configurationViewModel.RefreshConfiguration();
             _softwareViewModel.RefreshSoftwareList();
         }

@@ -150,6 +150,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Caliburn.Micro.3.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -235,6 +236,7 @@
     <Compile Include="Classes\TextInput.cs" />
     <Compile Include="Classes\UIpp.cs" />
     <Compile Include="Classes\_Template.cs" />
+    <Compile Include="Controllers\ConfigMgrScanner.cs" />
     <Compile Include="Controllers\XMLToClassModel.cs" />
     <Compile Include="Converters\AvailableApplicationsListConverter.cs" />
     <Compile Include="Interfaces\IAction.cs" />

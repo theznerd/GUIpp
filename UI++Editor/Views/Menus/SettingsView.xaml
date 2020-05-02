@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UI__Editor.Views.Menus"
+             xmlns:ma="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -29,9 +31,11 @@
             <Button x:Name="SaveSettings" FontSize="14">Save Settings</Button>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="4" Margin="5" Orientation="Horizontal">
-            <Button x:Name="SettingsScanPackages" FontSize="14" Margin="0,0,5,0">Scan Packages</Button>
-            <Button x:Name="SettingsScanApplications" FontSize="14" Margin="5,0">Scan Applications</Button>
-            <Button x:Name="SettingsScanAll" FontSize="14" Margin="5,0">Scan All</Button>
+            <Button x:Name="SettingsScanPackages" FontSize="14" Margin="0,0,5,0" Visibility="Collapsed">Scan Packages</Button>
+            <Button x:Name="SettingsScanApplications" FontSize="14" Margin="5,0" Visibility="Collapsed">Scan Applications</Button>
+            <Button x:Name="SettingsScanAll" FontSize="14" Margin="0">Scan for Software</Button>
+            <ma:ProgressRing IsActive="True" Height="20" Width="20" Margin="10,0,0,0" Visibility="{Binding CurrentlyScanningVis}" />
+            <TextBlock x:Name="ProgressText" VerticalAlignment="Center" Margin="5,0" Visibility="{Binding CurrentlyScanningVis}">Connecting to ConfigMgr...</TextBlock>
         </StackPanel>
     </Grid>
 </UserControl>
