@@ -9,13 +9,17 @@
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,5">Slide Title</Label>
-        <WebBrowser wb:BrowserBehavior.Html="{Binding Path=InfoViewText, Mode=OneWay}" 
-                    Margin="25,5,25,10"
+        <Image x:Name="Image" Source="{Binding Image}" Width="462" Height="75" Margin="0,10,0,0" Stretch="UniformToFill" StretchDirection="Both" Visibility="{Binding ImageVisibilityConverter}" />
+        <Label x:Name="Title" Grid.Row="1" FontSize="32" Margin="5,8,10,5">Slide Title</Label>
+        <WebBrowser Grid.Row="2" wb:BrowserBehavior.Html="{Binding Path=InfoViewText, Mode=OneWay}"
+                    Margin="25,5,25,0"
                     IsEnabled="False"
-                    Grid.Row="1" LoadCompleted="WebBrowser_LoadCompleted"
+                    LoadCompleted="WebBrowser_LoadCompleted"
                     />
+        <Image x:Name="InfoImage" Margin="0,0,0,18" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="{Binding InfoImage}" />
     </Grid>
 </UserControl>

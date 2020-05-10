@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
@@ -55,6 +56,37 @@ namespace UI__Editor.ViewModels.Preview
             {
                 _InfoViewText = value;
                 NotifyOfPropertyChange(() => InfoViewText);
+            }
+        }
+
+        private string _Image;
+        public string Image
+        {
+            get { return _Image; }
+            set
+            {
+                _Image = value;
+                NotifyOfPropertyChange(() => Image);
+                NotifyOfPropertyChange(() => ImageVisibilityConverter);
+            }
+        }
+
+        public string ImageVisibilityConverter
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Image) ? "Visible" : "Collapsed";
+            }
+        }
+
+        private string _InfoImage;
+        public string InfoImage
+        {
+            get { return _InfoImage; }
+            set
+            {
+                _InfoImage = value;
+                NotifyOfPropertyChange(() => InfoImage);
             }
         }
     }

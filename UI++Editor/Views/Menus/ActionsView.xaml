@@ -8,10 +8,9 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:UI__Editor.Views.Menus"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -57,72 +56,102 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height=".4*" />
             </Grid.RowDefinitions>
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="30" HorizontalAlignment="Center">Action Preview</Label>
-            <Grid x:Name="ActionPreview" Grid.Row="1" VerticalAlignment="Center" Margin="20" Width="{Binding Path=WindowWidth, Mode=OneWay}" Height="327px">
-                <Border x:Name="MaskBorder" Margin="0" CornerRadius="{Binding ElementName=PreviewBorder, Path=CornerRadius}" BorderThickness="1" BorderBrush="White" Background="White" />
-                <Grid Margin="0">
-                    <Grid.OpacityMask>
-                        <VisualBrush Visual="{Binding ElementName=MaskBorder}"/>
-                    </Grid.OpacityMask>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="49" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="64" />
-                    </Grid.RowDefinitions>
-                    <!-- Bottom Border -->
-                    <Grid Margin="0" Background="#F0F0F0" Grid.Row="1" Grid.Column="{Binding Path=SetGridColumn, Mode=OneWay}" Grid.ColumnSpan="{Binding Path=SetGridColumnSpan, Mode=OneWay}">
-                        <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <Border BorderThickness="0" Visibility="{Binding Path=PreviewRefreshButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/refresh.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
-                                </Border.Background>
-                            </Border>
-                            <Border BorderThickness="0" Visibility="{Binding Path=PreviewBackButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/back.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
-                                </Border.Background>
-                            </Border>
-                            <Border BorderThickness="0" Visibility="{Binding Path=PreviewCancelButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/cancel.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
-                                </Border.Background>
-                            </Border>
-                            <Border BorderThickness="0" Visibility="{Binding Path=PreviewAcceptButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/accept.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
-                                </Border.Background>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
+            <ScrollViewer Margin="20" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                <Grid x:Name="ActionPreview" VerticalAlignment="Center" Width="{Binding Path=WindowWidth, Mode=OneWay}" Height="413">
+                    <Border x:Name="MaskBorder" Margin="0" CornerRadius="{Binding ElementName=PreviewBorder, Path=CornerRadius}" BorderThickness="1" BorderBrush="White" Background="White" />
+                    <Grid Margin="0">
+                        <Grid.OpacityMask>
+                            <VisualBrush Visual="{Binding ElementName=MaskBorder}"/>
+                        </Grid.OpacityMask>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="49" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="64" />
+                        </Grid.RowDefinitions>
+                        <!-- Bottom Border -->
+                        <Grid Margin="0" Background="#F0F0F0" Grid.Row="1" Grid.Column="{Binding Path=SetGridColumn, Mode=OneWay}" Grid.ColumnSpan="{Binding Path=SetGridColumnSpan, Mode=OneWay}">
+                            <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Border BorderThickness="0" Visibility="{Binding Path=PreviewRefreshButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Images/refresh.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                                    </Border.Background>
+                                </Border>
+                                <Border BorderThickness="0" Visibility="{Binding Path=PreviewBackButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Images/back.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                                    </Border.Background>
+                                </Border>
+                                <Border BorderThickness="0" Visibility="{Binding Path=PreviewCancelButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Images/cancel.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                                    </Border.Background>
+                                </Border>
+                                <Border BorderThickness="0" Visibility="{Binding Path=PreviewAcceptButtonVisible, Mode=OneWay}" Height="32" Width="32" Margin="24,0" >
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Images/accept.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                                    </Border.Background>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
 
-                    <!-- Left Border -->
-                    <Grid Margin="0" Background="{Binding Path=LeftBorderColor, Mode=TwoWay}" Grid.Column="0" Grid.RowSpan="2" Visibility="{Binding Path=CollapseSideBar, Mode=OneWay}">
-                        <StackPanel Orientation="Vertical" Margin="0" VerticalAlignment="Bottom">
-                            <Label x:Name="ActionPreviewTitle" FontFamily="Segoe UI" Padding="5,0,3,0" Foreground="White" FontSize="32" Width="260" RenderOptions.EdgeMode="Aliased">
-                                <Label.LayoutTransform>
-                                    <RotateTransform Angle="-90" />
-                                </Label.LayoutTransform>
-                            </Label>
-                            <Border BorderThickness="0" Height="32" Width="32" Margin="0,3,0,10">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="pack://application:,,,/Images/UI++2.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
-                                </Border.Background>
-                            </Border>
-                        </StackPanel>
-                    </Grid>
+                        <!-- Left Border -->
+                        <Grid Margin="0" Background="{Binding Path=LeftBorderColor, Mode=TwoWay}" Grid.Column="0" Grid.RowSpan="2" Visibility="{Binding Path=CollapseSideBar, Mode=OneWay}">
+                            <StackPanel Orientation="Vertical" Margin="0" VerticalAlignment="Bottom">
+                                <Label x:Name="ActionPreviewTitle" FontFamily="Segoe UI" Padding="5,0,3,0" Foreground="White" FontSize="32" Width="260" RenderOptions.EdgeMode="Aliased">
+                                    <Label.LayoutTransform>
+                                        <RotateTransform Angle="-90" />
+                                    </Label.LayoutTransform>
+                                </Label>
+                                <Border BorderThickness="0" Height="32" Width="32" Margin="0,3,0,10">
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="pack://application:,,,/Images/UI++2.ico" TileMode="Tile" ViewportUnits="Absolute" Viewport="0.5,0.5,32,32" RenderOptions.BitmapScalingMode="NearestNeighbor" RenderOptions.EdgeMode="Aliased" />
+                                    </Border.Background>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
 
-                    <!-- Content -->
-                    <ContentControl x:Name="PreviewBox" Margin="0" Grid.Column="{Binding Path=SetGridColumn, Mode=OneWay}" Grid.ColumnSpan="{Binding Path=SetGridColumnSpan, Mode=OneWay}" />
-                    
+                        <!-- Content -->
+                        <ContentControl x:Name="PreviewBox" Margin="0" Grid.Column="{Binding Path=SetGridColumn, Mode=OneWay}" Grid.ColumnSpan="{Binding Path=SetGridColumnSpan, Mode=OneWay}" />
+
+                    </Grid>
+                    <Grid Margin="0" x:Name="NoPreview" Background="White" Visibility="Collapsed">
+                        <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="14">No Preview Available for this Action</Label>
+                    </Grid>
+                    <Border x:Name="PreviewBorder" Margin="0" CornerRadius="{Binding Path=FlatView, Mode=OneWay}" BorderThickness="1" BorderBrush="Black" Background="Transparent" IsHitTestVisible="False" />
                 </Grid>
-                <Grid Margin="0" x:Name="NoPreview" Background="White" Visibility="Collapsed">
-                    <Label HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Light" FontSize="14">No Preview Available for this Action</Label>
-                </Grid>
-                <Border x:Name="PreviewBorder" Margin="0" CornerRadius="{Binding Path=FlatView, Mode=OneWay}" BorderThickness="1" BorderBrush="Black" Background="Transparent" IsHitTestVisible="False" />
+            </ScrollViewer>
+            <Grid Grid.Row="2" Margin="20,0,20,20">
+                <Border BorderBrush="Black" BorderThickness="1" x:Name="InfoBorder">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" FontFamily="Segoe UI Light">No Item Selected</TextBlock>
+                        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto" Visibility="{Binding InfoPaneVisibilityConverter}" Background="White">
+                            <StackPanel Orientation="Vertical" Width="{Binding ElementName=InfoBorder, Path=ActualWidth}">
+                                <TextBlock FontFamily="Segoe UI" Margin="5,0" FontSize="15" HorizontalAlignment="Center" Text="{Binding SelectedActionName, Mode=OneWay}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock FontFamily="Segoe UI" Margin="5,5,0,0" Text="Condition" FontSize="13" />
+                                    <TextBlock FontFamily="Segoe UI Light" Margin="10,5,0,0" TextWrapping="Wrap" Grid.Row="1" Text="{Binding SelectedActionCondition}" />
+                                    <TextBlock FontFamily="Segoe UI" Margin="5,5,0,0" Grid.Row="2" FontSize="13" Text="Hidden Attributes" />
+                                    <TextBlock FontFamily="Segoe UI Light" Grid.Row="3" Margin="10,5,0,0" Text="{Binding SelectedActionHiddenAttributes}" />
+                                </Grid>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
             </Grid>
         </Grid>
         <ma:FlyoutsControl Grid.RowSpan="2" Grid.ColumnSpan="2">

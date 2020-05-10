@@ -15,6 +15,14 @@ namespace UI__Editor.ViewModels.Actions
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "AppTree"; } }
 
+        public string HiddenAttributes
+        {
+            get
+            {
+                return "";
+            }
+        }
+
         AppTreeViewModel(AppTree appTree)
         {
             ModelClass = appTree;

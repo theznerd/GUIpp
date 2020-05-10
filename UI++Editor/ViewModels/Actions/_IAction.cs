@@ -12,5 +12,7 @@ namespace UI__Editor.ViewModels.Actions
         IPreview PreviewViewModel { get; set; } // the associated preview view model
         object ModelClass { get; set; } // the associated model class
         string ActionTitle { get; }
+        string Condition { get; set; }
+        string HiddenAttributes { get; }
     }
 }

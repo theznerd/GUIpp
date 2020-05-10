@@ -25,6 +25,7 @@ namespace UI__Editor.ViewModels.Menus
         {
             Normal = 327,
             Tall = 500,
+            ExtraTall = 672,
             InfoWithLogo = 413
         }
 
@@ -42,6 +43,66 @@ namespace UI__Editor.ViewModels.Menus
         public void ActionsTreeViewChanged(Interfaces.IAction selectedAction)
         {
             SelectedActionsTreeView = selectedAction;
+            NotifyOfPropertyChange(() => SelectedActionName);
+            NotifyOfPropertyChange(() => SelectedActionCondition);
+            NotifyOfPropertyChange(() => SelectedActionHiddenAttributes);
+            NotifyOfPropertyChange(() => InfoPaneVisibilityConverter);
+        }
+
+        public string SelectedActionName
+        {
+            get
+            {
+                if(null != SelectedActionsTreeView)
+                {
+                    return "Attributes for " + SelectedActionsTreeView.ActionType;
+                }
+                else
+                {
+                    return "";
+                }
+                
+            }
+        }
+
+        public string InfoPaneVisibilityConverter
+        {
+            get
+            {
+                return null != SelectedActionsTreeView ? "Visible" : "Collapsed";
+            }
+        }
+
+        public string SelectedActionCondition
+        {
+            get
+            {
+                if(null != SelectedActionsTreeView && !string.IsNullOrEmpty(SelectedActionsTreeView.ViewModel.Condition))
+                {
+                    return SelectedActionsTreeView.ViewModel.Condition;
+                }
+                else
+                {
+                    return "No Condition Defined...";
+                }
+                
+            }
+        }
+
+        public string SelectedActionHiddenAttributes
+        {
+            get
+            {
+                if(null != SelectedActionsTreeView)
+                {
+                    return SelectedActionsTreeView.ViewModel.HiddenAttributes;
+                }
+                else
+                {
+                    return "";
+                }
+                
+            }
         }
 
         private Interfaces.IAction _SelectedActionsTreeView;
@@ -70,6 +131,8 @@ namespace UI__Editor.ViewModels.Menus
             UIpp = uipp;
             _actionEventAggregator = new EventAggregator();
             ActionsTreeView = new ObservableCollection<Interfaces.IAction>();
+            ActionsTreeView.Add(new Info(_eventAggregator));
+            ActionsTreeView.Add(new Info(_eventAggregator));
             ActionsTreeView.Add(new Info(_eventAggregator));
         }
 
@@ -251,6 +314,12 @@ namespace UI__Editor.ViewModels.Menus
                     NotifyOfPropertyChange(() => PreviewBackButtonVisible);
                     NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
                     NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
+                    break;
+                case "ConditionChange":
+                    NotifyOfPropertyChange(() => SelectedActionCondition);
+                    break;
+                case "AttributeChange":
+                    NotifyOfPropertyChange(() => SelectedActionHiddenAttributes);
                     break;
                 default:
                     break;

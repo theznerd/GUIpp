@@ -28,30 +28,26 @@
         <Label Margin="10,5">Title:</Label>
         <TextBox x:Name="Title" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Name:</Label>
-        <TextBox x:Name="InfoName" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Name" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Text to Display:</Label>
-        <TextBox x:Name="Content" Margin="0,5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150" Height="200" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" />
+        <TextBox x:Name="Content" Margin="0,5" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Width="150" Height="200" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto" />
         <Label Grid.Row="3" Margin="10,5">Image:</Label>
-        <TextBox x:Name="InfoImage" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Image" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="4" Margin="10,5">Info Image:</Label>
-        <TextBox x:Name="InfoInfoImage" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="InfoImage" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="5" Margin="10,5">Timeout (Seconds):</Label>
-        <TextBox x:Name="InfoTimeout" Grid.Row="5" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Timeout" Grid.Row="5" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="6" Margin="10,5">Timeout Action:</Label>
         <StackPanel Orientation="Vertical" Grid.Row="6" Grid.Column="1">
-            <ComboBox x:Name="InfoTimeoutAction" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
-                <ComboBoxItem Content="Continue" />
-                <ComboBoxItem Content="ContinueOnWarning" />
-                <ComboBoxItem Content="Custom" />
-            </ComboBox>
-            <StackPanel x:Name="InfoCustomTimeoutActionGroup" Visibility="Collapsed" Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2">
-                <TextBox x:Name="InfoCustomTimeoutAction" Margin="0,5" Width="50" />
+            <ComboBox x:Name="TimeoutAction" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" SelectedItem="{Binding SelectedTimeoutAction}" />
+            <StackPanel x:Name="CustomTimeoutActionGroup" Visibility="{Binding TimeoutActionVisibilityConverter}" Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2">
+                <TextBox x:Name="CustomTimeoutAction" Margin="0,5" Width="50" />
                 <Label VerticalContentAlignment="Center" Height="36">Return Code</Label>
             </StackPanel>
         </StackPanel>
         <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Show Back Button</CheckBox>
         <CheckBox x:Name="ShowCancel" Margin="10,5" Grid.Row="8" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
         <Label Margin="10,5" Grid.Row="9">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="9" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="9" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>
