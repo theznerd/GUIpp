@@ -192,59 +192,58 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
-    <Compile Include="Classes\ActionClasses\DefaultValues.cs" />
-    <Compile Include="Classes\ActionClasses\Info.cs" />
-    <Compile Include="Classes\ActionClasses\ErrorInfo.cs" />
-    <Compile Include="Classes\ActionClasses\ExternalCall.cs" />
-    <Compile Include="Classes\ActionClasses\FileRead.cs" />
-    <Compile Include="Classes\ActionClasses\Input.cs" />
-    <Compile Include="Classes\ActionClasses\Preflight.cs" />
-    <Compile Include="Classes\ActionClasses\RegWrite.cs" />
-    <Compile Include="Classes\ActionClasses\RegRead.cs" />
-    <Compile Include="Classes\ActionClasses\SaveItems.cs" />
-    <Compile Include="Classes\ActionClasses\Switch.cs" />
-    <Compile Include="Classes\ActionClasses\SoftwareDiscovery.cs" />
-    <Compile Include="Classes\ActionClasses\TSVarList.cs" />
-    <Compile Include="Classes\ActionClasses\TSVar.cs" />
-    <Compile Include="Classes\ActionClasses\UserAuth.cs" />
-    <Compile Include="Classes\ActionClasses\Vars.cs" />
-    <Compile Include="Classes\ActionClasses\WMIRead.cs" />
-    <Compile Include="Classes\ActionClasses\WMIWrite.cs" />
-    <Compile Include="Classes\ActionGroup.cs" />
-    <Compile Include="Classes\Actions.cs" />
-    <Compile Include="Classes\ActionClasses\AppTree.cs" />
-    <Compile Include="Classes\ActionClasses\_Template.cs" />
-    <Compile Include="Classes\Package.cs" />
-    <Compile Include="Classes\ChoiceList.cs" />
-    <Compile Include="Classes\ChoiceInput.cs" />
-    <Compile Include="Classes\Choice.cs" />
-    <Compile Include="Classes\Check.cs" />
-    <Compile Include="Classes\Case.cs" />
-    <Compile Include="Classes\CheckboxInput.cs" />
-    <Compile Include="Classes\SoftwareRef.cs" />
-    <Compile Include="Classes\Variable.cs" />
-    <Compile Include="Classes\Field.cs" />
-    <Compile Include="Classes\InputInfo.cs" />
-    <Compile Include="Classes\Match.cs" />
-    <Compile Include="Classes\Property.cs" />
-    <Compile Include="Classes\Set.cs" />
-    <Compile Include="Classes\Software.cs" />
-    <Compile Include="Classes\SoftwareGroup.cs" />
-    <Compile Include="Classes\SoftwareListRef.cs" />
-    <Compile Include="Classes\SoftwareSets.cs" />
-    <Compile Include="Classes\Text.cs" />
-    <Compile Include="Classes\TextInput.cs" />
-    <Compile Include="Classes\UIpp.cs" />
-    <Compile Include="Classes\_Template.cs" />
+    <Compile Include="Models\ActionClasses\DefaultValues.cs" />
+    <Compile Include="Models\ActionClasses\Info.cs" />
+    <Compile Include="Models\ActionClasses\ErrorInfo.cs" />
+    <Compile Include="Models\ActionClasses\ExternalCall.cs" />
+    <Compile Include="Models\ActionClasses\FileRead.cs" />
+    <Compile Include="Models\ActionClasses\Input.cs" />
+    <Compile Include="Models\ActionClasses\Preflight.cs" />
+    <Compile Include="Models\ActionClasses\RegWrite.cs" />
+    <Compile Include="Models\ActionClasses\RegRead.cs" />
+    <Compile Include="Models\ActionClasses\SaveItems.cs" />
+    <Compile Include="Models\ActionClasses\Switch.cs" />
+    <Compile Include="Models\ActionClasses\SoftwareDiscovery.cs" />
+    <Compile Include="Models\ActionClasses\TSVarList.cs" />
+    <Compile Include="Models\ActionClasses\TSVar.cs" />
+    <Compile Include="Models\ActionClasses\UserAuth.cs" />
+    <Compile Include="Models\ActionClasses\Vars.cs" />
+    <Compile Include="Models\ActionClasses\WMIRead.cs" />
+    <Compile Include="Models\ActionClasses\WMIWrite.cs" />
+    <Compile Include="Models\ActionGroup.cs" />
+    <Compile Include="Models\Actions.cs" />
+    <Compile Include="Models\ActionClasses\AppTree.cs" />
+    <Compile Include="Models\ActionClasses\_Template.cs" />
+    <Compile Include="Models\Package.cs" />
+    <Compile Include="Models\ChoiceList.cs" />
+    <Compile Include="Models\ChoiceInput.cs" />
+    <Compile Include="Models\Choice.cs" />
+    <Compile Include="Models\Check.cs" />
+    <Compile Include="Models\Case.cs" />
+    <Compile Include="Models\CheckboxInput.cs" />
+    <Compile Include="Models\SoftwareRef.cs" />
+    <Compile Include="Models\Variable.cs" />
+    <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\InputInfo.cs" />
+    <Compile Include="Models\Match.cs" />
+    <Compile Include="Models\Property.cs" />
+    <Compile Include="Models\Set.cs" />
+    <Compile Include="Models\Software.cs" />
+    <Compile Include="Models\SoftwareGroup.cs" />
+    <Compile Include="Models\SoftwareListRef.cs" />
+    <Compile Include="Models\SoftwareSets.cs" />
+    <Compile Include="Models\Text.cs" />
+    <Compile Include="Models\TextInput.cs" />
+    <Compile Include="Models\UIpp.cs" />
+    <Compile Include="Models\_Template.cs" />
     <Compile Include="Controllers\ConfigMgrScanner.cs" />
     <Compile Include="Controllers\XMLToClassModel.cs" />
     <Compile Include="Converters\AvailableApplicationsListConverter.cs" />
     <Compile Include="Interfaces\IAction.cs" />
     <Compile Include="Interfaces\IChoice.cs" />
     <Compile Include="Interfaces\IElement.cs" />
-    <Compile Include="Classes\Application.cs" />
+    <Compile Include="Models\Application.cs" />
     <Compile Include="Controllers\BrowserBehavior.cs" />
-    <Compile Include="Controllers\XMLToViewModel.cs" />
     <Compile Include="Converters\TreeViewLineConverter.cs" />
     <Compile Include="EventAggregators\ChangeUI.cs" />
     <Compile Include="EventAggregators\SendMessage.cs" />
@@ -252,39 +251,10 @@
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
-    <Compile Include="ViewModels\Menus\Actions\ActionGroupViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\AppTreeViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\CheckBoxInputViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\ChoiceInputViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\InputInfoViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\PreflightCheckViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\SoftwareDiscoveryMatchViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\SoftwareGroupViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\SoftwareRefViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\SoftwareSetViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\SwitchCaseViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\TextInputViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\UserAuthFieldViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\Children\_IChild.cs" />
-    <Compile Include="ViewModels\Menus\Actions\DefaultValuesViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\ErrorInfoViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\ExternalCallViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\FileReadViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\InfoViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\InputViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\PreflightViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\RegReadViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\RegWriteViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\SaveItemsViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\SoftwareDiscoveryViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\SwitchViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\TSVarListViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\TSVarViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\UserAuthViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\VarsViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\WMIWriteViewModel.cs" />
-    <Compile Include="ViewModels\Menus\Actions\_IAction.cs" />
-    <Compile Include="ViewModels\Menus\Actions\WMIReadViewModel.cs" />
+    <Compile Include="ViewModels\Actions\AppTreeViewModel.cs" />
+    <Compile Include="ViewModels\Actions\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Actions\_IAction.cs" />
+    <Compile Include="ViewModels\Elements\_IElement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Menus\AboutViewModel.cs" />
     <Compile Include="ViewModels\Menus\ActionsViewModel.cs" />
@@ -314,94 +284,94 @@
     <Compile Include="Views\Menus\ActionsView.xaml.cs">
       <DependentUpon>ActionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\ActionGroupView.xaml.cs">
+    <Compile Include="Views\Actions\ActionGroupView.xaml.cs">
       <DependentUpon>ActionGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\AppTreeView.xaml.cs">
+    <Compile Include="Views\Actions\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\CheckBoxInputView.xaml.cs">
+    <Compile Include="Views\Actions\Children\CheckBoxInputView.xaml.cs">
       <DependentUpon>CheckBoxInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\ChoiceInputView.xaml.cs">
+    <Compile Include="Views\Actions\Children\ChoiceInputView.xaml.cs">
       <DependentUpon>ChoiceInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\InputInfoView.xaml.cs">
+    <Compile Include="Views\Actions\Children\InputInfoView.xaml.cs">
       <DependentUpon>InputInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\PreflightCheckView.xaml.cs">
+    <Compile Include="Views\Actions\Children\PreflightCheckView.xaml.cs">
       <DependentUpon>PreflightCheckView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\SoftwareDiscoveryMatchView.xaml.cs">
+    <Compile Include="Views\Actions\Children\SoftwareDiscoveryMatchView.xaml.cs">
       <DependentUpon>SoftwareDiscoveryMatchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\SoftwareGroupView.xaml.cs">
+    <Compile Include="Views\Actions\Children\SoftwareGroupView.xaml.cs">
       <DependentUpon>SoftwareGroupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\SoftwareRefView.xaml.cs">
+    <Compile Include="Views\Actions\Children\SoftwareRefView.xaml.cs">
       <DependentUpon>SoftwareRefView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\SoftwareSetView.xaml.cs">
+    <Compile Include="Views\Actions\Children\SoftwareSetView.xaml.cs">
       <DependentUpon>SoftwareSetView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\SwitchCaseView.xaml.cs">
+    <Compile Include="Views\Actions\Children\SwitchCaseView.xaml.cs">
       <DependentUpon>SwitchCaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\TextInputView.xaml.cs">
+    <Compile Include="Views\Actions\Children\TextInputView.xaml.cs">
       <DependentUpon>TextInputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\Children\UserAuthFieldView.xaml.cs">
+    <Compile Include="Views\Actions\Children\UserAuthFieldView.xaml.cs">
       <DependentUpon>UserAuthFieldView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\DefaultValuesView.xaml.cs">
+    <Compile Include="Views\Actions\DefaultValuesView.xaml.cs">
       <DependentUpon>DefaultValuesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\ErrorInfoView.xaml.cs">
+    <Compile Include="Views\Actions\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\ExternalCallView.xaml.cs">
+    <Compile Include="Views\Actions\ExternalCallView.xaml.cs">
       <DependentUpon>ExternalCallView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\FileReadView.xaml.cs">
+    <Compile Include="Views\Actions\FileReadView.xaml.cs">
       <DependentUpon>FileReadView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\InfoView.xaml.cs">
+    <Compile Include="Views\Actions\InfoView.xaml.cs">
       <DependentUpon>InfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\InputView.xaml.cs">
+    <Compile Include="Views\Actions\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\PreflightView.xaml.cs">
+    <Compile Include="Views\Actions\PreflightView.xaml.cs">
       <DependentUpon>PreflightView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\RegReadView.xaml.cs">
+    <Compile Include="Views\Actions\RegReadView.xaml.cs">
       <DependentUpon>RegReadView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\RegWriteView.xaml.cs">
+    <Compile Include="Views\Actions\RegWriteView.xaml.cs">
       <DependentUpon>RegWriteView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\SaveItemsView.xaml.cs">
+    <Compile Include="Views\Actions\SaveItemsView.xaml.cs">
       <DependentUpon>SaveItemsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\SwitchView.xaml.cs">
+    <Compile Include="Views\Actions\SwitchView.xaml.cs">
       <DependentUpon>SwitchView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\TSVarView.xaml.cs">
+    <Compile Include="Views\Actions\TSVarView.xaml.cs">
       <DependentUpon>TSVarView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\TSVarListView.xaml.cs">
+    <Compile Include="Views\Actions\TSVarListView.xaml.cs">
       <DependentUpon>TSVarListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\UserAuthView.xaml.cs">
+    <Compile Include="Views\Actions\UserAuthView.xaml.cs">
       <DependentUpon>UserAuthView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\VarsView.xaml.cs">
+    <Compile Include="Views\Actions\VarsView.xaml.cs">
       <DependentUpon>VarsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\WMIReadView.xaml.cs">
+    <Compile Include="Views\Actions\WMIReadView.xaml.cs">
       <DependentUpon>WMIReadView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Menus\Actions\WMIWriteView.xaml.cs">
+    <Compile Include="Views\Actions\WMIWriteView.xaml.cs">
       <DependentUpon>WMIWriteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Menus\ConfigurationView.xaml.cs">
@@ -510,123 +480,123 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\ActionGroupView.xaml">
+    <Page Include="Views\Actions\ActionGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\AppTreeView.xaml">
+    <Page Include="Views\Actions\AppTreeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\CheckBoxInputView.xaml">
+    <Page Include="Views\Actions\Children\CheckBoxInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\ChoiceInputView.xaml">
+    <Page Include="Views\Actions\Children\ChoiceInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\InputInfoView.xaml">
+    <Page Include="Views\Actions\Children\InputInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\PreflightCheckView.xaml">
+    <Page Include="Views\Actions\Children\PreflightCheckView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\SoftwareDiscoveryMatchView.xaml">
+    <Page Include="Views\Actions\Children\SoftwareDiscoveryMatchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\SoftwareGroupView.xaml">
+    <Page Include="Views\Actions\Children\SoftwareGroupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\SoftwareRefView.xaml">
+    <Page Include="Views\Actions\Children\SoftwareRefView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\SoftwareSetView.xaml">
+    <Page Include="Views\Actions\Children\SoftwareSetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\SwitchCaseView.xaml">
+    <Page Include="Views\Actions\Children\SwitchCaseView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\TextInputView.xaml">
+    <Page Include="Views\Actions\Children\TextInputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\Children\UserAuthFieldView.xaml">
+    <Page Include="Views\Actions\Children\UserAuthFieldView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\DefaultValuesView.xaml">
+    <Page Include="Views\Actions\DefaultValuesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\ErrorInfoView.xaml">
+    <Page Include="Views\Actions\ErrorInfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\ExternalCallView.xaml">
+    <Page Include="Views\Actions\ExternalCallView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\FileReadView.xaml">
+    <Page Include="Views\Actions\FileReadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\InfoView.xaml">
+    <Page Include="Views\Actions\InfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\InputView.xaml">
+    <Page Include="Views\Actions\InputView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\PreflightView.xaml">
+    <Page Include="Views\Actions\PreflightView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\RegReadView.xaml">
+    <Page Include="Views\Actions\RegReadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\RegWriteView.xaml">
+    <Page Include="Views\Actions\RegWriteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\SaveItemsView.xaml">
+    <Page Include="Views\Actions\SaveItemsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\SwitchView.xaml">
+    <Page Include="Views\Actions\SwitchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\TSVarView.xaml">
+    <Page Include="Views\Actions\TSVarView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\TSVarListView.xaml">
+    <Page Include="Views\Actions\TSVarListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\UserAuthView.xaml">
+    <Page Include="Views\Actions\UserAuthView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\VarsView.xaml">
+    <Page Include="Views\Actions\VarsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\WMIReadView.xaml">
+    <Page Include="Views\Actions\WMIReadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Menus\Actions\WMIWriteView.xaml">
+    <Page Include="Views\Actions\WMIWriteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

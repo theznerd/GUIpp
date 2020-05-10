@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ma="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:src="clr-namespace:UI__Editor.Interfaces"
+             xmlns:cal="http://www.caliburnproject.org"
              xmlns:local="clr-namespace:UI__Editor.Views.Menus"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -18,7 +20,13 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="1" Margin="0,5,10,0">
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">Actions</Label>
-            <TreeView x:Name="ActionsTreeView" Width="250" Height="200" BorderThickness="1" Margin="0,0,0,5" />
+            <TreeView x:Name="ActionsTreeView" Width="250" Height="200" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type src:IAction}" ItemsSource="{Binding ActionsTreeView}">
+                        <TextBlock Text="{Binding ActionType}"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="AddButton" Margin="5,0,0,0" FontSize="14">Add</Button>
                 <Button x:Name="EditButton" Margin="5,0,0,0" FontSize="14">Edit</Button>

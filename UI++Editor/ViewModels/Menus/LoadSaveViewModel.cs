@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,14 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator = ea;
         }
 
-        public void NewButton()
+        public async void NewButton()
         {
-            _eventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("newFile", null));
+            MetroWindow appWindow = (System.Windows.Application.Current.MainWindow as MetroWindow);
+            MessageDialogResult result = await appWindow.ShowMessageAsync("Confirm", "Are you sure you want to create a new file?", MessageDialogStyle.AffirmativeAndNegative);
+            if (result.ToString() == "Affirmative")
+            {
+                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("newFile", null));
+            }
         }
 
         public void SaveButton()
@@ -31,13 +38,18 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
-        public void LoadButton()
+        public async void LoadButton()
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "XML Files (*.xml)|*.xml";
-            if(ofd.ShowDialog() == true)
+            MetroWindow appWindow = (System.Windows.Application.Current.MainWindow as MetroWindow);
+            MessageDialogResult result = await appWindow.ShowMessageAsync("Confirm", "You may have changes which have not been saved.\r\nAre you sure you want to load a new file?", MessageDialogStyle.AffirmativeAndNegative);
+            if (result.ToString() == "Affirmative")
             {
-                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("loadFile", ofd.FileName));
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "XML Files (*.xml)|*.xml";
+                if (ofd.ShowDialog() == true)
+                {
+                    _eventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("loadFile", ofd.FileName));
+                }
             }
         }
     }

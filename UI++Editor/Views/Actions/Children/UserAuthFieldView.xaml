@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="UI__Editor.Views.Actions.Children.UserAuthFieldView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UI__Editor.Views.Actions.Children"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Margin="10,5,5,5">Name:</Label>
+        <ComboBox x:Name="FieldName" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
+            <ComboBoxItem Content="Username" />
+            <ComboBoxItem Content="Password" />
+            <ComboBoxItem Content="Domain" />
+        </ComboBox>
+        <Label Margin="10,5,5,5" Grid.Row="1">Hint:</Label>
+        <TextBox x:Name="FieldHint" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="2">Domain List:</Label>
+        <TextBox x:Name="FieldDomainList" Grid.Row="2" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <Label Margin="10,5" Grid.Row="3">Prompt:</Label>
+        <TextBox x:Name="FieldPrompt" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <Label Margin="10,5" Grid.Row="4">Question:</Label>
+        <TextBox x:Name="FieldQuestion" Grid.Row="4" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <CheckBox x:Name="ReadOnly" Margin="10,5" Grid.Row="5" IsChecked="False" Grid.ColumnSpan="3">Read Only (Domain)</CheckBox>
+        <Label Margin="10,5" Grid.Row="6">RegEx:</Label>
+        <TextBox x:Name="FieldRegEx" Grid.Row="6" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <Label Margin="10,5" Grid.Row="7">Condition:</Label>
+        <TextBox x:Name="ConditionString" Grid.Row="7" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+    </Grid>
+</UserControl>

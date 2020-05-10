@@ -1,10 +1,13 @@
 ﻿using Caliburn.Micro;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
 using System.Xml;
 
@@ -91,16 +94,45 @@ namespace UI__Editor.ViewModels.Menus
         {
             CurrentlyScanning = true;
             ProgressText = "Scanning " + SettingsCMFQDN + " via WMI...";
+            var dispatcher = Application.Current.Dispatcher;
+
             Task.Run(() => {
-                XmlDocument softwareList = Controllers.ConfigMgrScanner.GenerateSoftwareList(SettingsCMFQDN, SettingsSiteCode);
-                ProgressText = "Saving updated software list...";
-                if(!Directory.Exists(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++"))
+                try
                 {
-                    Directory.CreateDirectory(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++");
+                    XmlDocument softwareList = Controllers.ConfigMgrScanner.GenerateSoftwareList(SettingsCMFQDN, SettingsSiteCode);
+                    ProgressText = "Saving updated software list...";
+                    if (!Directory.Exists(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++"))
+                    {
+                        Directory.CreateDirectory(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++");
+                    }
+                    softwareList.Save(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++\\SynchronizedSoftware.xml");
                 }
-                softwareList.Save(Environment.GetEnvironmentVariable("ProgramData") + "\\(G)UI++\\SynchronizedSoftware.xml");
+                catch(UnauthorizedAccessException)
+                {
+                    dispatcher.BeginInvoke(DispatcherPriority.Render, new System.Action(() => 
+                    { 
+                        (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("Error!", "Unauthorized access exception.\r\nDo you have the correct permissions for WMI to " + SettingsCMFQDN + "?"); 
+                    }));
+                    // System.Windows.MessageBox.Show("Unauthorized access exception.\r\nDo you have the correct permissions for WMI to " + SettingsCMFQDN + "?");
+                }
+                catch(System.Runtime.InteropServices.COMException)
+                {
+                    dispatcher.BeginInvoke(DispatcherPriority.Render, new System.Action(() =>
+                    {
+                        (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("Error!", "Cannot connect to " + SettingsCMFQDN + "\r\nCan you ping the server?");
+                    }));
+                    // System.Windows.MessageBox.Show("Cannot connect to " + SettingsCMFQDN + "\r\nCan you ping the server?");
+                }
+                catch(Exception ex)
+                {
+                    dispatcher.BeginInvoke(DispatcherPriority.Render, new System.Action(() =>
+                    {
+                        (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("Error!", "Unknown Error.\r\n\r\nException Type: " + ex.GetType() + "\r\nMessage: " + ex.Message);
+                    }));
+                    // System.Windows.MessageBox.Show("Unknown Error.\r\n\r\nException Type: " + ex.GetType() + "\r\nMessage: " + ex.Message);
+                }
                 CurrentlyScanning = false;
-            });
+            });            
         }
 
         public void SaveSettings()

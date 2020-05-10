@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace UI__Editor.Interfaces
 {
     public interface IAction : IElement
     {
-        string Type { get; }
+        string ActionType { get; }
+        ViewModels.Actions.IAction ViewModel { get; set; }
+        IEventAggregator EventAggregator { get; set; }
     }
 }

@@ -4,18 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using UI__Editor.Views.Menus.Actions;
+using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
     class InfoViewModel : PropertyChangedBase, IPreview
     {
+        public IEventAggregator EventAggregator { get; set; }
         public bool PreviewRefreshButtonVisible { get { return false; } }
-        public bool PreviewBackButtonVisible { get { return false; } }
-        public bool PreviewCancelButtonVisible { get { return true; } }
+        private bool _PreviewBackButtonVisible;
+        public bool PreviewBackButtonVisible
+        {
+            get { return _PreviewBackButtonVisible; }
+            set
+            {
+                _PreviewBackButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
+        private bool _PreviewCancelButtonVisible;
+        public bool PreviewCancelButtonVisible
+        {
+            get { return _PreviewCancelButtonVisible; }
+            set
+            {
+                _PreviewCancelButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
         public bool PreviewAcceptButtonVisible { get { return true; } }
 
-        private string title = "Welcome";
+        private string title;
         public string Title
         {
             get { return title; }
@@ -26,7 +47,7 @@ namespace UI__Editor.ViewModels.Preview
             }
         }
 
-        private string _InfoViewText = "UI++ 2.0 includes all of the power of UI++ 1.0 combined with UI App Tree!<br>It's UI, interactive, evolved, and customized.<br><br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe";
+        private string _InfoViewText;
         public string InfoViewText
         {
             get { return _InfoViewText; }

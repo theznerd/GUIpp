@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using UI__Editor.Views.Menus.Actions;
+using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
     class UserAuthViewModel : PropertyChangedBase, IPreview
     {
+        public IEventAggregator EventAggregator { get; set; }
         public bool PreviewRefreshButtonVisible { get { return false; } }
         public bool PreviewBackButtonVisible { get { return false; } }
         public bool PreviewCancelButtonVisible { get { return true; } }

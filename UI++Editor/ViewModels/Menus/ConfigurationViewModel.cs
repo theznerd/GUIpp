@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI__Editor.Classes;
+using UI__Editor.Models;
 
 namespace UI__Editor.ViewModels.Menus
 {
@@ -24,7 +24,7 @@ namespace UI__Editor.ViewModels.Menus
             ConfigTitle = UIpp.Title;
             ConfigRootXMLPath = UIpp.RootXMLPath;
             ConfigIcon = UIpp.Icon;
-            ConfigColor = UIpp.Color;
+            ConfigColor = string.IsNullOrEmpty(UIpp.Color) ? "#002147" : UIpp.Color;
             ConfigAlwaysOnTop = (null != UIpp.AlwaysOnTop) ? (bool)UIpp.AlwaysOnTop : true;
             ConfigDialogSideBar = (null != UIpp.DialogSidebar) ? (bool)UIpp.DialogSidebar : true;
             ConfigFlatView = (null != UIpp.Flat) ? (bool)UIpp.Flat : false;

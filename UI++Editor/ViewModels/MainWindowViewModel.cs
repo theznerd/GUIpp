@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Threading.Tasks;
-using UI__Editor.Classes;
+using UI__Editor.Models;
 using UI__Editor.Controllers;
 using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace UI__Editor.ViewModels
 {
@@ -124,11 +126,9 @@ namespace UI__Editor.ViewModels
             switch (message.Type)
             {
                 case "newFile":
-                    // to add - "Are You Sure"
                     NewXML();
                     break;
                 case "loadFile":
-                    // to add - "Are You Sure" if changes not saved
                     LoadXML((string)message.Data);
                     break;
                 case "saveFile":

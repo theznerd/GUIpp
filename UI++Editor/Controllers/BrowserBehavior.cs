@@ -30,8 +30,15 @@ namespace UI__Editor.Controllers
         static void OnHtmlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             WebBrowser wb = d as WebBrowser;
-            if (wb != null)
+            if (wb != null && !string.IsNullOrEmpty(e.NewValue as string))
+            {
                 wb.NavigateToString(e.NewValue as string);
+            }
+            else
+            {
+                wb.NavigateToString(" ");
+            }
+                
         }
     }
 }

@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UI__Editor.Classes;
+using UI__Editor.Models;
+using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels;
 
 namespace UI__Editor.ViewModels.Menus
 {
-    public class ActionsViewModel : PropertyChangedBase, IHandle<EventAggregators.ChangeUI>
+    public class ActionsViewModel : PropertyChangedBase, IHandle<EventAggregators.ChangeUI>, IHandle<EventAggregators.SendMessage>
     {
         private UIpp UIpp;
 
@@ -27,33 +28,62 @@ namespace UI__Editor.ViewModels.Menus
             InfoWithLogo = 413
         }
 
-        private ObservableCollection<Actions.IAction> _Actions;
-        public ObservableCollection<Actions.IAction> Actions
+        private ObservableCollection<Interfaces.IAction> _ActionsTreeView;
+        public ObservableCollection<Interfaces.IAction> ActionsTreeView
         {
-            get { return _Actions; }
+            get { return _ActionsTreeView; }
             set
             {
-                _Actions = value;
-                NotifyOfPropertyChange(() => Actions);
+                _ActionsTreeView = value;
+                NotifyOfPropertyChange(() => ActionsTreeView);
             }
         }
 
-        private IEventAggregator _eventAggregator;
+        public void ActionsTreeViewChanged(Interfaces.IAction selectedAction)
+        {
+            SelectedActionsTreeView = selectedAction;
+        }
+
+        private Interfaces.IAction _SelectedActionsTreeView;
+        public Interfaces.IAction SelectedActionsTreeView
+        {
+            get { return _SelectedActionsTreeView; }
+            set
+            {
+                _SelectedActionsTreeView = value;
+                NotifyOfPropertyChange(() => SelectedActionsTreeView);
+                NotifyOfPropertyChange(() => CanEditButton);
+                NotifyOfPropertyChange(() => PreviewBox);
+                NotifyOfPropertyChange(() => PreviewRefreshButtonVisible);
+                NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+                NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+                NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
+            }
+        }
+
+        private IEventAggregator _eventAggregator = new EventAggregator();
+        private IEventAggregator _actionEventAggregator;
         public ActionsViewModel(IEventAggregator ea, UIpp uipp)
         {
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
+            _actionEventAggregator = new EventAggregator();
+            ActionsTreeView = new ObservableCollection<Interfaces.IAction>();
+            ActionsTreeView.Add(new Info(_eventAggregator));
         }
 
-        private object _previewBox = new Preview.UserAuthViewModel();
         public object PreviewBox
         {
-            get { return _previewBox; }
-            set
-            {
-                _previewBox = value;
-                NotifyOfPropertyChange(() => PreviewBox);
+            get {
+                if(null != SelectedActionsTreeView)
+                {
+                    return SelectedActionsTreeView.ViewModel.PreviewViewModel;
+                }
+                else
+                {
+                    return new Preview._NoPreviewViewModel();
+                }
             }
         }
 
@@ -147,12 +177,22 @@ namespace UI__Editor.ViewModels.Menus
 
         }
 
+        public bool CanEditButton
+        {
+            get
+            {
+                return null != SelectedActionsTreeView;
+            }
+        }
+
         public void EditButton()
         {
-            var vm = new Actions.DefaultValuesViewModel();
-            FlyoutContent = vm;
-            FlyoutTitle = vm.ActionTitle;
-            ActionsFlyOutShown = true;
+            if(null != SelectedActionsTreeView)
+            {
+                FlyoutContent = SelectedActionsTreeView.ViewModel;
+                FlyoutTitle = SelectedActionsTreeView.ViewModel.ActionTitle;
+                ActionsFlyOutShown = true;
+            }
         }
 
         public void DeleteButton()
@@ -200,6 +240,21 @@ namespace UI__Editor.ViewModels.Menus
         public string PreviewAcceptButtonVisible
         {
             get { return (PreviewBox as Preview.IPreview).PreviewAcceptButtonVisible ? "Visible" : "Collapsed"; }
+        }
+
+        public void Handle(EventAggregators.SendMessage message)
+        {
+            switch(message.Type)
+            {
+                case "ButtonChange":
+                    NotifyOfPropertyChange(() => PreviewRefreshButtonVisible);
+                    NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+                    NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+                    NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void Handle(EventAggregators.ChangeUI change)

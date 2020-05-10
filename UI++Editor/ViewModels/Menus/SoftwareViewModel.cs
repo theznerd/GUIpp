@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Xml;
 using Caliburn.Micro;
-using UI__Editor.Classes;
+using UI__Editor.Models;
 using UI__Editor.Interfaces;
 
 namespace UI__Editor.ViewModels.Menus
