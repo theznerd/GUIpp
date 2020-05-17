@@ -10,6 +10,10 @@ namespace UI__Editor.Models
 {
     public class CheckboxInput : IInput, IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Checkbox Input"; } }
         public string CheckedValue { get; set; } = "True";
         public string Default { get; set; }
         public string Question { get; set; } // required

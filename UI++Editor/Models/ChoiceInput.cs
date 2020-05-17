@@ -12,6 +12,10 @@ namespace UI__Editor.Models
 {
     public class ChoiceInput : IInput, IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Choice Input"; } }
         public string AlternateValue { get; set; }
         public bool AutoComplete { get; set; } = false;
         public string Default { get; set; }

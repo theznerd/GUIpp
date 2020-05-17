@@ -14,6 +14,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "Vars";
         public string Direction { get; set; } // default is Save | Save/Load
         public string Filename { get; set; } // defaults to %temp%\ui++vars.dat

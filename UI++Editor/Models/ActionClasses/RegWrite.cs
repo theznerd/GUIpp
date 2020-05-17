@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "RegWrite";
         public string Default { get; set; }
         public string Hive { get; set; } // Default is HKLM

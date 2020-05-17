@@ -10,6 +10,10 @@ namespace UI__Editor.Models
 {
     public class TextInput : IElement, IInput
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Text Input"; } }
         public bool? ADValidate { get; set; } // default is false
         public string Default { get; set; }
         public string ForceCase { get; set; }

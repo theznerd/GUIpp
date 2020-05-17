@@ -8,16 +8,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel Orientation="Vertical">
-        <CheckBox x:Name="ADefaultValuesShowProgress" IsChecked="True" Margin="10,5">Show Progress Dialog</CheckBox>
+        <CheckBox x:Name="ShowProgress" Margin="10,5">Show Progress Dialog</CheckBox>
         <Label Margin="10,5,10,0">Value Types:</Label>
-        <ListBox x:Name="ADefaultValuesValueTypes" SelectionMode="Multiple" Height="103" Margin="10,0,10,5" BorderThickness="1">
+        <ListBox ItemsSource="{Binding ValueTypesList}" SelectionMode="Multiple" Height="103" Margin="10,0,10,5" BorderThickness="1" cal:Message.Attach="[Event SelectionChanged] = [Action SelectedValueTypeListChanged]">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,5">
-                        <StackPanel>
-                            <TextBlock Text="{Binding Path=Name}" />
-                        </StackPanel>
-                    </Border>
+                    <TextBlock Text="{Binding Name}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
@@ -28,7 +24,7 @@
         </ListBox>
         <StackPanel Orientation="Horizontal">
             <Label Margin="10,5">Condition:</Label>
-            <TextBox x:Name="ConditionString" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+            <TextBox x:Name="Condition" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
         </StackPanel>
     </StackPanel>
 </UserControl>

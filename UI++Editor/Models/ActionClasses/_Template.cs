@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "";
         public bool? ShowBack { get; set; }
         public bool? ShowCancel { get; set; }

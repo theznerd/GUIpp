@@ -11,6 +11,9 @@ namespace UI__Editor.Models
 {
     public class UIpp : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "UI++ Element"; } }
         public bool? AlwaysOnTop { get; set; }
         public string Color { get; set; }
         public bool? DialogSidebar { get; set; }

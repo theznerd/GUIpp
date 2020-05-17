@@ -14,11 +14,18 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "FileRead";
-        public bool? DeleteLine { get; set; }
+        public bool? DeleteLine { get; set; } = true;
         public string FileName { get; set; } // required
         public string Variable { get; set; } // required
         public string Condition { get; set; }
+
+        public FileRead(IEventAggregator ea)
+        {
+            EventAggregator = ea;
+            ViewModel = new ViewModels.Actions.FileReadViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

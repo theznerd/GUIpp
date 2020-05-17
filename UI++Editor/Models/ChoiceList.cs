@@ -13,6 +13,9 @@ namespace UI__Editor.Models
 {
     public class ChoiceList : IElement, IChoice
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Choice List"; } }
         public string AlternateValueList { get; set; }
         public string OptionList { get; set; }
         public string ValueList { get; set; }

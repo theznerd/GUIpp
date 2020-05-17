@@ -14,15 +14,22 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Input";
-        public bool? ShowBack { get; set; } // default is false
-        public bool? ShowCancel { get; set; } // default is false
-        public bool? ADValidate { get; set; } // default is false
+        public bool? ShowBack { get; set; } = false;
+        public bool? ShowCancel { get; set; } = false;
+        public bool? ADValidate { get; set; } = false;
         public string Name { get; set; }
         public string Size { get; set; } // default is Regular | Regular, Tall
         public string Title { get; set; }
-        public ObservableCollection<IInput> Inputs { get; set; }
+        public ObservableCollection<IInput> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public Input(IEventAggregator ea)
+        {
+            EventAggregator = ea;
+            ViewModel = new ViewModels.Actions.InputViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -80,7 +87,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (IInput input in Inputs)
+            foreach (IInput input in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(input.GenerateXML(), true);
                 output.AppendChild(importNode);

@@ -14,5 +14,6 @@ namespace UI__Editor.ViewModels.Preview
         public bool PreviewBackButtonVisible { get { return false; } }
         public bool PreviewCancelButtonVisible { get { return false; } }
         public bool PreviewAcceptButtonVisible { get { return false; } }
+        public string WindowHeight { get; set; } = "Regular";
     }
 }

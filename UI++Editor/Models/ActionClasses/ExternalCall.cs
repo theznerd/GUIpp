@@ -13,11 +13,18 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "ExternalCall";
         public int? MaxRunTime { get; set; }
         public string Title { get; set; } // Shown in log and progress bar
         public string Content { get; set; }
         public string Condition { get; set; }
+
+        public ExternalCall(IEventAggregator ea)
+        {
+            EventAggregator = ea;
+            ViewModel = new ViewModels.Actions.ExternalCallViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

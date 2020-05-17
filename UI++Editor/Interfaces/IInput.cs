@@ -8,6 +8,6 @@ namespace UI__Editor.Interfaces
 {
     public interface IInput : IElement
     {
-
+        ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
     }
 }

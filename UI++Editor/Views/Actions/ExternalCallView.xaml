@@ -21,12 +21,12 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Title:</Label>
-        <TextBox x:Name="ExternalCallTitle" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Title" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Command Line:</Label>
-        <TextBox x:Name="ExternalCallData" Margin="0,5" TextWrapping="Wrap" Height="75" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="CommandLine" Margin="0,5" TextWrapping="Wrap" Height="75" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Max Runtime:</Label>
-        <TextBox x:Name="ExternalCallMaxRuntime" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="MaxRuntime" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="3">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

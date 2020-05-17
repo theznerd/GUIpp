@@ -251,8 +251,15 @@
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
+    <Compile Include="ViewModels\Actions\ActionGroupViewModel.cs" />
     <Compile Include="ViewModels\Actions\AppTreeViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\_IInput.cs" />
+    <Compile Include="ViewModels\Actions\DefaultValuesViewModel.cs" />
+    <Compile Include="ViewModels\Actions\ErrorInfoViewModel.cs" />
+    <Compile Include="ViewModels\Actions\FileReadViewModel.cs" />
+    <Compile Include="ViewModels\Actions\ExternalCallViewModel.cs" />
     <Compile Include="ViewModels\Actions\InfoViewModel.cs" />
+    <Compile Include="ViewModels\Actions\InputViewModel.cs" />
     <Compile Include="ViewModels\Actions\_IAction.cs" />
     <Compile Include="ViewModels\Elements\_IElement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

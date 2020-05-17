@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "TSVar";
         public string Variable { get; set; } // required - could be named either Name or Variable, rename if Name
         public bool? DontEval { get; set; } // default is false

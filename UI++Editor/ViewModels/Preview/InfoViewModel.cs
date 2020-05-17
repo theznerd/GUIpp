@@ -12,6 +12,7 @@ namespace UI__Editor.ViewModels.Preview
     class InfoViewModel : PropertyChangedBase, IPreview
     {
         public IEventAggregator EventAggregator { get; set; }
+        public string WindowHeight { get; set; } = "Regular";
         public bool PreviewRefreshButtonVisible { get { return false; } }
         private bool _PreviewBackButtonVisible;
         public bool PreviewBackButtonVisible

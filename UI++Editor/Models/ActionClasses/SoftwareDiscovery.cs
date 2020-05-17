@@ -14,6 +14,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "SoftwareDiscovery";
         public ObservableCollection<Match> Matches { get; set; }
         public string Condition { get; set; }

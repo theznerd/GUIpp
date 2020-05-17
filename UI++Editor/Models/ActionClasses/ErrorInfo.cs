@@ -13,14 +13,21 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "ErrorInfo";
-        public bool? ShowBack { get; set; }
+        public bool? ShowBack { get; set; } = false;
         public string Name { get; set; }
         public string Image { get; set; }
         public string InfoImage { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
         public string Condition { get; set; }
+
+        public ErrorInfo(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.ErrorInfoViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

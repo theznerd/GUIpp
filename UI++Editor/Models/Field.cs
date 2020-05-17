@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class Field : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Field"; } }
         public string Name { get; set; } // required - must be Username, Password, or Domain
         public string Hint { get; set; }
         public string List { get; set; }

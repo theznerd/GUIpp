@@ -14,6 +14,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "WMIWrite";
         public string Class { get; set; } // required
         public string Namespace { get; set; } // default is root\cimv2

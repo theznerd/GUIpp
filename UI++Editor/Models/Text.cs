@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class Text : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Text"; } }
         public string Type { get; set; }
         public string Value { get; set; }
 

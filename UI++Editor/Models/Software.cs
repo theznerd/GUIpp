@@ -11,6 +11,9 @@ namespace UI__Editor.Models
 {
     public class Software : IElement, IRootElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Software"; } }
         public string RootElementType { get; } = "Software";
         public ObservableCollection<ISoftware> Softwares { get; set; }
 

@@ -11,6 +11,7 @@ namespace UI__Editor.ViewModels.Preview
     class PreflightViewModel : PropertyChangedBase, IPreview
     {
         public IEventAggregator EventAggregator { get; set; }
+        public string WindowHeight { get; set; } = "Regular";
         public bool PreviewRefreshButtonVisible { get { return false; } }
         public bool PreviewBackButtonVisible { get { return false; } }
         public bool PreviewCancelButtonVisible { get { return true; } }

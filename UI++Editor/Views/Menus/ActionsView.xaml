@@ -17,41 +17,36 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="0,5,10,0">
-            <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">Actions</Label>
-            <TreeView x:Name="ActionsTreeView" Width="250" Height="200" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" >
+        <Grid Grid.Column="1" Margin="0,5,10,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height=".5*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">UI++ Steps</Label>
+            <TreeView x:Name="ActionsTreeView" Grid.Row="1" Width="250" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" >
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type src:IAction}" ItemsSource="{Binding ActionsTreeView}">
-                        <TextBlock Text="{Binding ActionType}"/>
+                    <HierarchicalDataTemplate DataType="{x:Type src:IElement}" ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding ActionType}" />
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
             </TreeView>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="AddButton" Margin="5,0,0,0" FontSize="14">Add</Button>
                 <Button x:Name="EditButton" Margin="5,0,0,0" FontSize="14">Edit</Button>
                 <Button x:Name="DeleteButton" Margin="5,0,0,0" FontSize="14">Delete</Button>
             </StackPanel>
-            <StackPanel x:Name="SubItemsStackPanel" Visibility="Visible">
-                <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">Inputs</Label>
-                <TreeView x:Name="InputsTreeView" Width="250" Height="200" BorderThickness="1" Margin="0,0,0,5" />
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="InputsAddButton" Margin="5,0,0,0" FontSize="14">Add</Button>
-                    <Button x:Name="InputsEditButton" Margin="5,0,0,0" FontSize="14">Edit</Button>
-                    <Button x:Name="InputsDeleteButton" Margin="5,0,0,0" FontSize="14">Delete</Button>
-                </StackPanel>
+            <Label Grid.Row="3" FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center" Visibility="{Binding SubElementsVisibliltyConverter}">Step Sub Elements</Label>
+            <TreeView Grid.Row="4" x:Name="InputsTreeView" Width="250" BorderThickness="1" Margin="0,0,0,5" Visibility="{Binding SubElementsVisibliltyConverter}" />
+            <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding SubElementsVisibliltyConverter}">
+                <Button x:Name="InputsAddButton" Margin="5,0,0,0" FontSize="14">Add</Button>
+                <Button x:Name="InputsEditButton" Margin="5,0,0,0" FontSize="14">Edit</Button>
+                <Button x:Name="InputsDeleteButton" Margin="5,0,0,0" FontSize="14">Delete</Button>
             </StackPanel>
-            <!-- DISABLE FOR NOW - NOT NEEDED IF USING TREEVIEW
-            <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">Action Groups</Label>
-            <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
-                <ListBox Width="250" Height="100" BorderThickness="1" Margin="5"></ListBox>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="GroupsAddButton" Margin="5" FontSize="14">Add</Button>
-                    <Button x:Name="GroupsEditButton" Margin="5" FontSize="14">Edit</Button>
-                    <Button x:Name="GroupsDeleteButton" Margin="5" FontSize="14">Delete</Button>
-                </StackPanel>
-            </StackPanel>
-            -->
-        </StackPanel>
+        </Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -59,8 +54,8 @@
                 <RowDefinition Height=".4*" />
             </Grid.RowDefinitions>
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="30" HorizontalAlignment="Center">Action Preview</Label>
-            <ScrollViewer Margin="20" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-                <Grid x:Name="ActionPreview" VerticalAlignment="Center" Width="{Binding Path=WindowWidth, Mode=OneWay}" Height="413">
+            <ScrollViewer Margin="20" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible">
+                <Grid x:Name="ActionPreview" VerticalAlignment="Center" Width="{Binding Path=WindowWidth, Mode=OneWay}" Height="{Binding Path=WindowHeight, Mode=OneWay}">
                     <Border x:Name="MaskBorder" Margin="0" CornerRadius="{Binding ElementName=PreviewBorder, Path=CornerRadius}" BorderThickness="1" BorderBrush="White" Background="White" />
                     <Grid Margin="0">
                         <Grid.OpacityMask>

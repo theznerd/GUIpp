@@ -21,11 +21,11 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">FileName:</Label>
-        <TextBox x:Name="FileReadFileName" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="FileName" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Variable:</Label>
-        <TextBox x:Name="FileReadVariable" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <CheckBox x:Name="FileReadDeleteLine" Margin="10,5" Grid.Row="2" Grid.ColumnSpan="3">Delete Line after Read</CheckBox>
+        <TextBox x:Name="Variable" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <CheckBox x:Name="DeleteLine" Margin="10,5" Grid.Row="2" Grid.ColumnSpan="3">Delete Line after Read</CheckBox>
         <Label Margin="10,5" Grid.Row="3">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

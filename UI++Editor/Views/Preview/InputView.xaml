@@ -12,31 +12,18 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,0">Actions!</Label>
-        <Grid Grid.Row="1" Margin="25,0,50,0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <UserControl x:Name="Action1" Grid.Column="0" />
-            <UserControl x:Name="Action2" Grid.Column="1" />
-            <UserControl x:Name="Action3" Grid.Column="2" />
-            <UserControl x:Name="Action4" Grid.Column="3" />
-            <UserControl x:Name="Action5" Grid.Column="4" />
-            <UserControl x:Name="Action6" Grid.Column="5" />
-            <UserControl x:Name="Action7" Grid.Column="6" />
-            <UserControl x:Name="Action8" Grid.Column="7" />
-            <UserControl x:Name="Action9" Grid.Column="8" />
-        </Grid>
+        <Label x:Name="Title" FontSize="32" Margin="5,8,10,0" />
+        <ItemsControl Grid.Row="1" Margin="25,0,50,0">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!-- User Control -->
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

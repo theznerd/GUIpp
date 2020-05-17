@@ -11,6 +11,10 @@ namespace UI__Editor.Models
 {
     public class Application : PropertyChangedBase, IElement, ISoftware
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public string ActionType { get { return "Application"; } }
+        public bool HasSubChildren { get { return false; } }
+
         private string _Id;
         public string Id // required
         {

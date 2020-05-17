@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class SoftwareRef : IElement, ISoftwareRef
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Software Ref"; } }
         public string Id { get; set; } // required
         public bool? Hidden { get; set; } // default is false
         public bool? Default { get; set; } // default is false

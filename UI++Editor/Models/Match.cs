@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class Match : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Match"; } }
         public string DisplayName { get; set; } // required
         public string Variable { get; set; } // required
         public string Version { get; set; }

@@ -5,9 +5,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels;
+using UI__Editor.ViewModels.Preview;
 
 namespace UI__Editor.ViewModels.Menus
 {
@@ -23,14 +25,14 @@ namespace UI__Editor.ViewModels.Menus
 
         private enum WindowHeights
         {
-            Normal = 327,
+            Regular = 327,
             Tall = 500,
             ExtraTall = 672,
             InfoWithLogo = 413
         }
 
-        private ObservableCollection<Interfaces.IAction> _ActionsTreeView;
-        public ObservableCollection<Interfaces.IAction> ActionsTreeView
+        private ObservableCollection<Interfaces.IElement> _ActionsTreeView;
+        public ObservableCollection<Interfaces.IElement> ActionsTreeView
         {
             get { return _ActionsTreeView; }
             set
@@ -40,13 +42,29 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
-        public void ActionsTreeViewChanged(Interfaces.IAction selectedAction)
+        public string SubElementsVisibliltyConverter
+        {
+            get
+            {
+                if(null != SelectedActionsTreeView && SelectedActionsTreeView.HasSubChildren)
+                {
+                    return "Visible";
+                }
+                else
+                {
+                    return "Hidden";
+                }
+            }
+        }
+
+        public void ActionsTreeViewChanged(Interfaces.IElement selectedAction)
         {
             SelectedActionsTreeView = selectedAction;
             NotifyOfPropertyChange(() => SelectedActionName);
             NotifyOfPropertyChange(() => SelectedActionCondition);
             NotifyOfPropertyChange(() => SelectedActionHiddenAttributes);
             NotifyOfPropertyChange(() => InfoPaneVisibilityConverter);
+            NotifyOfPropertyChange(() => SubElementsVisibliltyConverter);
         }
 
         public string SelectedActionName
@@ -105,8 +123,8 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
-        private Interfaces.IAction _SelectedActionsTreeView;
-        public Interfaces.IAction SelectedActionsTreeView
+        private Interfaces.IElement _SelectedActionsTreeView;
+        public Interfaces.IElement SelectedActionsTreeView
         {
             get { return _SelectedActionsTreeView; }
             set
@@ -119,6 +137,7 @@ namespace UI__Editor.ViewModels.Menus
                 NotifyOfPropertyChange(() => PreviewBackButtonVisible);
                 NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
                 NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
+                NotifyOfPropertyChange(() => WindowHeight);
             }
         }
 
@@ -130,13 +149,18 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
             _actionEventAggregator = new EventAggregator();
-            ActionsTreeView = new ObservableCollection<Interfaces.IAction>();
-            ActionsTreeView.Add(new Info(_eventAggregator));
-            ActionsTreeView.Add(new Info(_eventAggregator));
-            ActionsTreeView.Add(new Info(_eventAggregator));
+            ActionsTreeView = new ObservableCollection<Interfaces.IElement>();
+            ActionGroup ag = new ActionGroup(_eventAggregator);
+            ag.Children.Add(new DefaultValues(_eventAggregator));
+            ag.Children.Add(new ErrorInfo(_eventAggregator));
+            ag.Children.Add(new ExternalCall(_eventAggregator));
+            ag.Children.Add(new FileRead(_eventAggregator));
+            ag.Children.Add(new Info(_eventAggregator));
+            ag.Children.Add(new Input(_eventAggregator));
+            ActionsTreeView.Add(ag);
         }
 
-        public object PreviewBox
+        public IPreview PreviewBox
         {
             get {
                 if(null != SelectedActionsTreeView)
@@ -203,6 +227,14 @@ namespace UI__Editor.ViewModels.Menus
         public int WindowWidth
         {
             get { return ShowSideBar ? (int)WindowWidths.WithSidebar : (int)WindowWidths.WithoutSidebar; }
+        }
+
+        public int WindowHeight
+        {
+            get
+            {
+                return (int)Enum.Parse(typeof(WindowHeights), PreviewBox.WindowHeight, true);
+            }
         }
 
         public string CollapseSideBar
@@ -320,6 +352,9 @@ namespace UI__Editor.ViewModels.Menus
                     break;
                 case "AttributeChange":
                     NotifyOfPropertyChange(() => SelectedActionHiddenAttributes);
+                    break;
+                case "SizeChange":
+                    NotifyOfPropertyChange(() => WindowHeight);
                     break;
                 default:
                     break;

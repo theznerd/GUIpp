@@ -10,6 +10,10 @@ namespace UI__Editor.Models
 {
     public class InputInfo : IElement, IInput
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Input Info"; } }
         public string Color { get; set; }
         public int NumberOfLines { get; set; } = 1; // 1-2
         public string Content { get; set; } 

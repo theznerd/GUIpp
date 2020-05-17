@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class Variable : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Variable"; } }
         public string Name { get; set; } // required
         public bool DontEval { get; set; } // default is false
 

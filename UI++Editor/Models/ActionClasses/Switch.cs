@@ -14,6 +14,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Switch";
         public bool? DontEval { get; set; } // default is false
         public string OnValue { get; set; } // required

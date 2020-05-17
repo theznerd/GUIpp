@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class _Template : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return ""; } }
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

@@ -15,6 +15,12 @@ namespace UI__Editor
     {
         public App()
         {
+            string[] cla = Environment.GetCommandLineArgs();
+            if(cla.Where(i => i.ToLower().Contains("tomanytalking")).Count() > 0)
+            {
+                System.Diagnostics.Process.Start("https://www.youtube.com/watch?v=KN4tfKQqtVs&lc=Ugwq5c0-yg7KoHwX-WN4AaABAg");
+                Current.Shutdown(0);
+            }
             InitializeComponent();
         }
     }

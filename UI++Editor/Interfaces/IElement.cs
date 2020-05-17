@@ -9,6 +9,9 @@ namespace UI__Editor.Interfaces
 {
     public interface IElement
     {
+        string ActionType { get; }
+        bool HasSubChildren { get; }
+        ViewModels.Actions.IAction ViewModel { get; set; }
         XmlNode GenerateXML();
     }
 }

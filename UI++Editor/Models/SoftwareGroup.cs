@@ -11,6 +11,9 @@ namespace UI__Editor.Models
 {
     public class SoftwareGroup : IElement, ISoftwareRef
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Software Group"; } }
         public bool? Default { get; set; } // default is false
         public string Id { get; set; } // required
         public string Label { get; set; } // required

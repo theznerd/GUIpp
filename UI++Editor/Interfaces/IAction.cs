@@ -9,8 +9,6 @@ namespace UI__Editor.Interfaces
 {
     public interface IAction : IElement
     {
-        string ActionType { get; }
-        ViewModels.Actions.IAction ViewModel { get; set; }
         IEventAggregator EventAggregator { get; set; }
     }
 }

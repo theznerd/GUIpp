@@ -10,6 +10,9 @@ namespace UI__Editor.Models
 {
     public class SoftwareListRef : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Software List Ref"; } }
         public string Id { get; set; } // required
 
         public XmlNode GenerateXML()

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,8 +12,13 @@ namespace UI__Editor.Models
 {
     public class Actions : IElement, IRootElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IEventAggregator EventAggregator { get; set; }
+        public bool HasSubChildren { get { return false; } }
         public string RootElementType { get; } = "Actions";
-        public ObservableCollection<IAction> actions;
+        public string ActionType { get { return "Actions"; } }
+
+        public ObservableCollection<Interfaces.IAction> actions;
 
         public XmlNode GenerateXML()
         {
@@ -21,7 +27,7 @@ namespace UI__Editor.Models
             XmlNode output = d.CreateNode("element", "Actions", null);
 
             // Append all children
-            foreach(IAction action in actions)
+            foreach(Interfaces.IAction action in actions)
             {
                 XmlNode importNode = d.ImportNode(action.GenerateXML(), true);
                 output.AppendChild(importNode);

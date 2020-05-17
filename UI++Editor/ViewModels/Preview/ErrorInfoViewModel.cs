@@ -11,12 +11,23 @@ namespace UI__Editor.ViewModels.Preview
     class ErrorInfoViewModel : PropertyChangedBase, IPreview
     {
         public IEventAggregator EventAggregator { get; set; }
+        public string WindowHeight { get; set; } = "Regular";
         public bool PreviewRefreshButtonVisible { get { return false; } }
-        public bool PreviewBackButtonVisible { get { return false; } }
-        public bool PreviewCancelButtonVisible { get { return true; } }
+        public bool PreviewCancelButtonVisible { get { return true; } } // double check whether this is visible by default
         public bool PreviewAcceptButtonVisible { get { return false; } }
+        private bool _PreviewBackButtonVisible;
+        public bool PreviewBackButtonVisible
+        {
+            get { return _PreviewBackButtonVisible; }
+            set
+            {
+                _PreviewBackButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
 
-        private string title = "Welcome";
+        private string title;
         public string Title
         {
             get { return title; }
@@ -27,7 +38,7 @@ namespace UI__Editor.ViewModels.Preview
             }
         }
 
-        private string _InfoViewText = "UI++ 2.0 includes all of the power of UI++ 1.0 combined with UI App Tree!<br>It's UI, interactive, evolved, and customized.<br><br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe<br>hehehehe";
+        private string _InfoViewText;
         public string InfoViewText
         {
             get { return _InfoViewText; }
@@ -35,6 +46,37 @@ namespace UI__Editor.ViewModels.Preview
             {
                 _InfoViewText = value;
                 NotifyOfPropertyChange(() => InfoViewText);
+            }
+        }
+
+        private string _Image;
+        public string Image
+        {
+            get { return _Image; }
+            set
+            {
+                _Image = value;
+                NotifyOfPropertyChange(() => Image);
+                NotifyOfPropertyChange(() => ImageVisibilityConverter);
+            }
+        }
+
+        public string ImageVisibilityConverter
+        {
+            get
+            {
+                return !string.IsNullOrEmpty(Image) ? "Visible" : "Collapsed";
+            }
+        }
+
+        private string _InfoImage;
+        public string InfoImage
+        {
+            get { return _InfoImage; }
+            set
+            {
+                _InfoImage = value;
+                NotifyOfPropertyChange(() => InfoImage);
             }
         }
     }

@@ -11,6 +11,9 @@ namespace UI__Editor.Models
 {
     public class SoftwareSets : IElement
     {
+        public ViewModels.Actions.IAction ViewModel { get; set; }
+        public bool HasSubChildren { get { return false; } }
+        public string ActionType { get { return "Software Sets"; } }
         public ObservableCollection<Set> Sets { get; set; }
 
         public XmlNode GenerateXML()
