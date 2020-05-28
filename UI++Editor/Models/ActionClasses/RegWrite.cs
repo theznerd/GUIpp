@@ -14,15 +14,20 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "RegWrite";
-        public string Default { get; set; }
-        public string Hive { get; set; } // Default is HKLM
+        public string ActionType { get; } = "Registry Write";
+        public string Hive { get; set; } = "HKLM";
         public string Key { get; set; } // Required
-        public bool? Reg64 { get; set; } // Default is true
-        public string ValueType { get; set; }
+        public bool? Reg64 { get; set; } = true;
+        public string ValueType { get; set; } = "REG_SZ";
         public string Value { get; set; } // required
         public string Content { get; set; }
         public string Condition { get; set; }
+
+        public RegWrite(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.RegWriteViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -40,7 +45,6 @@ namespace UI__Editor.Models.ActionClasses
 
             // Assign attribute values
             type.Value = ActionType;
-            _default.Value = Default;
             hive.Value = Hive;
             key.Value = Key;
             reg64.Value = Reg64.ToString();
@@ -50,10 +54,6 @@ namespace UI__Editor.Models.ActionClasses
 
             // Append Attributes
             output.Attributes.Append(type);
-            if (!string.IsNullOrEmpty(Default))
-            {
-                output.Attributes.Append(_default);
-            }
             if (!string.IsNullOrEmpty(Hive))
             {
                 output.Attributes.Append(hive);

@@ -15,7 +15,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
-        public string ActionType { get; } = "TSVarList";
+        public string ActionType { get; } = "TS Variable List";
         public string ApplicationVariableBase { get; set; }
         public string PackageVariableBase { get; set; }
         public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; }

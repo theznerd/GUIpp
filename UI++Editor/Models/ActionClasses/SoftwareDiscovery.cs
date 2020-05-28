@@ -15,9 +15,15 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
-        public string ActionType { get; } = "SoftwareDiscovery";
-        public ObservableCollection<Match> Matches { get; set; }
+        public string ActionType { get; } = "Software Discovery";
+        public ObservableCollection<Match> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public SoftwareDiscovery(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.SoftwareDiscoveryViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -39,7 +45,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (Match match in Matches)
+            foreach (Match match in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(match.GenerateXML(), true);
                 output.AppendChild(importNode);

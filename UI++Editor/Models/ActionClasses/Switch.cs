@@ -16,10 +16,16 @@ namespace UI__Editor.Models.ActionClasses
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Switch";
-        public bool? DontEval { get; set; } // default is false
+        public bool? DontEval { get; set; } = false;
         public string OnValue { get; set; } // required
-        public ObservableCollection<Case> Cases { get; set; }
+        public ObservableCollection<Case> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public Switch(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.SwitchViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -50,7 +56,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (Case c in Cases)
+            foreach (Case c in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(c.GenerateXML(), true);
                 output.AppendChild(importNode);

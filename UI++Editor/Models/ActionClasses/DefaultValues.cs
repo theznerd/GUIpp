@@ -15,7 +15,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "DefaultValues";
+        public string ActionType { get; } = "Default Values";
         public bool? ShowProgress { get; set; } = true;
         public string Condition { get; set; }
 

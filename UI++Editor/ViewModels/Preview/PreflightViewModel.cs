@@ -13,11 +13,31 @@ namespace UI__Editor.ViewModels.Preview
         public IEventAggregator EventAggregator { get; set; }
         public string WindowHeight { get; set; } = "Regular";
         public bool PreviewRefreshButtonVisible { get { return false; } }
-        public bool PreviewBackButtonVisible { get { return false; } }
-        public bool PreviewCancelButtonVisible { get { return true; } }
-        public bool PreviewAcceptButtonVisible { get { return false; } }
+        public bool PreviewAcceptButtonVisible { get { return true; } }
+        private bool _PreviewBackButtonVisible = false;
+        public bool PreviewBackButtonVisible
+        {
+            get { return _PreviewBackButtonVisible; }
+            set
+            {
+                _PreviewBackButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
+        private bool _PreviewCancelButtonVisible = false;
+        public bool PreviewCancelButtonVisible
+        {
+            get { return _PreviewCancelButtonVisible; }
+            set
+            {
+                _PreviewCancelButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
 
-        private string title = "Preflight Checks";
+        private string title;
         public string Title
         {
             get { return title; }

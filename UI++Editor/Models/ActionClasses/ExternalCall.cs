@@ -14,7 +14,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "ExternalCall";
+        public string ActionType { get; } = "External Call";
         public int? MaxRunTime { get; set; }
         public string Title { get; set; } // Shown in log and progress bar
         public string Content { get; set; }

@@ -14,7 +14,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
-        public string ActionType { get; } = "AppTree";
+        public string ActionType { get; } = "App Tree";
         public string ApplicationVariableBase { get; set; }
         public string PackageVariableBase { get; set; }
         public bool? ShowBack { get; set; } // default is false

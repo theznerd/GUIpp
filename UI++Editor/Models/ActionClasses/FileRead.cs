@@ -15,7 +15,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "FileRead";
+        public string ActionType { get; } = "File Read";
         public bool? DeleteLine { get; set; } = true;
         public string FileName { get; set; } // required
         public string Variable { get; set; } // required

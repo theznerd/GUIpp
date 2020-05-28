@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="UI__Editor.Views.Actions.SaveItemsView"
+﻿<UserControl x:Class="UI__Editor.Views.Actions.SoftwareDiscoveryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -24,11 +24,5 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Margin="10,5">Items To Save:</Label>
-        <TextBox x:Name="Items" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Margin="10,5" Grid.Row="1">Path:</Label>
-        <TextBox x:Name="Path" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Margin="10,5" Grid.Row="2">Condition:</Label>
-        <TextBox x:Name="Condition" Grid.Row="2" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

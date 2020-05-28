@@ -14,7 +14,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "UserAuth";
+        public string ActionType { get; } = "User Authentication";
         public string Attributes { get;set; }
         public bool? DisableCancel { get; set; } // default is false
         public string Domain { get; set; }

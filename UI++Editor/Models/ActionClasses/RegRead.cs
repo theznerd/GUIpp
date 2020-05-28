@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
 using Caliburn.Micro;
+using System.Management.Instrumentation;
 
 namespace UI__Editor.Models.ActionClasses
 {
@@ -14,14 +15,20 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "RegRead";
+        public string ActionType { get; } = "Registry Read";
         public string Default { get; set; }
-        public string Hive { get; set; } // Default is HKLM
+        public string Hive { get; set; } = "HKLM";
         public string Key { get; set; } // Required
-        public bool? Reg64 { get; set; } // Default is true
+        public bool? Reg64 { get; set; } = true;
         public string Variable { get; set; } // required
         public string Value { get; set; } // required
         public string Condition { get; set; }
+
+        public RegRead(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.RegReadViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

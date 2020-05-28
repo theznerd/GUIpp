@@ -14,7 +14,7 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "ErrorInfo";
+        public string ActionType { get; } = "Error Info";
         public bool? ShowBack { get; set; } = false;
         public string Name { get; set; }
         public string Image { get; set; }

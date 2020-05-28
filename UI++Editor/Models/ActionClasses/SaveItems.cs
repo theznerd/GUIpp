@@ -14,10 +14,16 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "SaveItems";
+        public string ActionType { get; } = "Save Items";
         public string Items { get; set; } // required
         public string Path { get; set; } // required
         public string Condition { get; set; }
+
+        public SaveItems(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.SaveItemsViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

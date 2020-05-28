@@ -25,30 +25,23 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Title:</Label>
-        <TextBox x:Name="PreflightTitle" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Margin="10,5" Grid.Row="1">Height:</Label>
-        <ComboBox x:Name="PreflightSize" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1">
-            <ComboBoxItem Content="Regular" />
-            <ComboBoxItem Content="Tall" />
-        </ComboBox>
+        <TextBox x:Name="Title" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="1">Size:</Label>
+        <ComboBox x:Name="Size" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Timeout (seconds):</Label>
-        <TextBox x:Name="PreflightTimeout" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Timeout" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="3" Margin="10,5">Timeout Action:</Label>
         <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="1">
-            <ComboBox x:Name="PreflightTimeoutAction" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
-                <ComboBoxItem Content="Continue" />
-                <ComboBoxItem Content="ContinueOnWarning" />
-                <ComboBoxItem Content="Custom" />
-            </ComboBox>
-            <StackPanel x:Name="PreflightCustomTimeoutActionGroup" Visibility="Collapsed" Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2">
-                <TextBox x:Name="PreflightCustomTimeoutAction" Margin="5" Width="50" />
+            <ComboBox x:Name="TimeoutAction" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+            <StackPanel x:Name="CustomTimeoutActionGroup" Visibility="{Binding CustomTimeoutActionGroupVisibility}" Grid.Row="3" HorizontalAlignment="Left" Orientation="Horizontal" Grid.Column="2">
+                <TextBox x:Name="CustomTimeoutAction" Margin="0,5" Width="50" />
                 <Label VerticalContentAlignment="Center" Height="36">Return Code</Label>
             </StackPanel>
         </StackPanel>
-        <CheckBox x:Name="PreflightShowOnFailureOnly" Grid.Row="4" Margin="10,5" Grid.ColumnSpan="3">Show on Failure Only</CheckBox>
-        <CheckBox x:Name="PreflightShowBack" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Show Back Button</CheckBox>
-        <CheckBox x:Name="PreflightShowCancel" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
+        <CheckBox x:Name="ShowOnFailureOnly" Grid.Row="4" Margin="10,5" Grid.ColumnSpan="3">Show on Failure Only</CheckBox>
+        <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Show Back Button</CheckBox>
+        <CheckBox x:Name="ShowCancel" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
         <Label Margin="10,5" Grid.Row="7">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="7" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="7" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

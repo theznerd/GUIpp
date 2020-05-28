@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -22,26 +23,17 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Registry Hive:</Label>
-        <ComboBox x:Name="RegWriteHive" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
-            <ComboBoxItem Content="HKLM" />
-            <ComboBoxItem Content="HKCU" />
-        </ComboBox>
+        <ComboBox x:Name="Hive" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Key:</Label>
-        <TextBox x:Name="RegWriteKey" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Key" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Value:</Label>
-        <TextBox x:Name="RegWriteValue" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Margin="10,5" Grid.Row="3">Value Type:</Label>
-        <ComboBox x:Name="RegWriteType" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="3">
-            <ComboBoxItem Content="REG_SZ (String)" />
-            <ComboBoxItem Content="REG_MULTI_SZ (Multi-String)" />
-            <ComboBoxItem Content="REG_EXPAND_SZ (Expand String)" />
-            <ComboBoxItem Content="REG_DWORD (32-bit Hex)" />
-            <ComboBoxItem Content="REG_QWORD (64-bit Hex)" />
-            <ComboBoxItem Content="REG_BINARY (Binary Data)" />
-            <ComboBoxItem Content="REG_NONE" />
-        </ComboBox>
-        <CheckBox x:Name="RegWrite64Bit" Margin="10,5" Grid.Row="4" Grid.ColumnSpan="3" IsChecked="True">Read from 64-bit Registry</CheckBox>
-        <Label Margin="10,5" Grid.Row="5">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="5" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Value" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="3">Value to Write:</Label>
+        <TextBox x:Name="Content" Margin="0,5" Grid.Row="3" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="4">Value Type:</Label>
+        <ComboBox x:Name="RegType" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" Grid.Row="4" />
+        <CheckBox x:Name="Reg64" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3" IsChecked="True">Read from 64-bit Registry</CheckBox>
+        <Label Margin="10,5" Grid.Row="6">Condition:</Label>
+        <TextBox x:Name="Condition" Grid.Row="6" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

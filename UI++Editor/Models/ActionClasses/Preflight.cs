@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
 using Caliburn.Micro;
+using System.Management.Instrumentation;
 
 namespace UI__Editor.Models.ActionClasses
 {
@@ -16,15 +17,22 @@ namespace UI__Editor.Models.ActionClasses
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Preflight";
-        public bool? ShowBack { get; set; }
-        public bool? ShowCancel { get; set; }
+        public bool? ShowBack { get; set; } = false;
+        public bool? ShowCancel { get; set; } = false;
         public string Title { get; set; }
-        public bool? ShowOnFailureOnly { get; set; } // default is false
+        public bool? ShowOnFailureOnly { get; set; } = false;
         public string Size { get; set; }
-        public int? Timeout { get; set; } // default is 0, no timeout
+        public int Timeout { get; set; } = 0; // default is 0, no timeout
         public string TimeoutAction { get; set; } // default is Continue | Continue, ContinueOnWarning, Cance, or custom (cancel + exitcode)
-        public ObservableCollection<Check> Checks { get; set; }
+        public int TimeoutReturnCode { get; set; }
+        public ObservableCollection<Check> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public Preflight(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.PreflightViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -49,7 +57,14 @@ namespace UI__Editor.Models.ActionClasses
             showOnFailureOnly.Value = ShowOnFailureOnly.ToString();
             size.Value = Size;
             timeout.Value = Timeout.ToString();
-            timeoutAction.Value = TimeoutAction;
+            if(TimeoutAction == "Custom")
+            {
+                timeoutAction.Value = TimeoutReturnCode.ToString();
+            }
+            else
+            {
+                timeoutAction.Value = TimeoutAction;
+            }
             condition.Value = Condition;
 
             // Append Attributes
@@ -88,7 +103,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (Check check in Checks)
+            foreach (Check check in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(check.GenerateXML(), true);
                 output.AppendChild(importNode);

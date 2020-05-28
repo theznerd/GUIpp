@@ -157,6 +157,12 @@ namespace UI__Editor.ViewModels.Menus
             ag.Children.Add(new FileRead(_eventAggregator));
             ag.Children.Add(new Info(_eventAggregator));
             ag.Children.Add(new Input(_eventAggregator));
+            ag.Children.Add(new Preflight(_eventAggregator));
+            ag.Children.Add(new RegRead(_eventAggregator));
+            ag.Children.Add(new RegWrite(_eventAggregator));
+            ag.Children.Add(new SaveItems(_eventAggregator));
+            ag.Children.Add(new SoftwareDiscovery(_eventAggregator));
+            ag.Children.Add(new Switch(_eventAggregator));
             ActionsTreeView.Add(ag);
         }
 
