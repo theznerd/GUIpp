@@ -25,18 +25,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">App Variable Base:</Label>
-        <TextBox x:Name="TSVarListApp" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="ApplicationVariableBase" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="1" Margin="10,5">Pkg Variable Base:</Label>
-        <TextBox x:Name="TSVarListPkg" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2">
-            <Label Margin="10,5">Apps and Packages:</Label>
-            <ListBox x:Name="AppsAndPackages" Height="100" Margin="10,0,0,0"></ListBox>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="AddAdd" Margin="5">Add</Button>
-                <Button x:Name="RemoveApp" Margin="5,5,0,5">Remove</Button>
-            </StackPanel>
-        </StackPanel>
+        <TextBox x:Name="PackageVariableBase" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="3">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

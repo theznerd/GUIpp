@@ -26,18 +26,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Title:</Label>
-        <TextBox x:Name="UserAuthTitle" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Title" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Domain:</Label>
-        <TextBox x:Name="UserAuthDomain" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Domain" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Group(s):</Label>
-        <TextBox x:Name="UserAuthGroups" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Group" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="3" Margin="10,5">Max Retries:</Label>
-        <TextBox x:Name="UserAuthMaxRetry" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="MaxRetryCount" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="4" Margin="10,5">Attributes:</Label>
-        <TextBox x:Name="UserAuthAttributes" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <CheckBox x:Name="UserAuthShowBack" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Show Back Button</CheckBox>
-        <CheckBox x:Name="UserAuthDisableCancel" Margin="10,5" Grid.Row="8" Grid.ColumnSpan="3">Show Cancel Button (after failed retries)</CheckBox>
+        <TextBox x:Name="Attributes" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Show Back Button</CheckBox>
+        <CheckBox x:Name="DisableCancel" Margin="10,5" Grid.Row="8" Grid.ColumnSpan="3">Show Cancel Button (after failed retries)</CheckBox>
         <Label Margin="10,5" Grid.Row="9">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="9" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="9" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

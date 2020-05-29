@@ -18,8 +18,14 @@ namespace UI__Editor.Models.ActionClasses
         public string ActionType { get; } = "TS Variable List";
         public string ApplicationVariableBase { get; set; }
         public string PackageVariableBase { get; set; }
-        public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; }
+        public ObservableCollection<ISoftwareRef> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public TSVarList(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.TSVarListViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -53,7 +59,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (ISoftwareRef softwareRef in SoftwareRefs)
+            foreach (ISoftwareRef softwareRef in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(softwareRef.GenerateXML(), true);
                 output.AppendChild(importNode);

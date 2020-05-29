@@ -251,6 +251,9 @@
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
+    <Compile Include="ViewModels\Actions\TSVarListViewModel.cs" />
+    <Compile Include="ViewModels\Actions\UserAuthViewModel.cs" />
+    <Compile Include="ViewModels\Actions\TSVarViewModel.cs" />
     <Compile Include="ViewModels\Actions\SwitchViewModel.cs" />
     <Compile Include="ViewModels\Actions\SoftwareDiscoveryViewModel.cs" />
     <Compile Include="ViewModels\Actions\SaveItemsViewModel.cs" />

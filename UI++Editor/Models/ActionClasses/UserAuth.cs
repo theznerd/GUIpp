@@ -16,13 +16,19 @@ namespace UI__Editor.Models.ActionClasses
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "User Authentication";
         public string Attributes { get;set; }
-        public bool? DisableCancel { get; set; } // default is false
+        public bool DisableCancel { get; set; } = false;
         public string Domain { get; set; }
         public string Group { get; set; }
         public string Title { get; set; }
         public int? MaxRetryCount { get; set; } // no default
-        public bool? ShowBack { get; set; }
+        public bool ShowBack { get; set; } = true;
         public string Condition { get; set; }
+
+        public UserAuth(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.UserAuthViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -52,14 +58,8 @@ namespace UI__Editor.Models.ActionClasses
 
             // Append Attributes
             output.Attributes.Append(type);
-            if(null != ShowBack)
-            {
-                output.Attributes.Append(showBack);
-            }
-            if(null != DisableCancel)
-            {
-                output.Attributes.Append(disableCancel);
-            }
+            output.Attributes.Append(showBack);
+            output.Attributes.Append(disableCancel);
             if(null != MaxRetryCount)
             {
                 output.Attributes.Append(maxRetryCount);

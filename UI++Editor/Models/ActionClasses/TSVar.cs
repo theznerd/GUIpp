@@ -14,11 +14,17 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get; } = "TS Variable";
+        public string ActionType { get; } = "Task Sequence Variable";
         public string Variable { get; set; } // required - could be named either Name or Variable, rename if Name
-        public bool? DontEval { get; set; } // default is false
+        public bool? DontEval { get; set; } = false;
         public string Content { get; set; }
         public string Condition { get; set; }
+
+        public TSVar(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.TSVarViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

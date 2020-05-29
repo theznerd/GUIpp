@@ -163,6 +163,9 @@ namespace UI__Editor.ViewModels.Menus
             ag.Children.Add(new SaveItems(_eventAggregator));
             ag.Children.Add(new SoftwareDiscovery(_eventAggregator));
             ag.Children.Add(new Switch(_eventAggregator));
+            ag.Children.Add(new TSVar(_eventAggregator));
+            ag.Children.Add(new TSVarList(_eventAggregator));
+            ag.Children.Add(new UserAuth(_eventAggregator));
             ActionsTreeView.Add(ag);
         }
 
