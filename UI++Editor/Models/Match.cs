@@ -11,6 +11,7 @@ namespace UI__Editor.Models
     public class Match : IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Match"; } }
         public string DisplayName { get; set; } // required

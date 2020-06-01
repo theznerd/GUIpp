@@ -14,12 +14,19 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "WMI Write";
         public string Class { get; set; } // required
         public string Namespace { get; set; } // default is root\cimv2
-        public ObservableCollection<Property> Properties { get; set; }
+        public ObservableCollection<Property> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public WMIWrite(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.WMIWriteViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {
@@ -50,7 +57,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach(Property property in Properties)
+            foreach(Property property in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(property.GenerateXML(), true);
                 output.AppendChild(importNode);

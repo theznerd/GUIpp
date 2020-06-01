@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "Task Sequence Variable";
         public string Variable { get; set; } // required - could be named either Name or Variable, rename if Name

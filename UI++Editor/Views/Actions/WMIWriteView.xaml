@@ -24,10 +24,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Class:</Label>
-        <TextBox x:Name="WMIWriteClass" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Class" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">Namespace:</Label>
-        <TextBox x:Name="WMIWriteNamespace" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Namespace" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="2">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="2" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="2" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

@@ -9,6 +9,7 @@ namespace UI__Editor.Interfaces
 {
     public interface IAction : IElement
     {
+        string ActionType { get; }
         IEventAggregator EventAggregator { get; set; }
     }
 }

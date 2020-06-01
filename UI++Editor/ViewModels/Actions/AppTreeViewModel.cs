@@ -23,7 +23,7 @@ namespace UI__Editor.ViewModels.Actions
             }
         }
 
-        AppTreeViewModel(AppTree appTree)
+        public AppTreeViewModel(AppTree appTree)
         {
             ModelClass = appTree;
         }

@@ -11,6 +11,7 @@ namespace UI__Editor.Interfaces
     {
         string ActionType { get; }
         bool HasSubChildren { get; }
+        IElement Parent { get; set; }
         ViewModels.Actions.IAction ViewModel { get; set; }
         XmlNode GenerateXML();
     }

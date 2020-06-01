@@ -13,6 +13,7 @@ namespace UI__Editor.Models
     public class Case : IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Case"; } }
         public bool CaseInsensitive { get; set; } = false;

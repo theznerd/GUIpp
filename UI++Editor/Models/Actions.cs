@@ -14,11 +14,17 @@ namespace UI__Editor.Models
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IEventAggregator EventAggregator { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string RootElementType { get; } = "Actions";
         public string ActionType { get { return "Actions"; } }
 
-        public ObservableCollection<Interfaces.IAction> actions;
+        public ObservableCollection<IElement> actions;
+
+        public Actions()
+        {
+            actions = new ObservableCollection<IElement>();
+        }
 
         public XmlNode GenerateXML()
         {

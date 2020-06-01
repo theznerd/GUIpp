@@ -138,7 +138,7 @@ namespace UI__Editor.ViewModels.Menus
 
         public void RefreshSoftwareList()
         {
-            Software softwareNode = (Software)UIpp.Elements.Where(x => x.RootElementType == "Software").FirstOrDefault();
+            Software softwareNode = (Software)UIpp.Software;
             if (null != softwareNode)
             {
                 XMLSoftware = softwareNode.Softwares;
@@ -150,7 +150,7 @@ namespace UI__Editor.ViewModels.Menus
                     Softwares = new ObservableCollection<ISoftware>()
                 };
                 XMLSoftware = softwareNode.Softwares;
-                UIpp.Elements.Add(softwareNode);
+                UIpp.Software = softwareNode;
             }
         }
 

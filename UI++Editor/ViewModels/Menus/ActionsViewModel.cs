@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using UI__Editor.Interfaces;
 using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels;
@@ -148,25 +150,9 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
+            
             _actionEventAggregator = new EventAggregator();
-            ActionsTreeView = new ObservableCollection<Interfaces.IElement>();
-            ActionGroup ag = new ActionGroup(_eventAggregator);
-            ag.Children.Add(new DefaultValues(_eventAggregator));
-            ag.Children.Add(new ErrorInfo(_eventAggregator));
-            ag.Children.Add(new ExternalCall(_eventAggregator));
-            ag.Children.Add(new FileRead(_eventAggregator));
-            ag.Children.Add(new Info(_eventAggregator));
-            ag.Children.Add(new Input(_eventAggregator));
-            ag.Children.Add(new Preflight(_eventAggregator));
-            ag.Children.Add(new RegRead(_eventAggregator));
-            ag.Children.Add(new RegWrite(_eventAggregator));
-            ag.Children.Add(new SaveItems(_eventAggregator));
-            ag.Children.Add(new SoftwareDiscovery(_eventAggregator));
-            ag.Children.Add(new Switch(_eventAggregator));
-            ag.Children.Add(new TSVar(_eventAggregator));
-            ag.Children.Add(new TSVarList(_eventAggregator));
-            ag.Children.Add(new UserAuth(_eventAggregator));
-            ActionsTreeView.Add(ag);
+            ActionsTreeView = UIpp.Actions.actions;
         }
 
         public IPreview PreviewBox
@@ -276,9 +262,96 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
+        private BindableCollection<string> AvailableActions
+        {
+            get
+            {
+                List<string> actions = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+                    .Where(x => typeof(IAction).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)
+                    .OrderBy(x => x.Name)
+                    .Select(x => x.Name).ToList();
+                return new BindableCollection<string>(actions);
+            }
+        }            
+
+        private BindableCollection<string> _AddActionList = new BindableCollection<string>();
+        public BindableCollection<string> AddActionList
+        {
+            get { return _AddActionList; }
+            set
+            {
+                _AddActionList = value;
+                NotifyOfPropertyChange(() => AddActionList);
+            }
+        }
+
+        private string _SelectedAddActionList;
+        public string SelectedAddActionList
+        {
+            get { return _SelectedAddActionList; }
+            set
+            {
+                _SelectedAddActionList = value;
+                NotifyOfPropertyChange(() => SelectedAddActionList);
+            }
+        }
+
+        private bool _DialogIsVisible = false;
+        public bool DialogIsVisible
+        {
+            get { return _DialogIsVisible; }
+            set
+            {
+                _DialogIsVisible = value;
+                NotifyOfPropertyChange(() => DialogIsVisible);
+                NotifyOfPropertyChange(() => DialogVisibilityConverter);
+            }
+        }
+
+        public void AddActionCancel()
+        {
+            DialogIsVisible = false;
+        }
+
+        public void AddActionOk()
+        {
+            IAction newAction = (IAction)Activator.CreateInstance(Type.GetType("UI__Editor.Models.ActionClasses." + SelectedAddActionList), _eventAggregator);
+            if (null == SelectedActionsTreeView)
+            {
+                // If no selected index, append to the end
+                ActionsTreeView.Add(newAction);
+            }
+            else if (SelectedActionsTreeView.ActionType == "Action Group")
+            {
+                // If selected index is an action group, dump it in the action group
+                (SelectedActionsTreeView as ActionGroup).AddChild(newAction);
+            }
+            else if(null == SelectedActionsTreeView.Parent)
+            {
+                // If selected index is not within group, add to UIpp directly
+                ActionsTreeView.Insert(ActionsTreeView.IndexOf(SelectedActionsTreeView) + 1, newAction);
+            }
+            else if(null != SelectedActionsTreeView.Parent)
+            {
+                // If selected index is within group, find and add to parent
+                int childIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(SelectedActionsTreeView);
+                (SelectedActionsTreeView.Parent as ActionGroup).AddChild(newAction, childIndex);
+            }
+
+
+            DialogIsVisible = false;
+        }
+
+        public string DialogVisibilityConverter
+        {
+            get { return DialogIsVisible ? "Visible" : "Collapsed"; }
+        }
+
         public void AddButton()
         {
-
+            // Display Modal Dialog
+            AddActionList = AvailableActions;
+            DialogIsVisible = true;
         }
 
         public bool CanEditButton
@@ -301,7 +374,18 @@ namespace UI__Editor.ViewModels.Menus
 
         public void DeleteButton()
         {
-
+            if(null != SelectedActionsTreeView)
+            {
+                if(null != SelectedActionsTreeView.Parent)
+                {
+                    (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                }
+                else
+                {
+                    ActionsTreeView.Remove(SelectedActionsTreeView);
+                }
+                NotifyOfPropertyChange(() => ActionsTreeView);
+            }
         }
 
         private string _flyoutTitle;

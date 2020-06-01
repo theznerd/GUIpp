@@ -48,9 +48,11 @@ namespace UI__Editor.Controllers
 
             // Add Software Node
             XmlNode swNode = xmlDoc.SelectSingleNode("/UIpp/Software");
-            uipp.Elements.Add(GetSoftwareNode(swNode));
+            uipp.Software = GetSoftwareNode(swNode);
 
             // Add Actions Node
+            XmlNode aNode = xmlDoc.SelectSingleNode("/UIpp/Actions");
+            // uipp.Actions = GetActionsNode(aNode);
 
             return uipp;
         }

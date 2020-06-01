@@ -210,7 +210,7 @@
     <Compile Include="Models\ActionClasses\Vars.cs" />
     <Compile Include="Models\ActionClasses\WMIRead.cs" />
     <Compile Include="Models\ActionClasses\WMIWrite.cs" />
-    <Compile Include="Models\ActionGroup.cs" />
+    <Compile Include="Models\ActionClasses\ActionGroup.cs" />
     <Compile Include="Models\Actions.cs" />
     <Compile Include="Models\ActionClasses\AppTree.cs" />
     <Compile Include="Models\ActionClasses\_Template.cs" />
@@ -252,6 +252,9 @@
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
     <Compile Include="ViewModels\Actions\TSVarListViewModel.cs" />
+    <Compile Include="ViewModels\Actions\WMIWriteViewModel.cs" />
+    <Compile Include="ViewModels\Actions\WMIReadViewModel.cs" />
+    <Compile Include="ViewModels\Actions\VarsViewModel.cs" />
     <Compile Include="ViewModels\Actions\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\Actions\TSVarViewModel.cs" />
     <Compile Include="ViewModels\Actions\SwitchViewModel.cs" />

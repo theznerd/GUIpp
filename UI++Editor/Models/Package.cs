@@ -12,6 +12,7 @@ namespace UI__Editor.Models
     public class Package : PropertyChangedBase, IElement, ISoftware
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Package"; } }
         private string _Id;

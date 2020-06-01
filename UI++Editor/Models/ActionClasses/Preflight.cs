@@ -15,6 +15,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Preflight";
         public bool? ShowBack { get; set; } = false;

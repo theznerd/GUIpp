@@ -11,6 +11,7 @@ namespace UI__Editor.Models
     public class SoftwareRef : IElement, ISoftwareRef
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Software Ref"; } }
         public string Id { get; set; } // required

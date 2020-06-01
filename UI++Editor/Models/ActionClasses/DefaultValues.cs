@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     public class DefaultValues : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
+        public IElement Parent { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "Default Values";

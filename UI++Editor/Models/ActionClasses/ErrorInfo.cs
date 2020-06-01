@@ -12,6 +12,7 @@ namespace UI__Editor.Models.ActionClasses
     public class ErrorInfo : IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
+        public IElement Parent { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "Error Info";

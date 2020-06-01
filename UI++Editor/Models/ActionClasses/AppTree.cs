@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "App Tree";
         public string ApplicationVariableBase { get; set; }
@@ -24,6 +25,12 @@ namespace UI__Editor.Models.ActionClasses
         public bool? Expanded { get; set; } // default is true
         public SoftwareSets Sets { get; set; }
         public string Condition { get; set; }
+
+        public AppTree(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.AppTreeViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

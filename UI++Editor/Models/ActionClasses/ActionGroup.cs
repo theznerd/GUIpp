@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
 
-namespace UI__Editor.Models
+namespace UI__Editor.Models.ActionClasses
 {
-    public class ActionGroup : PropertyChangedBase, IElement
+    public class ActionGroup : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Action Group"; } }
+        public IElement Parent { get; set; }
         public string Name { get; set; }
         public string Condition { get; set; }
 
@@ -29,6 +30,27 @@ namespace UI__Editor.Models
                 _Children = value;
                 NotifyOfPropertyChange(() => Children);
             }
+        }
+
+        public void AddChild(IElement element)
+        {
+            element.Parent = this;
+            Children.Add(element);
+            NotifyOfPropertyChange(() => Children);
+        }
+
+        public void AddChild(IElement element, int index)
+        {
+            element.Parent = this;
+            Children.Insert(index + 1, element);
+            NotifyOfPropertyChange(() => Children);
+        }
+
+        public void RemoveChild(IElement element)
+        {
+            element.Parent = null;
+            Children.Remove(element);
+            NotifyOfPropertyChange(() => Children);
         }
 
         public ActionGroup(IEventAggregator eventAggregator)

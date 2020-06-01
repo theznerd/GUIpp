@@ -12,6 +12,7 @@ namespace UI__Editor.Models
     public class UIpp : IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "UI++ Element"; } }
         public bool? AlwaysOnTop { get; set; }
@@ -22,7 +23,14 @@ namespace UI__Editor.Models
         public string Title { get; set; }
         public string RootXMLPath { get; set; }
 
-        public ObservableCollection<IRootElement> Elements { get; set; } = new ObservableCollection<IRootElement>();
+        public Software Software { get; set; }
+        public Actions Actions { get; set; }
+
+        public UIpp()
+        {
+            Software = new Software();
+            Actions = new Actions();
+        }
 
         public XmlNode GenerateXML()
         {
@@ -76,10 +84,17 @@ namespace UI__Editor.Models
                 output.Attributes.Append(rootXMLPath);
             }
 
-            // Append Children
-            foreach (IRootElement element in Elements)
+            // Append Software
+            if(Software.Softwares.Count != 0)
             {
-                XmlNode importNode = d.ImportNode(element.GenerateXML(), true);
+                XmlNode importNode = d.ImportNode(Software.GenerateXML(), true);
+                output.AppendChild(importNode);
+            }
+
+            // Append Actions
+            if (Actions.actions.Count != 0)
+            {
+                XmlNode importNode = d.ImportNode(Actions.GenerateXML(), true);
                 output.AppendChild(importNode);
             }
 

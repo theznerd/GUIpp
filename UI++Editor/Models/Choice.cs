@@ -14,6 +14,7 @@ namespace UI__Editor.Models
     public class Choice : IElement, IChoice
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Choice"; } }
         public string Option { get; set; } // required

@@ -14,6 +14,7 @@ namespace UI__Editor.Models
     public class Check : IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Case"; } }
         public string CheckCondition { get; set; } // required

@@ -13,6 +13,7 @@ namespace UI__Editor.Models.ActionClasses
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "WMI Read";
         public string Class { get; set; } // required
@@ -23,6 +24,12 @@ namespace UI__Editor.Models.ActionClasses
         public string Variable { get; set; } // required
         public string Query { get; set; } // required
         public string Condition { get; set; }
+
+        public WMIRead(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            ViewModel = new ViewModels.Actions.WMIReadViewModel(this);
+        }
 
         public XmlNode GenerateXML()
         {

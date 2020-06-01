@@ -12,6 +12,7 @@ namespace UI__Editor.Models
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Input Info"; } }
         public string Color { get; set; }
