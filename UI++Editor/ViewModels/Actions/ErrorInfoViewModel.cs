@@ -12,7 +12,7 @@ namespace UI__Editor.ViewModels.Actions
 {
     public class ErrorInfoViewModel : PropertyChangedBase, IAction
     {
-        public IPreview PreviewViewModel { get; set; } = new Preview.ErrorInfoViewModel();
+        public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "Info"; } }
         public IEventAggregator EventAggregator;
@@ -33,7 +33,7 @@ namespace UI__Editor.ViewModels.Actions
         {
             ModelClass = info;
             EventAggregator = info.EventAggregator;
-            PreviewViewModel.EventAggregator = info.EventAggregator;
+            PreviewViewModel = new Preview.ErrorInfoViewModel(info.EventAggregator);
             (PreviewViewModel as Preview.ErrorInfoViewModel).InfoViewText = Content;
             (PreviewViewModel as Preview.ErrorInfoViewModel).Title = Title;
         }

@@ -16,6 +16,7 @@
                     Margin="25,5,25,10"
                     IsEnabled="False"
                     Grid.Row="1" LoadCompleted="WebBrowser_LoadCompleted"
+                    Visibility="{Binding WebBrowserVisibilityConverter}"
                     />
     </Grid>
 </UserControl>

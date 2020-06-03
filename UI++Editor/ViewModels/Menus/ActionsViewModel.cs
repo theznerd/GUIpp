@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using UI__Editor.EventAggregators;
 using UI__Editor.Interfaces;
 using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
@@ -140,6 +141,7 @@ namespace UI__Editor.ViewModels.Menus
                 NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
                 NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
                 NotifyOfPropertyChange(() => WindowHeight);
+                NotifyOfPropertyChange(() => CanMoveAction);
             }
         }
 
@@ -303,6 +305,7 @@ namespace UI__Editor.ViewModels.Menus
             set
             {
                 _DialogIsVisible = value;
+                _eventAggregator.BeginPublishOnUIThread(new SendMessage("DialogVisible", value));
                 NotifyOfPropertyChange(() => DialogIsVisible);
                 NotifyOfPropertyChange(() => DialogVisibilityConverter);
             }
@@ -337,9 +340,113 @@ namespace UI__Editor.ViewModels.Menus
                 int childIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(SelectedActionsTreeView);
                 (SelectedActionsTreeView.Parent as ActionGroup).AddChild(newAction, childIndex);
             }
-
-
             DialogIsVisible = false;
+        }
+
+        public bool CanMoveAction
+        {
+            get 
+            { 
+                return (null != SelectedActionsTreeView); 
+            }
+        }
+
+        public void MoveAction(string position)
+        {
+            // TODO: Fix movements across groups. Movements are a touch buggy still
+            bool isChild = (null != SelectedActionsTreeView.Parent);
+            
+            int parentIndex;
+            int actionIndex;
+            int parentCount;
+            int actionCount = ActionsTreeView.Count;
+
+            if (isChild)
+            {
+                parentIndex = ActionsTreeView.IndexOf(SelectedActionsTreeView.Parent);
+                actionIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(SelectedActionsTreeView);
+                parentCount = (SelectedActionsTreeView.Parent as ActionGroup).Children.Count;
+                switch (position)
+                {
+                    case "top":
+                        ActionsTreeView.Insert(0, SelectedActionsTreeView);
+                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                        break;
+                    case "bottom":
+                        ActionsTreeView.Add(SelectedActionsTreeView);
+                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                        break;
+                    case "up":
+                        if (actionIndex == 0)
+                        {
+                            ActionsTreeView.Insert(parentIndex, SelectedActionsTreeView);
+                            (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                        }
+                        else
+                        {
+                            (SelectedActionsTreeView.Parent as ActionGroup).Children.Move(actionIndex, actionIndex - 1);
+                        }
+                        break;
+                    case "down":
+                        if (actionIndex == parentCount - 1)
+                        {
+                            ActionsTreeView.Insert(parentIndex + 1, SelectedActionsTreeView);
+                            (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                        }
+                        else
+                        {
+                            (SelectedActionsTreeView.Parent as ActionGroup).Children.Move(actionIndex, actionIndex + 1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                actionIndex = ActionsTreeView.IndexOf(SelectedActionsTreeView);
+                switch (position)
+                {
+                    case "top":
+                        ActionsTreeView.Move(actionIndex, 0);
+                        break;
+                    case "bottom":
+                        ActionsTreeView.Move(actionIndex, actionCount - 1);
+                        break;
+                    case "up":
+                        if(actionIndex != 0)
+                        {
+                            IElement previousAction = ActionsTreeView[actionIndex - 1];
+                            if(previousAction.ActionType == "Action Group")
+                            {
+                                (previousAction as ActionGroup).AddChild(SelectedActionsTreeView);
+                                ActionsTreeView.Remove(SelectedActionsTreeView);
+                            }
+                            else
+                            {
+                                ActionsTreeView.Move(actionIndex, actionIndex - 1);
+                            }
+                        }
+                        break;
+                    case "down":
+                        if(actionIndex != actionCount - 1)
+                        {
+                            IElement nextAction = ActionsTreeView[actionIndex + 1];
+                            if(nextAction.ActionType == "Action Group")
+                            {
+                                (nextAction as ActionGroup).AddChild(SelectedActionsTreeView, 0);
+                                ActionsTreeView.Remove(SelectedActionsTreeView);
+                            }
+                            else
+                            {
+                                ActionsTreeView.Move(actionIndex, actionIndex + 1);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
         public string DialogVisibilityConverter
@@ -412,22 +519,22 @@ namespace UI__Editor.ViewModels.Menus
 
         public string PreviewRefreshButtonVisible
         {
-            get { return (PreviewBox as Preview.IPreview).PreviewRefreshButtonVisible ? "Visible" : "Collapsed"; }
+            get { return PreviewBox.PreviewRefreshButtonVisible ? "Visible" : "Collapsed"; }
         }
 
         public string PreviewBackButtonVisible
         {
-            get { return (PreviewBox as Preview.IPreview).PreviewBackButtonVisible ? "Visible" : "Collapsed"; }
+            get { return PreviewBox.PreviewBackButtonVisible ? "Visible" : "Collapsed"; }
         }
 
         public string PreviewCancelButtonVisible
         {
-            get { return (PreviewBox as Preview.IPreview).PreviewCancelButtonVisible ? "Visible" : "Collapsed"; }
+            get { return PreviewBox.PreviewCancelButtonVisible ? "Visible" : "Collapsed"; }
         }
 
         public string PreviewAcceptButtonVisible
         {
-            get { return (PreviewBox as Preview.IPreview).PreviewAcceptButtonVisible ? "Visible" : "Collapsed"; }
+            get { return PreviewBox.PreviewAcceptButtonVisible ? "Visible" : "Collapsed"; }
         }
 
         public void Handle(EventAggregators.SendMessage message)

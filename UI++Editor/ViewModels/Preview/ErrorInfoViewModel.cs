@@ -8,7 +8,7 @@ using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
-    class ErrorInfoViewModel : PropertyChangedBase, IPreview
+    class ErrorInfoViewModel : PropertyChangedBase, IPreview, IHandle<EventAggregators.SendMessage>
     {
         public IEventAggregator EventAggregator { get; set; }
         public string WindowHeight { get; set; } = "Regular";
@@ -25,6 +25,12 @@ namespace UI__Editor.ViewModels.Preview
                 NotifyOfPropertyChange(() => PreviewBackButtonVisible);
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
             }
+        }
+
+        public ErrorInfoViewModel(IEventAggregator eventAggregator)
+        {
+            EventAggregator = eventAggregator;
+            EventAggregator.Subscribe(this);
         }
 
         private string title;
@@ -58,6 +64,37 @@ namespace UI__Editor.ViewModels.Preview
                 _Image = value;
                 NotifyOfPropertyChange(() => Image);
                 NotifyOfPropertyChange(() => ImageVisibilityConverter);
+            }
+        }
+
+        public void Handle(EventAggregators.SendMessage message)
+        {
+            switch (message.Type)
+            {
+                case "DialogVisible":
+                    HideWebBrowser = (bool)message.Data;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private bool _HideWebBrowser = false;
+        public bool HideWebBrowser
+        {
+            get { return _HideWebBrowser; }
+            set
+            {
+                _HideWebBrowser = value;
+                NotifyOfPropertyChange(() => WebBrowserVisibilityConverter);
+                NotifyOfPropertyChange(() => HideWebBrowser);
+            }
+        }
+        public string WebBrowserVisibilityConverter
+        {
+            get
+            {
+                return HideWebBrowser ? "Hidden" : "Visible";
             }
         }
 
