@@ -23,6 +23,9 @@ namespace UI__Editor.Models.ActionClasses
         public string Title { get; set; }
         public int? MaxRetryCount { get; set; } // no default
         public bool ShowBack { get; set; } = true;
+        public string DomainController { get; set; }
+        public bool DoNotFallback { get; set; } = false;
+        public bool GetGroups { get; set; } = false;
         public string Condition { get; set; }
 
         public UserAuth(IEventAggregator eventAggregator)

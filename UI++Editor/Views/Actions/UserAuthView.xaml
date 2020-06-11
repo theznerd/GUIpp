@@ -18,6 +18,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -33,11 +35,15 @@
         <TextBox x:Name="Group" Margin="0,5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="3" Margin="10,5">Max Retries:</Label>
         <TextBox x:Name="MaxRetryCount" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Grid.Row="4" Margin="10,5">Attributes:</Label>
-        <TextBox x:Name="Attributes" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Show Back Button</CheckBox>
-        <CheckBox x:Name="DisableCancel" Margin="10,5" Grid.Row="8" Grid.ColumnSpan="3">Show Cancel Button (after failed retries)</CheckBox>
-        <Label Margin="10,5" Grid.Row="9">Condition:</Label>
-        <TextBox x:Name="Condition" Grid.Row="9" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <Label Grid.Row="4" Margin="10,5">Domain Conroller:</Label>
+        <TextBox x:Name="DomainController" Grid.Row="4" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <CheckBox x:Name="DoNotFallback" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Do Not Fallback</CheckBox>
+        <CheckBox x:Name="GetGroups" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Get Groups</CheckBox>
+        <Label Grid.Row="7" Margin="10,5">Attributes:</Label>
+        <TextBox x:Name="Attributes" Grid.Row="7" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="8" Grid.ColumnSpan="3">Show Back Button</CheckBox>
+        <CheckBox x:Name="DisableCancel" Margin="10,5" Grid.Row="9" Grid.ColumnSpan="3">Show Cancel Button (after failed retries)</CheckBox>
+        <Label Margin="10,5" Grid.Row="10">Condition:</Label>
+        <TextBox x:Name="Condition" Grid.Row="10" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

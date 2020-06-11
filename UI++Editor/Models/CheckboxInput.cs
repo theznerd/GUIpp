@@ -25,7 +25,7 @@ namespace UI__Editor.Models
         {
             // Create XML Node and Attributes
             XmlDocument d = new XmlDocument();
-            XmlNode output = d.CreateNode("element", "CheckboxInput", null);
+            XmlNode output = d.CreateNode("element", "InputCheckbox", null);
             XmlAttribute checkedValue = d.CreateAttribute("CheckedValue");
             XmlAttribute _default = d.CreateAttribute("Default");
             XmlAttribute question = d.CreateAttribute("Question");

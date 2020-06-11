@@ -36,6 +36,8 @@ namespace UI__Editor.ViewModels.Actions
             PreviewViewModel = new Preview.ErrorInfoViewModel(info.EventAggregator);
             (PreviewViewModel as Preview.ErrorInfoViewModel).InfoViewText = Content;
             (PreviewViewModel as Preview.ErrorInfoViewModel).Title = Title;
+            (PreviewViewModel as Preview.ErrorInfoViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+            (PreviewViewModel as Preview.ErrorInfoViewModel).PreviewCancelButtonVisible = ShowCancel;
         }
 
         public bool? ShowBack
@@ -47,6 +49,17 @@ namespace UI__Editor.ViewModels.Actions
                 (PreviewViewModel as Preview.ErrorInfoViewModel).PreviewBackButtonVisible = value == true ? true : false;
             }
         }
+
+        public bool ShowCancel
+        {
+            get { return (ModelClass as ErrorInfo).ShowCancel; }
+            set
+            {
+                (ModelClass as ErrorInfo).ShowCancel = value;
+                (PreviewViewModel as Preview.ErrorInfoViewModel).PreviewCancelButtonVisible = value;
+            }
+        }
+
         public string Name
         {
             get { return (ModelClass as ErrorInfo).Name; }

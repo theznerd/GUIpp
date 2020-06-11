@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label FontFamily="Segoe UI" FontSize="16" Padding="0,0,0,3">Question</Label>
-        <ComboBox Padding="0,-3,0,0" FontFamily="Segoe UI" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9" />
+        <Label FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3">Question</Label>
+        <ComboBox Padding="0,-3,0,0" FontFamily="Tahoma" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9" />
     </Grid>
 </UserControl>

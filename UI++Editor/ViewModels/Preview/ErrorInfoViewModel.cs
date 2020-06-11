@@ -12,9 +12,22 @@ namespace UI__Editor.ViewModels.Preview
     {
         public IEventAggregator EventAggregator { get; set; }
         public string WindowHeight { get; set; } = "Regular";
+        public string Font { get; set; } = "Tahoma";
         public bool PreviewRefreshButtonVisible { get { return false; } }
-        public bool PreviewCancelButtonVisible { get { return true; } } // double check whether this is visible by default
         public bool PreviewAcceptButtonVisible { get { return false; } }
+
+        private bool _PreviewCancelButtonVisible;
+        public bool PreviewCancelButtonVisible
+        {
+            get { return _PreviewCancelButtonVisible; }
+            set
+            {
+                _PreviewCancelButtonVisible = value;
+                NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ButtonChange", ""));
+            }
+        }
+
         private bool _PreviewBackButtonVisible;
         public bool PreviewBackButtonVisible
         {

@@ -11,6 +11,7 @@ namespace UI__Editor.ViewModels.Preview
     {
         public IEventAggregator EventAggregator { get; set; }
         public string WindowHeight { get; set; } = "Regular";
+        public string Font { get; set; } = "Tahoma";
         public bool PreviewRefreshButtonVisible { get { return false; } }
         public bool PreviewAcceptButtonVisible { get { return true; } }
         private bool _PreviewBackButtonVisible;

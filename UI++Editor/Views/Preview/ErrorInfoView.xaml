@@ -11,7 +11,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,5">Slide Title</Label>
+        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
+            <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
+        </Viewbox>
         <WebBrowser wb:BrowserBehavior.Html="{Binding Path=InfoViewText, Mode=OneWay}" 
                     Margin="25,5,25,10"
                     IsEnabled="False"

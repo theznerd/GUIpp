@@ -24,6 +24,8 @@ namespace UI__Editor.ViewModels.Actions
                 string ha;
                 ha = "Attributes: " + Attributes;
                 ha += "\r\nGroup: " + Group;
+                ha += "\r\nDomain Conroller: " + DomainController;
+                ha += "\r\nDo Not Fallback: " + DoNotFallback;
                 ha += "\r\nMax Retry Count: " + MaxRetryCount;
                 return ha;
             }
@@ -103,6 +105,17 @@ namespace UI__Editor.ViewModels.Actions
                 NotifyOfPropertyChange(() => MaxRetryCount);
             }
         }
+        
+        public bool GetGroups
+        {
+            get { return (ModelClass as UserAuth).GetGroups; }
+            set
+            {
+                (ModelClass as UserAuth).GetGroups = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
+                NotifyOfPropertyChange(() => ShowBack);
+            }
+        }
 
         public bool ShowBack
         {
@@ -112,6 +125,28 @@ namespace UI__Editor.ViewModels.Actions
                 (ModelClass as UserAuth).ShowBack = value;
                 (PreviewViewModel as Preview.UserAuthViewModel).PreviewBackButtonVisible = value;
                 NotifyOfPropertyChange(() => ShowBack);
+            }
+        }
+
+        public string DomainController
+        {
+            get { return (ModelClass as UserAuth).DomainController; }
+            set
+            {
+                (ModelClass as UserAuth).DomainController = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
+                NotifyOfPropertyChange(() => DomainController);
+            }
+        }
+
+        public bool DoNotFallback
+        {
+            get { return (ModelClass as UserAuth).DoNotFallback; }
+            set
+            {
+                (ModelClass as UserAuth).DoNotFallback = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
+                NotifyOfPropertyChange(() => DoNotFallback);
             }
         }
 

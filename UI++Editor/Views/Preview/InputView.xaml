@@ -12,7 +12,9 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,0" />
+        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
+            <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
+        </Viewbox>
         <ItemsControl Grid.Row="1" Margin="25,0,50,0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>

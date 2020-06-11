@@ -214,6 +214,8 @@
     <Compile Include="Models\Actions.cs" />
     <Compile Include="Models\ActionClasses\AppTree.cs" />
     <Compile Include="Models\ActionClasses\_Template.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\Package.cs" />
     <Compile Include="Models\ChoiceList.cs" />
     <Compile Include="Models\ChoiceInput.cs" />
@@ -281,6 +283,7 @@
     <Compile Include="ViewModels\Menus\LoadSaveViewModel.cs" />
     <Compile Include="ViewModels\Menus\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Menus\SoftwareViewModel.cs" />
+    <Compile Include="ViewModels\Menus\StatusMessageViewModel.cs" />
     <Compile Include="ViewModels\Preview\AppTreeViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\TextInputViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\InputInfoViewModel.cs" />
@@ -407,6 +410,9 @@
     </Compile>
     <Compile Include="Views\Menus\SoftwareView.xaml.cs">
       <DependentUpon>SoftwareView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Menus\StatusMessageView.xaml.cs">
+      <DependentUpon>StatusMessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
@@ -639,6 +645,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Menus\SoftwareView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Menus\StatusMessageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

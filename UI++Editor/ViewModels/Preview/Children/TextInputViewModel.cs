@@ -9,6 +9,28 @@ namespace UI__Editor.ViewModels.Preview.Children
 {
     class TextInputViewModel : PropertyChangedBase, IChild
     {
+        private bool _ReadOnly;
+        public bool ReadOnly
+        {
+            get { return _ReadOnly; }
+            set
+            {
+                _ReadOnly = value;
+                NotifyOfPropertyChange(() => ReadOnly);
+            }
+        }
+
+        private string _Font;
+        public string Font
+        {
+            get { return _Font; }
+            set
+            {
+                _Font = value;
+                NotifyOfPropertyChange(() => Font);
+            }
+        }
+
         private string _Default;
         public string Default
         {

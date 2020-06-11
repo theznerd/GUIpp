@@ -118,6 +118,7 @@ namespace UI__Editor.ViewModels.Actions
                 {
                     "Continue",
                     "ContinueOnWarning",
+                    "ContinueNoPreempt",
                     "Custom"
                 };
             }

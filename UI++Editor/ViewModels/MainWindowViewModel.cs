@@ -24,19 +24,13 @@ namespace UI__Editor.ViewModels
         Menus.LoadSaveViewModel _loadSaveViewModel;
         Menus.SettingsViewModel _settingsViewModel;
         Menus.SoftwareViewModel _softwareViewModel;
+        Menus.StatusMessageViewModel _statusMessageViewModel;
 
         public MainWindowViewModel()
         {
-            NewXML();
             _aboutViewModel = new Menus.AboutViewModel();
-            _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
-            _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _loadSaveViewModel = new Menus.LoadSaveViewModel(_eventAggregator);
-            _settingsViewModel = new Menus.SettingsViewModel();
-            _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
-            _settingsViewModel.svm = _softwareViewModel;
-            _configurationViewModel.RefreshConfiguration();
-            _softwareViewModel.RefreshSoftwareList();
+            NewXML();
             _eventAggregator.Subscribe(this);
         }
 
@@ -64,6 +58,9 @@ namespace UI__Editor.ViewModels
                         case "_softwareViewModel":
                             ContentControl = _softwareViewModel;
                             _softwareViewModel.RefreshSynchronizationData();
+                            break;
+                        case "_statusMessageViewModel":
+                            ContentControl = _statusMessageViewModel;
                             break;
                         default:
                             break;
@@ -146,6 +143,7 @@ namespace UI__Editor.ViewModels
             _settingsViewModel = new Menus.SettingsViewModel();
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _statusMessageViewModel = new Menus.StatusMessageViewModel(uipp);
             _settingsViewModel.svm = _softwareViewModel;
             _configurationViewModel.RefreshConfiguration();
             _softwareViewModel.RefreshSoftwareList();
@@ -164,6 +162,7 @@ namespace UI__Editor.ViewModels
             _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            _statusMessageViewModel = new Menus.StatusMessageViewModel(uipp);
             _softwareViewModel.RefreshSoftwareList();
             _configurationViewModel.RefreshConfiguration();
         }

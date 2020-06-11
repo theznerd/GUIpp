@@ -9,6 +9,17 @@ namespace UI__Editor.ViewModels.Preview.Children
 {
     class CheckBoxInputViewModel : PropertyChangedBase, IChild
     {
+        private string _Font;
+        public string Font
+        {
+            get { return _Font; }
+            set
+            {
+                _Font = value;
+                NotifyOfPropertyChange(() => Font);
+            }
+        }
+
         private string _Question;
         public string Question
         {

@@ -32,7 +32,7 @@ namespace UI__Editor.Models
         {
             // Create XML Node and Attributes
             XmlDocument d = new XmlDocument();
-            XmlNode output = d.CreateNode("element", "ChoiceInput", null);
+            XmlNode output = d.CreateNode("element", "InputChoice", null);
             XmlAttribute alternateValue = d.CreateAttribute("AlternateValue");
             XmlAttribute autoComplete = d.CreateAttribute("AutoComplete");
             XmlAttribute _default = d.CreateAttribute("Default");

@@ -1,9 +1,11 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using UI__Editor.Models;
 
 namespace UI__Editor.ViewModels.Menus
@@ -17,6 +19,7 @@ namespace UI__Editor.ViewModels.Menus
         {
             _eventAggregator = ea;
             UIpp = uipp;
+            ConfigFont = "Tahoma";
         }
 
         public void RefreshConfiguration()
@@ -89,6 +92,18 @@ namespace UI__Editor.ViewModels.Menus
                 _configAlwaysOnTop = value;
                 UIpp.AlwaysOnTop = value;
                 NotifyOfPropertyChange(() => ConfigAlwaysOnTop);
+            }
+        }
+
+        private string _ConfigFont;
+        public string ConfigFont
+        {
+            get { return _ConfigFont; }
+            set
+            {
+                _ConfigFont = value;
+                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("font", value));
+                NotifyOfPropertyChange(() => ConfigFont);
             }
         }
 

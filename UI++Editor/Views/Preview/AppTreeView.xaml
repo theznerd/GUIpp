@@ -130,7 +130,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,5">Please choose your software</Label>
+        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
+            <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
+        </Viewbox>
         <TreeView x:Name="TreeView" Grid.Row="1" Margin="30,0,10,40" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0"  >
             <TreeViewItem Header="Hello" IsExpanded="False">
                 <TreeViewItem Header="Hello" />

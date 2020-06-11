@@ -25,11 +25,13 @@ namespace UI__Editor.Models
 
         public Software Software { get; set; }
         public Actions Actions { get; set; }
+        public Messages Messages { get; set; }
 
         public UIpp()
         {
             Software = new Software();
             Actions = new Actions();
+            Messages = new Messages();
         }
 
         public XmlNode GenerateXML()
@@ -88,6 +90,13 @@ namespace UI__Editor.Models
             if(Software.Softwares.Count != 0)
             {
                 XmlNode importNode = d.ImportNode(Software.GenerateXML(), true);
+                output.AppendChild(importNode);
+            }
+
+            // Append Messages
+            if(Messages.MessageCollection.Count != 0)
+            {
+                XmlNode importNode = d.ImportNode(Messages.GenerateXML(), true);
                 output.AppendChild(importNode);
             }
 

@@ -10,7 +10,9 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Label x:Name="Title" FontSize="32" Margin="5,8,10,0" />
+        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="50">
+            <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
+        </Viewbox>
         <Grid Grid.Row="1" Margin="25,0,50,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -21,11 +23,11 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label FontFamily="Segoe UI" FontSize="16" Padding="0,0,0,3">Enter your user name</Label>
-            <TextBox Padding="0,-3,0,0" FontFamily="Segoe UI" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9"></TextBox>
-            <Label Grid.Row="2" FontFamily="Segoe UI" FontSize="16" Padding="0,0,0,3">Enter your password</Label>
-            <PasswordBox Padding="0,-3,0,0" FontFamily="Segoe UI" FontSize="16" Grid.Row="3" Height="15" Margin="0,0,0,9"></PasswordBox>
-            <Label Grid.Row="4" FontFamily="Segoe UI" FontSize="16" Padding="0,0,0,3">Enter a domain</Label>
+            <Label FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3">Enter your user name</Label>
+            <TextBox Padding="0,-3,0,0" FontFamily="{Binding Font}" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9"></TextBox>
+            <Label Grid.Row="2" FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3">Enter your password</Label>
+            <PasswordBox Padding="0,-3,0,0" FontFamily="{Binding Font}" FontSize="16" Grid.Row="3" Height="15" Margin="0,0,0,9"></PasswordBox>
+            <Label Grid.Row="4" FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3">Enter a domain</Label>
             <TextBox x:Name="Domain" Padding="0,-3,0,0" FontFamily="Segoe UI" FontSize="16" Grid.Row="5" Height="15" Margin="0,0,0,9"></TextBox>
         </Grid>
     </Grid>

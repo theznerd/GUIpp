@@ -14,7 +14,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Image x:Name="Image" Source="{Binding Image}" Width="462" Height="75" Margin="0,10,0,0" Stretch="UniformToFill" StretchDirection="Both" Visibility="{Binding ImageVisibilityConverter}" />
-        <Label x:Name="Title" Grid.Row="1" FontSize="32" Margin="5,8,10,5">Slide Title</Label>
+        <Viewbox Grid.Row="1" StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
+            <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
+        </Viewbox>
         <WebBrowser Grid.Row="2" wb:BrowserBehavior.Html="{Binding Path=InfoViewText, Mode=OneWay}"
                     Margin="25,5,25,0"
                     IsEnabled="False"

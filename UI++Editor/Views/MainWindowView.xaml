@@ -52,6 +52,7 @@
                     <ma:HamburgerMenuGlyphItem Glyph="&#xE90F;" Label="Configuration" Tag="_configurationViewModel" />
                     <ma:HamburgerMenuGlyphItem Glyph="&#xEADF;" Label="Actions" Tag="_actionsViewModel" />
                     <ma:HamburgerMenuGlyphItem Glyph="&#xE7B8;" Label="Software" Tag="_softwareViewModel" />
+                    <ma:HamburgerMenuGlyphItem Glyph="&#xE8BD;" Label="Status Messages" Tag="_statusMessageViewModel" />
                 </ma:HamburgerMenuItemCollection>
             </ma:HamburgerMenu.ItemsSource>
 

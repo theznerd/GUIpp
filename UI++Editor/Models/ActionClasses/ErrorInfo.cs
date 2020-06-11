@@ -17,6 +17,7 @@ namespace UI__Editor.Models.ActionClasses
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "Error Info";
         public bool? ShowBack { get; set; } = false;
+        public bool ShowCancel { get; set; } = true;
         public string Name { get; set; }
         public string Image { get; set; }
         public string InfoImage { get; set; }
@@ -37,6 +38,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute showBack = d.CreateAttribute("ShowBack");
+            XmlAttribute showCancel = d.CreateAttribute("ShowCancel");
             XmlAttribute name = d.CreateAttribute("Name");
             XmlAttribute image = d.CreateAttribute("Image");
             XmlAttribute infoImage = d.CreateAttribute("InfoImage");
@@ -46,6 +48,7 @@ namespace UI__Editor.Models.ActionClasses
             // Assign attribute values
             type.Value = ActionType;
             showBack.Value = ShowBack.ToString();
+            showCancel.Value = ShowCancel.ToString();
             name.Value = Name;
             image.Value = Image;
             infoImage.Value = InfoImage;

@@ -32,7 +32,7 @@ namespace UI__Editor.Models
         {
             // Create XML Node and Attributes
             XmlDocument d = new XmlDocument();
-            XmlNode output = d.CreateNode("element", "TextInput", null);
+            XmlNode output = d.CreateNode("element", "InputText", null);
             XmlAttribute adValidate = d.CreateAttribute("ADValidate");
             XmlAttribute _default = d.CreateAttribute("Default");
             XmlAttribute forceCase = d.CreateAttribute("ForceCase");

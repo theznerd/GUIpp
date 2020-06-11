@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using UI__Editor.EventAggregators;
 using UI__Editor.Interfaces;
 using UI__Editor.Models;
@@ -63,6 +64,10 @@ namespace UI__Editor.ViewModels.Menus
         public void ActionsTreeViewChanged(Interfaces.IElement selectedAction)
         {
             SelectedActionsTreeView = selectedAction;
+            NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
+            NotifyOfPropertyChange(() => PreviewBackButtonVisible);
+            NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
+            NotifyOfPropertyChange(() => PreviewRefreshButtonVisible);
             NotifyOfPropertyChange(() => SelectedActionName);
             NotifyOfPropertyChange(() => SelectedActionCondition);
             NotifyOfPropertyChange(() => SelectedActionHiddenAttributes);
@@ -152,9 +157,33 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
+
+            FontFamilies = new List<string>();
+            foreach(FontFamily f in Fonts.SystemFontFamilies)
+            {
+                FontFamilies.Add(f.Source);
+            }
             
             _actionEventAggregator = new EventAggregator();
             ActionsTreeView = UIpp.Actions.actions;
+        }
+
+        private List<string> FontFamilies;
+
+        private string _Font;
+        public string Font
+        {
+            get { return _Font; }
+            set
+            {
+                _Font = value;
+                NotifyOfPropertyChange(() => Font);
+                if(null != SelectedActionsTreeView)
+                {
+                    if(FontFamilies.Contains(value))
+                        SelectedActionsTreeView.ViewModel.PreviewViewModel.Font = value;
+                }
+            }
         }
 
         public IPreview PreviewBox
@@ -162,6 +191,7 @@ namespace UI__Editor.ViewModels.Menus
             get {
                 if(null != SelectedActionsTreeView)
                 {
+                    SelectedActionsTreeView.ViewModel.PreviewViewModel.Font = Font;
                     return SelectedActionsTreeView.ViewModel.PreviewViewModel;
                 }
                 else
@@ -565,6 +595,9 @@ namespace UI__Editor.ViewModels.Menus
         {
             switch(change.Type)
             {
+                case "font":
+                    Font = (string)change.Data;
+                    break;
                 case "color":
                     LeftBorderColor = (string)change.Data;
                     break;

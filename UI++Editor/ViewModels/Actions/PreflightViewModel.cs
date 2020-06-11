@@ -14,7 +14,7 @@ namespace UI__Editor.ViewModels.Actions
     {
         public IPreview PreviewViewModel { get; set; } = new Preview.PreflightViewModel();
         public object ModelClass { get; set; }
-        public string ActionTitle { get { return "Input"; } }
+        public string ActionTitle { get { return "Preflight"; } }
         public IEventAggregator EventAggregator;
 
         public string HiddenAttributes
