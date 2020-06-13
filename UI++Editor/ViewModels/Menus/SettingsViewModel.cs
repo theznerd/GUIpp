@@ -42,6 +42,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _settingsCMFQDN = value;
                 NotifyOfPropertyChange(() => SettingsCMFQDN);
+                NotifyOfPropertyChange(() => CanSettingsScanAll);
             }
         }
 
@@ -53,6 +54,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _settingsSiteCode = value;
                 NotifyOfPropertyChange(() => SettingsSiteCode);
+                NotifyOfPropertyChange(() => CanSettingsScanAll);
             }
         }
 
@@ -71,7 +73,14 @@ namespace UI__Editor.ViewModels.Menus
 
         public bool CanSettingsScanAll
         {
-            get { return !CurrentlyScanning; }
+            get 
+            {
+                return
+                    !string.IsNullOrWhiteSpace(SettingsCMFQDN) &&
+                    !string.IsNullOrWhiteSpace(SettingsSiteCode) &&
+                    SettingsSiteCode.Length == 3 &&
+                    !CurrentlyScanning;
+            }
         }
 
         public string CurrentlyScanningVis

@@ -7,6 +7,7 @@ using System.Xml;
 using UI__Editor.Interfaces;
 using Caliburn.Micro;
 using Xceed.Wpf.Toolkit.Primitives;
+using System.Collections.ObjectModel;
 
 namespace UI__Editor.Models.ActionClasses
 {
@@ -15,10 +16,11 @@ namespace UI__Editor.Models.ActionClasses
         public IEventAggregator EventAggregator { get; set; }
         public IElement Parent { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
-        public bool HasSubChildren { get { return false; } }
+        public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Default Values";
         public bool? ShowProgress { get; set; } = true;
         public string Condition { get; set; }
+        public ObservableCollection<IInput> SubChildren { get; set; }
 
         public class ValueType : PropertyChangedBase
         {
@@ -108,6 +110,13 @@ namespace UI__Editor.Models.ActionClasses
             if (!string.IsNullOrEmpty(Condition))
             {
                 output.Attributes.Append(condition);
+            }
+
+            // Append Children
+            foreach (IInput input in SubChildren)
+            {
+                XmlNode importNode = d.ImportNode(input.GenerateXML(), true);
+                output.AppendChild(importNode);
             }
 
             return output;

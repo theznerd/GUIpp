@@ -34,6 +34,8 @@ namespace UI__Editor.ViewModels.Actions
             EventAggregator = input.EventAggregator;
             PreviewViewModel.EventAggregator = input.EventAggregator;
             SelectedSize = string.IsNullOrEmpty(input.Size) ? "Regular" : input.Size;
+            (PreviewViewModel as Preview.InputViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+            (PreviewViewModel as Preview.InputViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
         }
 
         public string Title

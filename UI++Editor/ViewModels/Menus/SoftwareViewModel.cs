@@ -90,7 +90,10 @@ namespace UI__Editor.ViewModels.Menus
             set
             {
                 _SASearcher = value;
-                AvailableSoftwareViewSource.View.Refresh();
+                if(null != AvailableSoftwareViewSource.View)
+                {
+                    AvailableSoftwareViewSource.View.Refresh();
+                }
                 NotifyOfPropertyChange(() => SASearcher);
             }
         }
@@ -210,25 +213,28 @@ namespace UI__Editor.ViewModels.Menus
         {
             CanToggleType = true;
             AEFunction = "Add";
-            AEType = SelectedAvailableSoftware.Type == "Application";
-            AEID = "";
-            AELabel = SelectedAvailableSoftware.Name;
-            AEIncludeID = "";
-            AEPkgID = "";
-            AEProgramName = "";
-            AEName = "";
-            if(SelectedAvailableSoftware.Type == "Application")
+            if(null != SelectedAvailableSoftware)
             {
-                AEName = (SelectedAvailableSoftware as Application).Name;
+                AEType = SelectedAvailableSoftware.Type == "Application";
+                AEID = "";
+                AELabel = SelectedAvailableSoftware.Name;
+                AEIncludeID = "";
+                AEPkgID = "";
+                AEProgramName = "";
+                AEName = "";
+                if (SelectedAvailableSoftware.Type == "Application")
+                {
+                    AEName = (SelectedAvailableSoftware as Application).Name;
+                }
+                else
+                {
+                    AEPkgID = (SelectedAvailableSoftware as Package).PkgId;
+                    AEProgramName = (SelectedAvailableSoftware as Package).ProgramName;
+                }
+                GenerateGUID();
+                PickVisibleBool = false;
+                AddVisibleBool = true;
             }
-            else
-            {
-                AEPkgID = (SelectedAvailableSoftware as Package).PkgId;
-                AEProgramName = (SelectedAvailableSoftware as Package).ProgramName;
-            }
-            GenerateGUID();
-            PickVisibleBool = false;
-            AddVisibleBool = true;
         }
 
         public void AECancel()

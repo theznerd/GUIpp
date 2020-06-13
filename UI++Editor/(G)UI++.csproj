@@ -197,8 +197,10 @@
     <Compile Include="Models\ActionClasses\ErrorInfo.cs" />
     <Compile Include="Models\ActionClasses\ExternalCall.cs" />
     <Compile Include="Models\ActionClasses\FileRead.cs" />
+    <Compile Include="Models\ActionClasses\InfoFullScreen.cs" />
     <Compile Include="Models\ActionClasses\Input.cs" />
     <Compile Include="Models\ActionClasses\Preflight.cs" />
+    <Compile Include="Models\ActionClasses\RandomString.cs" />
     <Compile Include="Models\ActionClasses\RegWrite.cs" />
     <Compile Include="Models\ActionClasses\RegRead.cs" />
     <Compile Include="Models\ActionClasses\SaveItems.cs" />
@@ -253,6 +255,8 @@
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
+    <Compile Include="ViewModels\Actions\InfoFullScreenViewModel.cs" />
+    <Compile Include="ViewModels\Actions\RandomStringViewModel.cs" />
     <Compile Include="ViewModels\Actions\TSVarListViewModel.cs" />
     <Compile Include="ViewModels\Actions\WMIWriteViewModel.cs" />
     <Compile Include="ViewModels\Actions\WMIReadViewModel.cs" />
@@ -291,12 +295,19 @@
     <Compile Include="ViewModels\Preview\Children\CheckBoxInputViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\_IChild.cs" />
     <Compile Include="ViewModels\Preview\ErrorInfoViewModel.cs" />
+    <Compile Include="ViewModels\Preview\InfoFullScreenViewModel.cs" />
     <Compile Include="ViewModels\Preview\InputViewModel.cs" />
     <Compile Include="ViewModels\Preview\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\Preview\PreflightViewModel.cs" />
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\_IPreview.cs" />
     <Compile Include="ViewModels\Preview\_NoPreviewViewModel.cs" />
+    <Compile Include="Views\Actions\InfoFullScreenView.xaml.cs">
+      <DependentUpon>InfoFullScreenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\RandomStringView.xaml.cs">
+      <DependentUpon>RandomStringView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\SoftwareDiscoveryView.xaml.cs">
       <DependentUpon>SoftwareDiscoveryView.xaml</DependentUpon>
     </Compile>
@@ -432,6 +443,9 @@
     <Compile Include="Views\Preview\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Preview\InfoFullScreenView.xaml.cs">
+      <DependentUpon>InfoFullScreenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Preview\InputView.xaml.cs">
       <DependentUpon>InputView.xaml</DependentUpon>
     </Compile>
@@ -496,6 +510,14 @@
     <Resource Include="Images\warn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Actions\InfoFullScreenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Actions\RandomStringView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Actions\SoftwareDiscoveryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -675,6 +697,10 @@
     <Page Include="Views\Preview\ErrorInfoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Preview\InfoFullScreenView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Preview\InputView.xaml">
       <Generator>MSBuild:Compile</Generator>

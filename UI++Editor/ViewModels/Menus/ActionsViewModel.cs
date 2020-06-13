@@ -99,6 +99,33 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
+        public string CustomPreviewVisibilityConverter
+        {
+            get
+            {
+                return PreviewBox.HasCustomPreview ? "Visible" : "Collapsed";
+            }
+        }
+
+        public string PreviewVisibilityConverter
+        {
+            get
+            {
+                return PreviewBox.HasCustomPreview ? "Collapsed" : "Visible";
+            }
+        }
+
+        private ObservableCollection<IPreview> _CustomPreview;
+        public ObservableCollection<IPreview> CustomPreview
+        {
+            get { return _CustomPreview; }
+            set
+            {
+                _CustomPreview = value;
+                NotifyOfPropertyChange(() => CustomPreview);
+            }
+        }
+
         public string SelectedActionCondition
         {
             get
@@ -138,9 +165,16 @@ namespace UI__Editor.ViewModels.Menus
             set
             {
                 _SelectedActionsTreeView = value;
+                if(_SelectedActionsTreeView.ViewModel.PreviewViewModel.HasCustomPreview)
+                {
+                    CustomPreview = new ObservableCollection<IPreview>();
+                    CustomPreview.Add(_SelectedActionsTreeView.ViewModel.PreviewViewModel);
+                }
                 NotifyOfPropertyChange(() => SelectedActionsTreeView);
                 NotifyOfPropertyChange(() => CanEditButton);
                 NotifyOfPropertyChange(() => PreviewBox);
+                NotifyOfPropertyChange(() => CustomPreview);
+                NotifyOfPropertyChange(() => CustomPreviewVisibilityConverter);
                 NotifyOfPropertyChange(() => PreviewRefreshButtonVisible);
                 NotifyOfPropertyChange(() => PreviewBackButtonVisible);
                 NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
@@ -176,7 +210,15 @@ namespace UI__Editor.ViewModels.Menus
             get { return _Font; }
             set
             {
-                _Font = value;
+                if(FontFamilies.Contains(value))
+                {
+                    _Font = value;
+                }
+                else
+                {
+                    _Font = "Tahoma";
+                }
+                
                 NotifyOfPropertyChange(() => Font);
                 if(null != SelectedActionsTreeView)
                 {

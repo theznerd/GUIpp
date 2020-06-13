@@ -38,6 +38,8 @@ namespace UI__Editor.ViewModels.Actions
             PreviewViewModel = new Preview.InfoViewModel(info.EventAggregator);
             (PreviewViewModel as Preview.InfoViewModel).InfoViewText = Content;
             (PreviewViewModel as Preview.InfoViewModel).Title = Title;
+            (PreviewViewModel as Preview.InfoViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+            (PreviewViewModel as Preview.InfoViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
         }
 
         public bool? ShowBack

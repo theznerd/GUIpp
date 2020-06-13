@@ -70,7 +70,7 @@
                 <RowDefinition Height=".4*" />
             </Grid.RowDefinitions>
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="30" HorizontalAlignment="Center">Action Preview</Label>
-            <ScrollViewer Margin="20" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible">
+            <ScrollViewer Margin="20" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Visible" Visibility="{Binding PreviewVisibilityConverter}">
                 <Grid x:Name="ActionPreview" VerticalAlignment="Center" Width="{Binding Path=WindowWidth, Mode=OneWay}" Height="{Binding Path=WindowHeight, Mode=OneWay}">
                     <Border x:Name="MaskBorder" Margin="0" CornerRadius="{Binding ElementName=PreviewBorder, Path=CornerRadius}" BorderThickness="1" BorderBrush="White" Background="White" />
                     <Grid Margin="0">
@@ -114,7 +114,7 @@
                         <!-- Left Border -->
                         <Grid Margin="0" Background="{Binding Path=LeftBorderColor, Mode=TwoWay}" Grid.Column="0" Grid.RowSpan="2" Visibility="{Binding Path=CollapseSideBar, Mode=OneWay}">
                             <StackPanel Orientation="Vertical" Margin="0" VerticalAlignment="Bottom">
-                                <Label x:Name="ActionPreviewTitle" FontFamily="Segoe UI" Padding="5,0,3,0" Foreground="White" FontSize="32" Width="260" RenderOptions.EdgeMode="Aliased">
+                                <Label x:Name="ActionPreviewTitle" FontFamily="{Binding Font}" Padding="5,0,3,0" Foreground="White" FontSize="32" Width="260" RenderOptions.EdgeMode="Aliased">
                                     <Label.LayoutTransform>
                                         <RotateTransform Angle="-90" />
                                     </Label.LayoutTransform>
@@ -137,6 +137,9 @@
                     <Border x:Name="PreviewBorder" Margin="0" CornerRadius="{Binding Path=FlatView, Mode=OneWay}" BorderThickness="1" BorderBrush="Black" Background="Transparent" IsHitTestVisible="False" />
                 </Grid>
             </ScrollViewer>
+            <Grid Background="White" Width="640" Height="360" Grid.Row="1" Visibility="{Binding CustomPreviewVisibilityConverter}">
+                <ItemsControl x:Name="CustomPreview" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
             <Grid Grid.Row="2" Margin="20,0,20,20">
                 <Border BorderBrush="Black" BorderThickness="1" x:Name="InfoBorder">
                     <Grid>

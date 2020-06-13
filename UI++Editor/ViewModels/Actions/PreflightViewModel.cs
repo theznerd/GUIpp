@@ -47,6 +47,8 @@ namespace UI__Editor.ViewModels.Actions
             EventAggregator = pf.EventAggregator;
             PreviewViewModel.EventAggregator = pf.EventAggregator;
             SelectedSize = string.IsNullOrEmpty(pf.Size) ? "Regular" : pf.Size;
+            (PreviewViewModel as Preview.PreflightViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+            (PreviewViewModel as Preview.PreflightViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
         }
 
         public string Title

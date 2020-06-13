@@ -8,11 +8,12 @@ using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
-    class ErrorInfoViewModel : PropertyChangedBase, IPreview, IHandle<EventAggregators.SendMessage>
+    public class ErrorInfoViewModel : PropertyChangedBase, IPreview, IHandle<EventAggregators.SendMessage>
     {
         public IEventAggregator EventAggregator { get; set; }
         public string WindowHeight { get; set; } = "Regular";
         public string Font { get; set; } = "Tahoma";
+        public bool HasCustomPreview { get; } = false;
         public bool PreviewRefreshButtonVisible { get { return false; } }
         public bool PreviewAcceptButtonVisible { get { return false; } }
 

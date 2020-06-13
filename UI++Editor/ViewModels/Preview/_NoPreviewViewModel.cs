@@ -16,5 +16,6 @@ namespace UI__Editor.ViewModels.Preview
         public bool PreviewAcceptButtonVisible { get { return false; } }
         public string WindowHeight { get; set; } = "Regular";
         public string Font { get; set; } = "Tahoma";
+        public bool HasCustomPreview { get; } = false;
     }
 }

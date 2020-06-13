@@ -15,6 +15,7 @@ namespace UI__Editor.ViewModels.Preview
         bool PreviewCancelButtonVisible { get; }
         bool PreviewAcceptButtonVisible { get; }
         string Font { get; set; }
+        bool HasCustomPreview { get; }
         string WindowHeight { get; set; }
     }
 }
