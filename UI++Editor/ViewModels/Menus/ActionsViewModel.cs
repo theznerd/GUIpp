@@ -165,7 +165,7 @@ namespace UI__Editor.ViewModels.Menus
             set
             {
                 _SelectedActionsTreeView = value;
-                if(_SelectedActionsTreeView.ViewModel.PreviewViewModel.HasCustomPreview)
+                if(null != _SelectedActionsTreeView && _SelectedActionsTreeView.ViewModel.PreviewViewModel.HasCustomPreview)
                 {
                     CustomPreview = new ObservableCollection<IPreview>();
                     CustomPreview.Add(_SelectedActionsTreeView.ViewModel.PreviewViewModel);
@@ -506,7 +506,7 @@ namespace UI__Editor.ViewModels.Menus
                             IElement nextAction = ActionsTreeView[actionIndex + 1];
                             if(nextAction.ActionType == "Action Group")
                             {
-                                (nextAction as ActionGroup).AddChild(SelectedActionsTreeView, 0);
+                                (nextAction as ActionGroup).AddChild(SelectedActionsTreeView, -1);
                                 ActionsTreeView.Remove(SelectedActionsTreeView);
                             }
                             else

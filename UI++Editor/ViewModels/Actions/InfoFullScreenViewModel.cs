@@ -42,8 +42,8 @@ namespace UI__Editor.ViewModels.Actions
             get { return (ModelClass as InfoFullScreen).BackgroundColor; }
             set
             {
-                (ModelClass as InfoFullScreen).BackgroundColor = value;
-                (PreviewViewModel as Preview.InfoFullScreenViewModel).BackgroundColor = value;
+                (ModelClass as InfoFullScreen).BackgroundColor = value.Replace("#FF", "#");
+                (PreviewViewModel as Preview.InfoFullScreenViewModel).BackgroundColor = value.Replace("#FF", "#");
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
                 NotifyOfPropertyChange(() => BackgroundColor);
             }
@@ -54,8 +54,8 @@ namespace UI__Editor.ViewModels.Actions
             get { return (ModelClass as InfoFullScreen).TextColor; }
             set
             {
-                (ModelClass as InfoFullScreen).TextColor = value;
-                (PreviewViewModel as Preview.InfoFullScreenViewModel).TextColor = value;
+                (ModelClass as InfoFullScreen).TextColor = value.Replace("#FF","#");
+                (PreviewViewModel as Preview.InfoFullScreenViewModel).TextColor = value.Replace("#FF", "#");
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
                 NotifyOfPropertyChange(() => TextColor);
             }

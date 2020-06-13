@@ -76,9 +76,9 @@ namespace UI__Editor.ViewModels.Menus
             get { return _configColor; }
             set
             {
-                _configColor = value;
-                UIpp.Color = value;
-                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("color", value));
+                _configColor = value.Replace("#FF", "#");
+                UIpp.Color = value.Replace("#FF", "#");
+                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("color", value.Replace("#FF", "#")));
                 NotifyOfPropertyChange(() => ConfigColor);
             }
         }
