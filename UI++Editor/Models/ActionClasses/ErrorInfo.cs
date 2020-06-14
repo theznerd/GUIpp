@@ -22,6 +22,7 @@ namespace UI__Editor.Models.ActionClasses
         public string Image { get; set; }
         public string InfoImage { get; set; }
         public string Title { get; set; }
+        public bool CenterTitle = false;
         public string Content { get; set; }
         public string Condition { get; set; }
 
@@ -43,6 +44,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute image = d.CreateAttribute("Image");
             XmlAttribute infoImage = d.CreateAttribute("InfoImage");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute centerTitle = d.CreateAttribute("CenterTitle");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
@@ -53,6 +55,7 @@ namespace UI__Editor.Models.ActionClasses
             image.Value = Image;
             infoImage.Value = InfoImage;
             title.Value = Title;
+            centerTitle.Value = CenterTitle.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -81,6 +84,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 output.Attributes.Append(condition);
             }
+            output.Attributes.Append(centerTitle);
 
             // Set Content
             output.InnerText = Content;

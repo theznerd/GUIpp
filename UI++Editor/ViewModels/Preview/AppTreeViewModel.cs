@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI__Editor.ViewModels.Preview
 {
-    public class AppTreeViewModel : IPreview
+    public class AppTreeViewModel : PropertyChangedBase, IPreview
     {
         public IEventAggregator EventAggregator { get; set; }
         public bool PreviewRefreshButtonVisible { get { return false; } }
@@ -17,5 +17,21 @@ namespace UI__Editor.ViewModels.Preview
         public string WindowHeight { get; set; } = "Regular";
         public string Font { get; set; } = "Tahoma";
         public bool HasCustomPreview { get; } = false;
+
+        private bool _CenterTitle;
+        public bool CenterTitle
+        {
+            get { return _CenterTitle; }
+            set
+            {
+                _CenterTitle = value;
+                NotifyOfPropertyChange(() => CenterTitle);
+                NotifyOfPropertyChange(() => CenterTitleConverter);
+            }
+        }
+        public string CenterTitleConverter
+        {
+            get { return CenterTitle ? "Center" : "Left"; }
+        }
     }
 }

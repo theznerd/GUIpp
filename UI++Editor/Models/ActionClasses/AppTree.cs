@@ -23,6 +23,7 @@ namespace UI__Editor.Models.ActionClasses
         public string Title { get; set; }
         public string Size { get; set; } // default is regular | regular, tall, and extratall
         public bool? Expanded { get; set; } // default is true
+        public bool CenterTitle = false;
         public SoftwareSets Sets { get; set; }
         public string Condition { get; set; }
 
@@ -45,6 +46,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute title = d.CreateAttribute("Title");
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute expanded = d.CreateAttribute("Expanded");
+            XmlAttribute centerTitle = d.CreateAttribute("CenterTitle");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
@@ -56,6 +58,7 @@ namespace UI__Editor.Models.ActionClasses
             title.Value = Title;
             size.Value = Size;
             expanded.Value = Expanded.ToString();
+            centerTitle.Value = CenterTitle.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -92,6 +95,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 output.Attributes.Append(condition);
             }
+            output.Attributes.Append(centerTitle);
 
             // Append Child
             XmlNode importNode = d.ImportNode(Sets.GenerateXML(), true);

@@ -175,6 +175,7 @@ namespace UI__Editor.ViewModels.Menus
                 NotifyOfPropertyChange(() => PreviewBox);
                 NotifyOfPropertyChange(() => CustomPreview);
                 NotifyOfPropertyChange(() => CustomPreviewVisibilityConverter);
+                NotifyOfPropertyChange(() => PreviewVisibilityConverter);
                 NotifyOfPropertyChange(() => PreviewRefreshButtonVisible);
                 NotifyOfPropertyChange(() => PreviewBackButtonVisible);
                 NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
@@ -633,6 +634,17 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
+        private string _Icon;
+        public string Icon
+        {
+            get { return _Icon; }
+            set
+            {
+                _Icon = value;
+                NotifyOfPropertyChange(() => Icon);
+            }
+        }
+
         public void Handle(EventAggregators.ChangeUI change)
         {
             switch(change.Type)
@@ -651,6 +663,9 @@ namespace UI__Editor.ViewModels.Menus
                     break;
                 case "title":
                     ActionPreviewTitle = (string)change.Data;
+                    break;
+                case "icon":
+                    Icon = (string)change.Data;
                     break;
                 default:
                     break;

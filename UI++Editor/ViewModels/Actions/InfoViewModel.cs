@@ -157,6 +157,16 @@ namespace UI__Editor.ViewModels.Actions
             }
         }
 
+        public bool CenterTitle
+        {
+            get { return (ModelClass as Info).CenterTitle; }
+            set
+            {
+                (ModelClass as Info).CenterTitle = value;
+                (PreviewViewModel as Preview.InfoViewModel).CenterTitle = value;
+            }
+        }
+
         public string Content
         {
             get { return (ModelClass as Info).Content; }

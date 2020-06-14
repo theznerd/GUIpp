@@ -66,6 +66,17 @@ namespace UI__Editor.ViewModels.Actions
             get { return (ModelClass as AppTree).Expanded; }
             set { (ModelClass as AppTree).Expanded = value; }
         }
+
+        public bool CenterTitle
+        {
+            get { return (ModelClass as AppTree).CenterTitle; }
+            set
+            {
+                (ModelClass as AppTree).CenterTitle = value;
+                (PreviewViewModel as Preview.AppTreeViewModel).CenterTitle = value;
+            }
+        }
+
         public string Condition
         {
             get { return (ModelClass as AppTree).Condition; }

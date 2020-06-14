@@ -111,6 +111,17 @@ namespace UI__Editor.ViewModels.Actions
                 (PreviewViewModel as Preview.ErrorInfoViewModel).InfoViewText = value;
             }
         }
+
+        public bool CenterTitle
+        {
+            get { return (ModelClass as ErrorInfo).CenterTitle; }
+            set
+            {
+                (ModelClass as ErrorInfo).CenterTitle = value;
+                (PreviewViewModel as Preview.ErrorInfoViewModel).CenterTitle = value;
+            }
+        }
+
         public string Condition
         {
             get { return (ModelClass as ErrorInfo).Condition; }

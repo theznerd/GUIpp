@@ -22,6 +22,7 @@ namespace UI__Editor.Models.ActionClasses
         public bool? ADValidate { get; set; } = false;
         public string Name { get; set; }
         public string Size { get; set; } // default is Regular | Regular, Tall
+        public bool CenterTitle = false;
         public string Title { get; set; }
         public ObservableCollection<IInput> SubChildren { get; set; }
         public string Condition { get; set; }
@@ -44,6 +45,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute name = d.CreateAttribute("Name");
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute title = d.CreateAttribute("Title");
+            XmlAttribute centerTitle = d.CreateAttribute("CenterTitle");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
@@ -54,6 +56,7 @@ namespace UI__Editor.Models.ActionClasses
             name.Value = Name;
             size.Value = Size;
             title.Value = Title;
+            centerTitle.Value = CenterTitle.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -86,6 +89,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 output.Attributes.Append(condition);
             }
+            output.Attributes.Append(centerTitle);
 
             // Append Children
             foreach (IInput input in SubChildren)

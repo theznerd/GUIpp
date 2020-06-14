@@ -192,7 +192,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="AppBootstrapper.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TreeViewSelectionBehavior.cs" />
+    <Compile Include="Globals.cs" />
     <Compile Include="Models\ActionClasses\DefaultValues.cs" />
     <Compile Include="Models\ActionClasses\Info.cs" />
     <Compile Include="Models\ActionClasses\ErrorInfo.cs" />

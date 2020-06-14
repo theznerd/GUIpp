@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using UI__Editor.Models;
 using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
@@ -69,6 +70,15 @@ namespace UI__Editor.ViewModels.Preview
             }
         }
 
+        public string ImageUri
+        {
+            get { return Controllers.ImageController.ConvertURI(Image, Globals.BaseXMLPath); }
+        }
+        public string InfoImageUri
+        {
+            get { return Controllers.ImageController.ConvertURI(InfoImage, Globals.BaseXMLPath); }
+        }
+
         private string _Image;
         public string Image
         {
@@ -77,6 +87,7 @@ namespace UI__Editor.ViewModels.Preview
             {
                 _Image = value;
                 NotifyOfPropertyChange(() => Image);
+                NotifyOfPropertyChange(() => ImageUri);
                 NotifyOfPropertyChange(() => ImageVisibilityConverter);
             }
         }
@@ -127,8 +138,25 @@ namespace UI__Editor.ViewModels.Preview
             set
             {
                 _InfoImage = value;
+                NotifyOfPropertyChange(() => InfoImageUri);
                 NotifyOfPropertyChange(() => InfoImage);
             }
+        }
+
+        private bool _CenterTitle;
+        public bool CenterTitle
+        {
+            get { return _CenterTitle; }
+            set
+            {
+                _CenterTitle = value;
+                NotifyOfPropertyChange(() => CenterTitle);
+                NotifyOfPropertyChange(() => CenterTitleConverter);
+            }
+        }
+        public string CenterTitleConverter
+        {
+            get { return CenterTitle ? "Center" : "Left"; }
         }
     }
 }

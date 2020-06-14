@@ -24,6 +24,7 @@ namespace UI__Editor.Models.ActionClasses
         public string Title { get; set; }
         public int? Timeout { get; set; } // default is 0, no timeout
         public string TimeoutAction { get; set; } // default is continue | continue, cancel, return code (Cancel + custom exit code)
+        public bool CenterTitle = false;
         public string Content { get; set; }
         public string Condition { get; set; }
 
@@ -47,6 +48,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute title = d.CreateAttribute("Title");
             XmlAttribute timeout = d.CreateAttribute("Timeout");
             XmlAttribute timeoutAction = d.CreateAttribute("TimeoutAction");
+            XmlAttribute centerTitle = d.CreateAttribute("CenterTitle");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
@@ -59,6 +61,7 @@ namespace UI__Editor.Models.ActionClasses
             title.Value = Title;
             timeout.Value = Timeout.ToString();
             timeoutAction.Value = TimeoutAction;
+            centerTitle.Value = CenterTitle.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -95,6 +98,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 output.Attributes.Append(condition);
             }
+            output.Attributes.Append(centerTitle);
 
             // Set Content
             output.InnerText = Content;

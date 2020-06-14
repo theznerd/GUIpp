@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.Models;
 
 namespace UI__Editor.ViewModels.Preview
 {
@@ -26,7 +27,13 @@ namespace UI__Editor.ViewModels.Preview
             {
                 _Image = value;
                 NotifyOfPropertyChange(() => Image);
+                NotifyOfPropertyChange(() => ImageUri);
             }
+        }
+
+        public string ImageUri
+        {
+            get { return Controllers.ImageController.ConvertURI(Image, Globals.BaseXMLPath); }
         }
 
         private string _Text;

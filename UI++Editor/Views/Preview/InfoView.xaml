@@ -13,7 +13,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Image x:Name="Image" Source="{Binding Image}" Width="462" Height="75" Margin="0,10,0,0" Stretch="UniformToFill" StretchDirection="Both" Visibility="{Binding ImageVisibilityConverter}" />
+        <Image x:Name="Image" Source="{Binding ImageUri}" Width="462" Height="75" Margin="0,10,0,0" Stretch="UniformToFill" StretchDirection="Both" Visibility="{Binding ImageVisibilityConverter}" />
         <Viewbox Grid.Row="1" StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
             <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
         </Viewbox>
@@ -23,6 +23,6 @@
                     LoadCompleted="WebBrowser_LoadCompleted"
                     Visibility="{Binding WebBrowserVisibilityConverter}"
                     />
-        <Image x:Name="InfoImage" Margin="0,0,0,18" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="{Binding InfoImage}" />
+        <Image x:Name="InfoImage" Margin="0,0,0,18" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Source="{Binding InfoImageUri}" />
     </Grid>
 </UserControl>

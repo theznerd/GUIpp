@@ -48,5 +48,21 @@ namespace UI__Editor.ViewModels.Preview
                 NotifyOfPropertyChange(() => Title);
             }
         }
+
+        private bool _CenterTitle;
+        public bool CenterTitle
+        {
+            get { return _CenterTitle; }
+            set
+            {
+                _CenterTitle = value;
+                NotifyOfPropertyChange(() => CenterTitle);
+                NotifyOfPropertyChange(() => CenterTitleConverter);
+            }
+        }
+        public string CenterTitleConverter
+        {
+            get { return CenterTitle ? "Center" : "Left"; }
+        }
     }
 }

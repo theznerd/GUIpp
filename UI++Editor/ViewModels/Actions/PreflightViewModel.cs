@@ -178,6 +178,16 @@ namespace UI__Editor.ViewModels.Actions
             }
         }
 
+        public bool CenterTitle
+        {
+            get { return (ModelClass as Preflight).CenterTitle; }
+            set
+            {
+                (ModelClass as Preflight).CenterTitle = value;
+                (PreviewViewModel as Preview.PreflightViewModel).CenterTitle = value;
+            }
+        }
+
         public string Condition
         {
             get { return (ModelClass as Preflight).Condition; }

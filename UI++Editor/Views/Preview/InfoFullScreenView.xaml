@@ -42,7 +42,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height=".5*" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" MaxWidth="576" MaxHeight="180" Source="{Binding Image}" />
+        <Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" MaxWidth="576" MaxHeight="180" Source="{Binding ImageUri}" />
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch" Orientation="Vertical" Grid.Row="1">
             <TextBlock x:Name="Text" FontFamily="{Binding Font}" Foreground="{Binding TextColor}" HorizontalAlignment="Center" FontSize="14" />
             <ProgressBar Template="{StaticResource CustomProgressBar}" IsIndeterminate="True" Margin="100,5" />

@@ -54,7 +54,9 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _configRootXMLPath = value;
                 UIpp.RootXMLPath = value;
+                Globals.BaseXMLPath = value;
                 NotifyOfPropertyChange(() => ConfigRootXMLPath);
+                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("icon", Controllers.ImageController.ConvertURI(ConfigIcon, Globals.BaseXMLPath)));
             }
         }
 
@@ -66,6 +68,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _configIcon = value;
                 UIpp.Icon = value;
+                _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("icon", Controllers.ImageController.ConvertURI(value, Globals.BaseXMLPath)));
                 NotifyOfPropertyChange(() => ConfigIcon);
             }
         }

@@ -25,6 +25,7 @@ namespace UI__Editor.Models.ActionClasses
         public string Size { get; set; }
         public int Timeout { get; set; } = 0; // default is 0, no timeout
         public string TimeoutAction { get; set; } // default is Continue | Continue, ContinueOnWarning, Cance, or custom (cancel + exitcode)
+        public bool CenterTitle = false;
         public int TimeoutReturnCode { get; set; }
         public ObservableCollection<Check> SubChildren { get; set; }
         public string Condition { get; set; }
@@ -48,6 +49,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute timeout = d.CreateAttribute("Timeout");
             XmlAttribute timeoutAction = d.CreateAttribute("TimeoutAction");
+            XmlAttribute centerTitle = d.CreateAttribute("CenterTitle");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
@@ -66,6 +68,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 timeoutAction.Value = TimeoutAction;
             }
+            centerTitle.Value = CenterTitle.ToString();
             condition.Value = Condition;
 
             // Append Attributes
@@ -102,6 +105,7 @@ namespace UI__Editor.Models.ActionClasses
             {
                 output.Attributes.Append(condition);
             }
+            output.Attributes.Append(centerTitle);
 
             // Append Children
             foreach (Check check in SubChildren)

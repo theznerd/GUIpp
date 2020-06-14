@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -38,7 +39,8 @@
         <CheckBox x:Name="AppTreeExpanded" Margin="10,5" Grid.Row="4" IsChecked="True" Grid.ColumnSpan="3">Expand Tree at Launch</CheckBox>
         <CheckBox x:Name="AppTreeShowBack" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Show Back Button</CheckBox>
         <CheckBox x:Name="AppTreeShowCancel" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
-        <Label Margin="10,5" Grid.Row="7">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="7" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <CheckBox x:Name="CenterTitle" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Center Title</CheckBox>
+        <Label Margin="10,5" Grid.Row="8">Condition:</Label>
+        <TextBox x:Name="ConditionString" Grid.Row="8" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

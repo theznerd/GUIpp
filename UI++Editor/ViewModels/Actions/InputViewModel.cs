@@ -119,6 +119,16 @@ namespace UI__Editor.ViewModels.Actions
             }
         }
 
+        public bool CenterTitle
+        {
+            get { return (ModelClass as Input).CenterTitle; }
+            set
+            {
+                (ModelClass as Input).CenterTitle = value;
+                (PreviewViewModel as Preview.InputViewModel).CenterTitle = value;
+            }
+        }
+
         public string Condition
         {
             get { return (ModelClass as Input).Condition; }
