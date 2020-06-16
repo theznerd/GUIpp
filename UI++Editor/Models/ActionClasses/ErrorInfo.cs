@@ -9,7 +9,7 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class ErrorInfo : IElement, IAction
+    public class ErrorInfo : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public IElement Parent { get; set; }
@@ -26,6 +26,17 @@ namespace UI__Editor.Models.ActionClasses
         public string Content { get; set; }
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public ErrorInfo(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;

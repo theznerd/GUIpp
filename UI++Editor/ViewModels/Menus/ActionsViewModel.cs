@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -46,6 +47,53 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
+        private ObservableCollection<Interfaces.IChildElement> _SubActionsTreeView;
+        public ObservableCollection<Interfaces.IChildElement> SubActionsTreeView
+        {
+            get { return _SubActionsTreeView; }
+            set
+            {
+                _SubActionsTreeView = value;
+                NotifyOfPropertyChange(() => SubActionsTreeView);
+                NotifyOfPropertyChange(() => SelectedSubActionsTreeView);
+            }
+        }
+
+        private IChildElement _SelectedSubActionsTreeView;
+        public IChildElement SelectedSubActionsTreeView
+        {
+            get { return _SelectedSubActionsTreeView; }
+            set
+            {
+                _SelectedSubActionsTreeView = value;
+                NotifyOfPropertyChange(() => SelectedSubActionsTreeView);
+            }
+        }
+
+        public void SubActionsTreeViewChanged(IChildElement selectedSubAction)
+        {
+            SelectedSubActionsTreeView = selectedSubAction;
+            NotifyOfPropertyChange(() => CanSubEditButton);
+        }
+
+        public bool CanSubEditButton
+        {
+            get
+            {
+                return null != SelectedSubActionsTreeView;
+            }
+        }
+
+        public void SubEditButton()
+        {
+            if (null != SelectedSubActionsTreeView)
+            {
+                FlyoutContent = SelectedSubActionsTreeView.ViewModel;
+                FlyoutTitle = SelectedSubActionsTreeView.ViewModel.ActionTitle;
+                ActionsFlyOutShown = true;
+            }
+        }
+
         public string SubElementsVisibliltyConverter
         {
             get
@@ -61,9 +109,13 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
-        public void ActionsTreeViewChanged(Interfaces.IElement selectedAction)
+        public void ActionsTreeViewChanged(IElement selectedAction)
         {
             SelectedActionsTreeView = selectedAction;
+            if (null != selectedAction && selectedAction.HasSubChildren)
+            {
+                SubActionsTreeView = (selectedAction as IParentElement).SubChildren;
+            }
             NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
             NotifyOfPropertyChange(() => PreviewBackButtonVisible);
             NotifyOfPropertyChange(() => PreviewCancelButtonVisible);
@@ -186,12 +238,30 @@ namespace UI__Editor.ViewModels.Menus
         }
 
         private IEventAggregator _eventAggregator = new EventAggregator();
-        private IEventAggregator _actionEventAggregator;
         public ActionsViewModel(IEventAggregator ea, UIpp uipp)
         {
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
+
+            Switch s = new Switch(_eventAggregator);
+            Case c = new Case();
+            Variable v = new Variable()
+            {
+                Name = "TestVariable",
+                DontEval = true,
+                Content = "TestTestBaby"
+            };
+            Variable v2 = new Variable()
+            {
+                Name = "TestVariable2",
+                DontEval = true,
+                Content = "TestTestBaby"
+            };
+            c.Children.Add(v);
+            c.Children.Add(v2);
+            s.SubChildren.Add(c);
+            UIpp.Actions.actions.Add(s);
 
             FontFamilies = new List<string>();
             foreach(FontFamily f in Fonts.SystemFontFamilies)
@@ -199,7 +269,6 @@ namespace UI__Editor.ViewModels.Menus
                 FontFamilies.Add(f.Source);
             }
             
-            _actionEventAggregator = new EventAggregator();
             ActionsTreeView = UIpp.Actions.actions;
         }
 
@@ -566,6 +635,44 @@ namespace UI__Editor.ViewModels.Menus
                 }
                 NotifyOfPropertyChange(() => ActionsTreeView);
             }
+        }
+
+        public string SubDialogVisibilityConverter
+        {
+            get { return SubDialogIsVisible ? "Visible" : "Collapsed"; }
+        }
+
+        private bool _SubDialogIsVisible = false;
+        public bool SubDialogIsVisible
+        {
+            get { return _SubDialogIsVisible; }
+            set
+            {
+                _SubDialogIsVisible = value;
+                _eventAggregator.BeginPublishOnUIThread(new SendMessage("DialogVisible", value)); // to hide the webbrowser element on some previews
+                NotifyOfPropertyChange(() => SubDialogIsVisible);
+                NotifyOfPropertyChange(() => SubDialogVisibilityConverter);
+            }
+        }
+
+        public void SubAddButton()
+        {
+            SubDialogIsVisible = true;
+        }
+
+        public void SubDeleteButton()
+        {
+            // write handling code for removing child objects from their parent
+        }
+
+        public void AddSubActionOk()
+        {
+            SubDialogIsVisible = false;
+        }
+
+        public void AddSubActionCancel()
+        {
+            SubDialogIsVisible = false;
         }
 
         private string _flyoutTitle;

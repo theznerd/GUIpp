@@ -13,6 +13,7 @@ namespace UI__Editor.Interfaces
         bool HasSubChildren { get; }
         IElement Parent { get; set; }
         ViewModels.Actions.IAction ViewModel { get; set; }
+        bool TVSelected { get; set; } // for the tree view, not optimal
         XmlNode GenerateXML();
     }
 }

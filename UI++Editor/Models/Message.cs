@@ -16,6 +16,17 @@ namespace UI__Editor.Models
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Message"; } }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         private string _Id;
         public string Id
         {

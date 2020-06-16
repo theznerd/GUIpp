@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UI__Editor.Interfaces;
 
 namespace UI__Editor.Views.Menus
 {
@@ -23,6 +24,22 @@ namespace UI__Editor.Views.Menus
         public ActionsView()
         {
             InitializeComponent();
+        }
+
+        private void ActionsTreeView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(null != ActionsTreeView.SelectedItem)
+            {
+                (ActionsTreeView.SelectedItem as IElement).TVSelected = false;
+            }
+        }
+
+        private void SubActionsTreeView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (null != SubActionsTreeView.SelectedItem)
+            {
+                (SubActionsTreeView.SelectedItem as IElement).TVSelected = false;
+            }
         }
     }
 }

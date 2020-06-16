@@ -59,6 +59,17 @@ namespace UI__Editor.Models
         public string Name { get; set; } // not part of UI++ XML, used for Available Software only
         public string Type { get { return this.GetType().Name; } } // not part of UI++ XML, used for Software Blade
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

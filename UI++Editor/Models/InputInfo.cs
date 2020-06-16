@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,17 +9,28 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class InputInfo : IElement, IInput
+    public class InputInfo : PropertyChangedBase, IElement, IInput
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
-        public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        // public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Input Info"; } }
         public string Color { get; set; }
         public int NumberOfLines { get; set; } = 1; // 1-2
-        public string Content { get; set; } 
+        public string Content { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

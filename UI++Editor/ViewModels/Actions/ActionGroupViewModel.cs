@@ -24,7 +24,7 @@ namespace UI__Editor.ViewModels.Actions
         public ActionGroupViewModel(ActionGroup actionGroup)
         {
             ModelClass = actionGroup;
-            EventAggregator = (actionGroup as ActionGroup).EventAggregator;
+            EventAggregator = actionGroup.EventAggregator;
         }
 
         public string Name

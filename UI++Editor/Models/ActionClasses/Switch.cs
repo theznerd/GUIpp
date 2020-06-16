@@ -10,7 +10,7 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class Switch : IElement, IAction
+    public class Switch : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -19,8 +19,21 @@ namespace UI__Editor.Models.ActionClasses
         public string ActionType { get; } = "Switch";
         public bool? DontEval { get; set; } = false;
         public string OnValue { get; set; } // required
-        public ObservableCollection<Case> SubChildren { get; set; }
+        public string[] ValidChildren { get; set; } = { "Case" };
+        public ObservableCollection<IChildElement> SubChildren { get; set; } = new ObservableCollection<IChildElement>();
         public string Condition { get; set; }
+
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
 
         public Switch(IEventAggregator eventAggregator)
         {

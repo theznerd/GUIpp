@@ -9,7 +9,7 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class SaveItems : IElement, IAction
+    public class SaveItems : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -20,6 +20,17 @@ namespace UI__Editor.Models.ActionClasses
         public string Path { get; set; } // required
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public SaveItems(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;

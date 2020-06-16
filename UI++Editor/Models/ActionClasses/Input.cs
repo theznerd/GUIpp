@@ -10,7 +10,7 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class Input : IElement, IAction
+    public class Input : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -27,6 +27,17 @@ namespace UI__Editor.Models.ActionClasses
         public ObservableCollection<IInput> SubChildren { get; set; }
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public Input(IEventAggregator ea)
         {
             EventAggregator = ea;

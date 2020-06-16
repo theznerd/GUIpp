@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace UI__Editor.Interfaces
 {
-    public interface IInput : IElement
+    public interface IChildElement : IElement
     {
-        // ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
+        string[] ValidChildren { get; set; }
+        string[] ValidParents { get; set; }
     }
 }

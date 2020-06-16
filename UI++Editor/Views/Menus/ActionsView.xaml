@@ -33,7 +33,12 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">UI++ Steps</Label>
-            <TreeView x:Name="ActionsTreeView" Grid.Row="1" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]">
+            <TreeView Padding="0,0,0,15" x:Name="ActionsTreeView" Grid.Row="1" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" MouseDown="ActionsTreeView_MouseDown">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding TVSelected}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate DataType="{x:Type src:IElement}" ItemsSource="{Binding Children}">
                         <TextBlock Text="{Binding ActionType}" />
@@ -52,7 +57,18 @@
                 <Button x:Name="DeleteButton" Margin="5,0,0,0" FontSize="14">Delete</Button>
             </StackPanel>
             <Label Grid.Row="3" FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center" Visibility="{Binding SubElementsVisibliltyConverter}">Step Sub Elements</Label>
-            <TreeView Grid.Row="4" x:Name="SubTreeView" BorderThickness="1" Margin="0,0,0,5" Visibility="{Binding SubElementsVisibliltyConverter}" />
+            <TreeView Grid.Row="4" x:Name="SubActionsTreeView" ItemsSource="{Binding SubActionsTreeView}" BorderThickness="1" Margin="0,0,0,5" Visibility="{Binding SubElementsVisibliltyConverter}" cal:Message.Attach="[Event SelectedItemChanged] = [Action SubActionsTreeViewChanged($this)]" MouseDown="SubActionsTreeView_MouseDown">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
+                        <Setter Property="IsSelected" Value="{Binding TVSelected}" />
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate  DataType="{x:Type src:IElement}" ItemsSource="{Binding Children}">
+                        <TextBlock Text="{Binding ActionType}" />
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
             <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding SubElementsVisibliltyConverter}">
                 <Button x:Name="SubAddButton" Margin="5,0,0,0" FontSize="14">Add</Button>
                 <Button x:Name="SubEditButton" Margin="5,0,0,0" FontSize="14">Edit</Button>
@@ -200,6 +216,36 @@
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,0,0,20">
                     <Button x:Name="AddActionOk" Margin="5" FontSize="15">Add</Button>
                     <Button x:Name="AddActionCancel" Margin="5" FontSize="15">Cancel</Button>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.ColumnSpan="2" Background="#99000000" Visibility="{Binding SubDialogVisibilityConverter}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Background="White" Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="AddSubActionTitle" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" FontFamily="Segoe UI" FontSize="30" Margin="0,20,0,0">Select a sub-element to add:</Label>
+                <ComboBox x:Name="AddSubActionList" Grid.Column="1" Grid.Row="1" Margin="5" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,0,0,20">
+                    <Button x:Name="AddSubActionOk" Margin="5" FontSize="15">Add</Button>
+                    <Button x:Name="AddSubActionCancel" Margin="5" FontSize="15">Cancel</Button>
                 </StackPanel>
             </Grid>
         </Grid>

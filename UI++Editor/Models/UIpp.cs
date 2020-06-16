@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,7 +10,7 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class UIpp : IElement
+    public class UIpp : PropertyChangedBase, IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
@@ -27,6 +28,17 @@ namespace UI__Editor.Models
         public Actions Actions { get; set; }
         public Messages Messages { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public UIpp()
         {
             Software = new Software();

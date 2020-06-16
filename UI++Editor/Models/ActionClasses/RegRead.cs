@@ -10,7 +10,7 @@ using System.Management.Instrumentation;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class RegRead : IElement, IAction
+    public class RegRead : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -25,6 +25,17 @@ namespace UI__Editor.Models.ActionClasses
         public string Value { get; set; } // required
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public RegRead(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;

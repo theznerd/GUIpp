@@ -22,6 +22,17 @@ namespace UI__Editor.Models.ActionClasses
         public string Condition { get; set; }
         public ObservableCollection<IInput> SubChildren { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public class ValueType : PropertyChangedBase
         {
             public string Name { get; set; }

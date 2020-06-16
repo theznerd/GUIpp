@@ -11,7 +11,7 @@ using System.Management.Instrumentation;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class Preflight : IElement, IAction
+    public class Preflight : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -30,6 +30,17 @@ namespace UI__Editor.Models.ActionClasses
         public ObservableCollection<Check> SubChildren { get; set; }
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public Preflight(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;

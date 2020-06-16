@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -11,7 +12,7 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class ChoiceList : IElement, IChoice
+    public class ChoiceList : PropertyChangedBase, IElement, IChoice
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
@@ -21,6 +22,17 @@ namespace UI__Editor.Models
         public string OptionList { get; set; }
         public string ValueList { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class Field : IElement
+    public class Field : PropertyChangedBase, IElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
@@ -22,6 +23,17 @@ namespace UI__Editor.Models
         public bool ReadOnly { get; set; } = false;
         public string RegEx { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

@@ -10,7 +10,7 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class Actions : IElement, IRootElement
+    public class Actions : PropertyChangedBase, IElement, IRootElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IEventAggregator EventAggregator { get; set; }
@@ -19,6 +19,17 @@ namespace UI__Editor.Models
         public string RootElementType { get; } = "Actions";
         public string ActionType { get { return "Actions"; } }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public ObservableCollection<IElement> actions;
 
         public Actions()

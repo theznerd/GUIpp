@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UI__Editor.ViewModels.Actions.Children
 {
-    public interface IInput
+    public interface IChild
     {
 
     }

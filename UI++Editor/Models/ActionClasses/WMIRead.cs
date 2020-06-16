@@ -9,7 +9,7 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class WMIRead : IElement, IAction
+    public class WMIRead : PropertyChangedBase, IElement, IAction
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -25,6 +25,17 @@ namespace UI__Editor.Models.ActionClasses
         public string Query { get; set; } // required
         public string Condition { get; set; }
 
+        // Code to handle TreeView Selection
+        private bool _TVSelected = false;
+        public bool TVSelected
+        {
+            get { return _TVSelected; }
+            set
+            {
+                _TVSelected = value;
+                NotifyOfPropertyChange(() => TVSelected);
+            }
+        }
         public WMIRead(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
