@@ -149,9 +149,7 @@
                         <TextBlock x:Name="AEHeader" FontSize="24" FontFamily="Segoe UI Light" xml:space="preserve" Padding="0,5"> Software Item</TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left" Margin="5" Grid.ColumnSpan="3">
-                        <Label FontSize="16" FontFamily="Segoe UI Light">Package</Label>
-                        <ma:ToggleSwitchButton x:Name="AEType" IsEnabled="{Binding CanToggleType}" />
-                        <Label x:Name="AEAppLabel" FontSize="16" FontFamily="Segoe UI Light">Application</Label>
+                        <ma:ToggleSwitch FontFamily="Segoe UI Light" FontSize="16" IsOn="{Binding AEType}" IsEnabled="{Binding CanToggleType}" OnContent="Application" OffContent="Package" />
                     </StackPanel>
                     <Label Margin="0,5" Grid.Row="2" Grid.Column="0" FontSize="16" FontFamily="Segoe UI Light">ID:</Label>
                     <TextBox FontSize="16" Margin="0,5" Grid.Row="2" Grid.Column="1" x:Name="AEID" />

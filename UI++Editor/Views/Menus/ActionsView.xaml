@@ -33,7 +33,18 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Label FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center">UI++ Steps</Label>
-            <TreeView Padding="0,0,0,15" x:Name="ActionsTreeView" Grid.Row="1" BorderThickness="1" Margin="0,0,0,5" ItemsSource="{Binding ActionsTreeView}" cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" MouseDown="ActionsTreeView_MouseDown">
+            <TreeView x:Name="ActionsTreeView" 
+                      Grid.Row="1" BorderThickness="1" 
+                      Margin="0,0,0,5" 
+                      ItemsSource="{Binding ActionsTreeView}" 
+                      cal:Message.Attach="[Event SelectedItemChanged] = [Action ActionsTreeViewChanged($this)]" 
+                      MouseDown="ActionsTreeView_MouseDown"
+                      Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Margin="1,1,1,20" IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding TVSelected}" />
@@ -57,14 +68,26 @@
                 <Button x:Name="DeleteButton" Margin="5,0,0,0" FontSize="14">Delete</Button>
             </StackPanel>
             <Label Grid.Row="3" FontFamily="Segoe UI Light" Padding="0,5,0,0" FontSize="20" HorizontalAlignment="Center" Visibility="{Binding SubElementsVisibliltyConverter}">Step Sub Elements</Label>
-            <TreeView Grid.Row="4" x:Name="SubActionsTreeView" ItemsSource="{Binding SubActionsTreeView}" BorderThickness="1" Margin="0,0,0,5" Visibility="{Binding SubElementsVisibliltyConverter}" cal:Message.Attach="[Event SelectedItemChanged] = [Action SubActionsTreeViewChanged($this)]" MouseDown="SubActionsTreeView_MouseDown">
+            <TreeView Grid.Row="4" 
+                      x:Name="SubActionsTreeView" 
+                      ItemsSource="{Binding SubActionsTreeView}" 
+                      BorderThickness="1" Margin="0,0,0,5" 
+                      Visibility="{Binding SubElementsVisibliltyConverter}" 
+                      cal:Message.Attach="[Event SelectedItemChanged] = [Action SubActionsTreeViewChanged($this)]" 
+                      MouseDown="SubActionsTreeView_MouseDown"
+                      Style="{StaticResource MahApps.Styles.TreeView.Virtualized}">
+                <TreeView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel Margin="1,1,1,20" IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </TreeView.ItemsPanel>
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding TVSelected}" />
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate  DataType="{x:Type src:IElement}" ItemsSource="{Binding Children}">
+                    <HierarchicalDataTemplate  DataType="{x:Type src:IElement}" ItemsSource="{Binding SubChildren}">
                         <TextBlock Text="{Binding ActionType}" />
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>

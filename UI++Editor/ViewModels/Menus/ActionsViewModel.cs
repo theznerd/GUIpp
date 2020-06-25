@@ -67,6 +67,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _SelectedSubActionsTreeView = value;
                 NotifyOfPropertyChange(() => SelectedSubActionsTreeView);
+                NotifyOfPropertyChange(() => AddSubActionList);
             }
         }
 
@@ -234,6 +235,7 @@ namespace UI__Editor.ViewModels.Menus
                 NotifyOfPropertyChange(() => PreviewAcceptButtonVisible);
                 NotifyOfPropertyChange(() => WindowHeight);
                 NotifyOfPropertyChange(() => CanMoveAction);
+                NotifyOfPropertyChange(() => AddSubActionList);
             }
         }
 
@@ -243,25 +245,6 @@ namespace UI__Editor.ViewModels.Menus
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
             UIpp = uipp;
-
-            Switch s = new Switch(_eventAggregator);
-            Case c = new Case();
-            Variable v = new Variable()
-            {
-                Name = "TestVariable",
-                DontEval = true,
-                Content = "TestTestBaby"
-            };
-            Variable v2 = new Variable()
-            {
-                Name = "TestVariable2",
-                DontEval = true,
-                Content = "TestTestBaby"
-            };
-            c.Children.Add(v);
-            c.Children.Add(v2);
-            s.SubChildren.Add(c);
-            UIpp.Actions.actions.Add(s);
 
             FontFamilies = new List<string>();
             foreach(FontFamily f in Fonts.SystemFontFamilies)
@@ -403,6 +386,40 @@ namespace UI__Editor.ViewModels.Menus
                 NotifyOfPropertyChange(() => WindowWidth);
                 NotifyOfPropertyChange(() => SetGridColumn);
                 NotifyOfPropertyChange(() => SetGridColumnSpan);
+            }
+        }
+
+        private string _SelectedAddSubActionList;
+        public string SelectedAddSubActionList
+        {
+            get { return _SelectedAddSubActionList; }
+            set
+            {
+                _SelectedAddSubActionList = value;
+                NotifyOfPropertyChange(() => SelectedAddSubActionList);
+            }
+        }
+
+        public BindableCollection<string> AddSubActionList
+        {
+            get
+            {
+                if(null != SelectedActionsTreeView && SelectedActionsTreeView is IParentElement)
+                {
+                    List<string> subActions = (SelectedActionsTreeView as IParentElement).ValidChildren.ToList();
+                    if(null != SelectedSubActionsTreeView)
+                    {
+                        subActions.Add(SelectedSubActionsTreeView.ActionType);
+
+                        if(null != SelectedSubActionsTreeView.ValidChildren)
+                            subActions.AddRange(SelectedSubActionsTreeView.ValidChildren);
+                    }
+                    return new BindableCollection<string>(subActions.Distinct());
+                }
+                else
+                {
+                    return new BindableCollection<string>();
+                }
             }
         }
 
@@ -667,6 +684,35 @@ namespace UI__Editor.ViewModels.Menus
 
         public void AddSubActionOk()
         {
+            if (null == SelectedAddSubActionList)
+                return;
+            
+            if (null == SelectedSubActionsTreeView)
+            {
+                IChildElement newChild = (IChildElement)Activator.CreateInstance(Type.GetType("UI__Editor.Models." + SelectedAddSubActionList), (SelectedActionsTreeView as IElement));
+                (SelectedActionsTreeView as IParentElement).SubChildren.Add(newChild);
+            }
+            else
+            {
+                if (null != SelectedSubActionsTreeView.ValidChildren && SelectedSubActionsTreeView.ValidChildren.Contains(SelectedAddSubActionList))
+                {
+                    // Add a new child to the selected subaction
+                    IChildElement newChild = (IChildElement)Activator.CreateInstance(Type.GetType("UI__Editor.Models." + SelectedAddSubActionList), (SelectedSubActionsTreeView as IElement));
+                    (SelectedSubActionsTreeView as IParentElement).SubChildren.Add(newChild);
+                }
+                else if (SelectedSubActionsTreeView.ActionType == SelectedAddSubActionList && null != SelectedSubActionsTreeView.Parent)
+                {
+                    // Add a new child to the parent after the index of the selected child
+                    int ssaIndex = (SelectedSubActionsTreeView.Parent as IParentElement).SubChildren.IndexOf(SelectedSubActionsTreeView);
+                    IChildElement newChild = (IChildElement)Activator.CreateInstance(Type.GetType("UI__Editor.Models." + SelectedAddSubActionList), (SelectedSubActionsTreeView.Parent as IElement));
+                    (SelectedSubActionsTreeView.Parent as IParentElement).SubChildren.Insert(ssaIndex + 1, newChild);
+                }
+                else
+                {
+                    IChildElement newChild = (IChildElement)Activator.CreateInstance(Type.GetType("UI__Editor.Models." + SelectedAddSubActionList), (SelectedActionsTreeView as IElement));
+                    (SelectedActionsTreeView as IParentElement).SubChildren.Add(newChild);
+                }
+            }
             SubDialogIsVisible = false;
         }
 

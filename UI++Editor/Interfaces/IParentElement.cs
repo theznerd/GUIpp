@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UI__Editor.Interfaces
 {
-    public interface IParentElement
+    public interface IParentElement : IElement
     {
         ObservableCollection<IChildElement> SubChildren { get; set; }
         string[] ValidChildren { get; set; }

@@ -12,7 +12,7 @@ using UI__Editor.ViewModels.Actions.Children;
 
 namespace UI__Editor.Models
 {
-    public class Case : PropertyChangedBase, IElement, IChildElement
+    public class Case : PropertyChangedBase, IElement, IChildElement, IParentElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
@@ -24,7 +24,7 @@ namespace UI__Editor.Models
         public bool DontEval { get; set; } = false;
         public string RegEx { get; set; } // required
         public string Condition { get; set; }
-        public ObservableCollection<IElement> Children { get; set; } = new ObservableCollection<IElement>();
+        public ObservableCollection<IChildElement> SubChildren { get; set; } = new ObservableCollection<IChildElement>();
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -39,6 +39,11 @@ namespace UI__Editor.Models
         }
         public Case()
         {
+            ViewModel = new CaseViewModel(this);
+        }
+        public Case(IElement parent)
+        {
+            Parent = parent;
             ViewModel = new CaseViewModel(this);
         }
 
@@ -68,7 +73,7 @@ namespace UI__Editor.Models
             }
 
             // Append Children
-            foreach (Variable v in Children)
+            foreach (Variable v in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(v.GenerateXML(), true);
                 output.AppendChild(importNode);

@@ -13,11 +13,12 @@ namespace UI__Editor.Models
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
-        public string[] ValidChildren { get; set; } = { "" };
+        public string[] ValidChildren { get; set; }
         public string[] ValidParents { get; set; } = { "Case" };
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Variable"; } }
         public string Name { get; set; } // required
+        public string Condition { get; set; }
         public string Content { get; set; }
         public bool DontEval { get; set; } // default is false
 
@@ -35,7 +36,13 @@ namespace UI__Editor.Models
 
         public Variable()
         {
-            // create viewmodel
+            ViewModel = new ViewModels.Actions.Children.VariableViewModel(this);
+        }
+
+        public Variable(IElement parent)
+        {
+            Parent = parent;
+            ViewModel = new ViewModels.Actions.Children.VariableViewModel(this);
         }
 
         public XmlNode GenerateXML()
@@ -45,14 +52,17 @@ namespace UI__Editor.Models
             XmlNode output = d.CreateNode("element", "Variable", null);
             XmlAttribute name = d.CreateAttribute("Name");
             XmlAttribute dontEval = d.CreateAttribute("DontEval");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Value
             name.Value = Name;
             dontEval.Value = DontEval.ToString();
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(name);
             output.Attributes.Append(dontEval);
+            output.Attributes.Append(condition);
 
             // Append Content
             output.InnerText = Content;
