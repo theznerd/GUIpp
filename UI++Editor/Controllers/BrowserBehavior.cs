@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mshtml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,10 @@ namespace UI__Editor.Controllers
             WebBrowser wb = d as WebBrowser;
             if (wb != null && !string.IsNullOrEmpty(e.NewValue as string))
             {
-                wb.NavigateToString(e.NewValue as string);
+                string body = "<html><head><style>body {font-family: " + Globals.DisplayFont + ";}</style><body>";
+                body += (e.NewValue as string);
+                body += "</body></html>";
+                wb.NavigateToString(body);
             }
             else
             {

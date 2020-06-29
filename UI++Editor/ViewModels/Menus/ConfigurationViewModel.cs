@@ -106,6 +106,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _ConfigFont = value;
                 _eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("font", value));
+                Globals.DisplayFont = value;
                 NotifyOfPropertyChange(() => ConfigFont);
             }
         }

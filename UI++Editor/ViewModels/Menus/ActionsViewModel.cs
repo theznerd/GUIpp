@@ -75,6 +75,8 @@ namespace UI__Editor.ViewModels.Menus
         {
             SelectedSubActionsTreeView = selectedSubAction;
             NotifyOfPropertyChange(() => CanSubEditButton);
+            NotifyOfPropertyChange(() => CanSubDeleteButton);
+            NotifyOfPropertyChange(() => CanMoveSub);
         }
 
         public bool CanSubEditButton
@@ -92,6 +94,184 @@ namespace UI__Editor.ViewModels.Menus
                 FlyoutContent = SelectedSubActionsTreeView.ViewModel;
                 FlyoutTitle = SelectedSubActionsTreeView.ViewModel.ActionTitle;
                 ActionsFlyOutShown = true;
+            }
+        }
+
+        public bool CanMoveSub
+        {
+            get { return null != SelectedSubActionsTreeView; }
+        }
+
+        private IParentElement findNewParent(IParentElement root, IChildElement child, bool searchUp = false, bool searchFromRoot = false)
+        {
+            if(searchFromRoot)
+            {
+                List<IChildElement> rootChildren;
+                if (searchUp)
+                {
+                    rootChildren = root.SubChildren.Reverse().ToList();
+                }
+                else
+                {
+                    rootChildren = root.SubChildren.ToList();
+                }
+                foreach(IChildElement rootChild in rootChildren)
+                {
+                    if (rootChild is IParentElement)
+                    {
+                        if (rootChild.ValidChildren.Contains(child.ActionType))
+                        {
+                            return (rootChild as IParentElement);
+                        }
+                        else
+                        {
+                            IParentElement recurse = findNewParent((rootChild as IParentElement), child, searchUp, true);
+                            if(null != recurse) { return recurse; }
+                        }
+                    }
+                }
+                return null; // Couldn't find a parent element from root
+            }
+            else
+            {
+                if(child.Parent is IAction)
+                {
+                    // this "child" is at the root of the Action, therefore it's parent will always be the Action
+                    return (child.Parent as IParentElement);
+                }
+                else
+                {
+                    int parentIndex = (child.Parent.Parent as IParentElement).SubChildren.IndexOf(child.Parent as IChildElement); // get the index of the parent to search from
+
+                    int[] indexesToSearch;
+                    if (searchUp)
+                    {
+                        indexesToSearch = Enumerable.Range(0, parentIndex).Reverse().ToArray();
+                    }
+                    else
+                    {
+                        indexesToSearch = Enumerable.Range(parentIndex + 1, (child.Parent.Parent as IParentElement).SubChildren.Count - 1).ToArray();
+                    }
+                    foreach(int indexToSearch in indexesToSearch)
+                    {
+                        if(indexToSearch < (child.Parent.Parent as IParentElement).SubChildren.Count) // hacky bug fix to logic... should fix this
+                        {
+                            if ((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] is IParentElement)
+                            {
+                                if (searchUp)
+                                {
+                                    // search through index and return first valid parent, else return index if it is a valid parent
+                                    IParentElement recurse = findNewParent((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement, child, searchUp, true);
+                                    if (null != recurse) { return recurse; }
+                                    else if (((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement).ValidChildren.Contains(child.ActionType))
+                                    {
+                                        return (child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement;
+                                    }
+                                }
+                                else
+                                {
+                                    if (((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement).ValidChildren.Contains(child.ActionType))
+                                    {
+                                        return (child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement;
+                                    }
+                                    else
+                                    {
+                                        IParentElement recurse = findNewParent((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement, child, searchUp, true);
+                                        if (null != recurse) { return recurse; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return null; // Couldn't find a new parent element
+        }
+
+        public void MoveSub(string direction)
+        {
+
+            IChildElement selectedElement = SelectedSubActionsTreeView;
+            int currentIndex = (selectedElement.Parent as IParentElement).SubChildren.IndexOf(selectedElement);
+            int parentCount = (selectedElement.Parent as IParentElement).SubChildren.Count;
+            switch (direction)
+            {
+                case "top":
+                    if((SelectedActionsTreeView as IParentElement).ValidChildren.Contains(SelectedSubActionsTreeView.ActionType))
+                    {
+                        (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                        SubActionsTreeView.Insert(0, selectedElement);
+                        selectedElement.Parent = SelectedActionsTreeView;
+                        SubActionsTreeView[0].TVSelected = true;               
+                    }
+                    else
+                    {
+                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, false, true);
+                        if(null != newParent)
+                        {
+                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                            newParent.SubChildren.Insert(0, selectedElement);
+                            selectedElement.Parent = newParent;
+                            selectedElement.TVSelected = true;
+                        }
+                    }
+                    break;
+                case "bottom":
+                    if ((SelectedActionsTreeView as IParentElement).ValidChildren.Contains(SelectedSubActionsTreeView.ActionType))
+                    {
+                        (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                        SubActionsTreeView.Add(selectedElement);
+                        selectedElement.Parent = SelectedActionsTreeView;
+                        SubActionsTreeView[(SubActionsTreeView.Count - 1)].TVSelected = true;
+                    }
+                    else
+                    {
+                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, true, true);
+                        if(null != newParent)
+                        {
+                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                            newParent.SubChildren.Add(selectedElement);
+                            selectedElement.Parent = newParent;
+                            selectedElement.TVSelected = true;
+                        }
+                    }
+                    break;
+                case "up":
+                    if(currentIndex > 0)
+                    {
+                        (selectedElement.Parent as IParentElement).SubChildren.Move(currentIndex, currentIndex - 1);
+                    }
+                    else
+                    {
+                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, selectedElement, true, false);
+                        if(null != newParent)
+                        {
+                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                            newParent.SubChildren.Add(selectedElement);
+                            selectedElement.Parent = newParent;
+                            selectedElement.TVSelected = true;
+                        }
+                    }
+                    break;
+                case "down":
+                    if (currentIndex == parentCount - 1) // last element in parent
+                    {
+                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, selectedElement, false, false);
+                        if (null != newParent)
+                        {
+                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
+                            newParent.SubChildren.Insert(0, selectedElement);
+                            selectedElement.Parent = newParent;
+                            selectedElement.TVSelected = true;
+                        }
+                    }
+                    else
+                    {
+                        (selectedElement.Parent as IParentElement).SubChildren.Move(currentIndex, currentIndex + 1);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -677,11 +857,19 @@ namespace UI__Editor.ViewModels.Menus
             SubDialogIsVisible = true;
         }
 
-        public void SubDeleteButton()
+        public bool CanSubDeleteButton
         {
-            // write handling code for removing child objects from their parent
+            get { return null != SelectedSubActionsTreeView; }
         }
 
+        public void SubDeleteButton()
+        {
+            if(null != SelectedSubActionsTreeView.Parent)
+            {
+                (SelectedSubActionsTreeView.Parent as IParentElement).SubChildren.Remove(SelectedSubActionsTreeView);
+            }
+        }
+               
         public void AddSubActionOk()
         {
             if (null == SelectedAddSubActionList)

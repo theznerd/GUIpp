@@ -9,5 +9,6 @@ namespace UI__Editor
     public static class Globals
     {
         public static string BaseXMLPath;
+        public static string DisplayFont;
     }
 }
