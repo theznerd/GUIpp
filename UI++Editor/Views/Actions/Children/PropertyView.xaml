@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="UI__Editor.Views.Actions.Children.CaseView"
+﻿<UserControl x:Class="UI__Editor.Views.Actions.Children.PropertyView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,11 +25,14 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Margin="10,5,5,5">Regex:</Label>
-        <TextBox x:Name="RegEx" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <CheckBox x:Name="CaseInsensitive" Margin="5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.ColumnSpan="3">Case Insensitive</CheckBox>
-        <CheckBox x:Name="DontEval" Margin="5" Grid.Row="2" HorizontalAlignment="Left" Width="150" Grid.ColumnSpan="3">Dont Eval</CheckBox>
-        <Label Margin="10,5" Grid.Row="3">Condition:</Label>
-        <TextBox x:Name="Condition" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <CheckBox x:Name="Key" Margin="15,5" HorizontalAlignment="Left" Grid.Row="4" Grid.ColumnSpan="3">Key</CheckBox>
+        <Label Margin="10,5,5,5" Grid.Row="1">Name:</Label>
+        <TextBox x:Name="Name" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="2">Type:</Label>
+        <ComboBox x:Name="Types" Grid.Row="2" Grid.Column="1" Margin="0,5" />
+        <Label Margin="10,5" Grid.Row="3">Value:</Label>
+        <TextBox x:Name="Question" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
+        <Label Margin="10,5" Grid.Row="5">Condition:</Label>
+        <TextBox x:Name="ConditionString" Grid.Row="5" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

@@ -10,16 +10,17 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class WMIWrite : PropertyChangedBase, IElement, IAction
+    public class WMIWrite : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
+        public string[] ValidChildren { get; set; } = { "Property" };
         public string ActionType { get; } = "WMI Write";
         public string Class { get; set; } // required
         public string Namespace { get; set; } // default is root\cimv2
-        public ObservableCollection<Property> SubChildren { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -37,6 +38,7 @@ namespace UI__Editor.Models.ActionClasses
         {
             EventAggregator = eventAggregator;
             ViewModel = new ViewModels.Actions.WMIWriteViewModel(this);
+            SubChildren = new ObservableCollection<IChildElement>();
         }
 
         public XmlNode GenerateXML()

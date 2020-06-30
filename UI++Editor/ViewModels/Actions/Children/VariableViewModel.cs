@@ -14,7 +14,7 @@ namespace UI__Editor.ViewModels.Actions.Children
     {
         public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
-        public string ActionTitle { get { return "Case"; } }
+        public string ActionTitle { get { return "Variable"; } }
         public string HiddenAttributes
         {
             get { return ""; }
