@@ -10,16 +10,17 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class TSVarList : PropertyChangedBase, IElement, IAction
+    public class TSVarList : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "TS Variable List";
+        public string[] ValidChildren { get; set; } = { "SoftwareListRef" };
         public string ApplicationVariableBase { get; set; }
         public string PackageVariableBase { get; set; }
-        public ObservableCollection<ISoftwareRef> SubChildren { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -37,6 +38,7 @@ namespace UI__Editor.Models.ActionClasses
         {
             EventAggregator = eventAggregator;
             ViewModel = new ViewModels.Actions.TSVarListViewModel(this);
+            SubChildren = new ObservableCollection<IChildElement>();
         }
 
         public XmlNode GenerateXML()

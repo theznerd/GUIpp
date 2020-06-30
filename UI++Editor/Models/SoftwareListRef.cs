@@ -9,13 +9,22 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class SoftwareListRef : PropertyChangedBase, IElement
+    public class SoftwareListRef : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
+        public string[] ValidChildren { get; set; } = { "" };
+        public string[] ValidParents { get; set; } = { "TSVarList" };
         public string ActionType { get { return "Software List Ref"; } }
         public string Id { get; set; } // required
+        public string Condition { get; set; }
+
+        public SoftwareListRef(IParentElement p)
+        {
+            Parent = p;
+            ViewModel = new ViewModels.Actions.Children.SoftwareListRefViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -34,12 +43,18 @@ namespace UI__Editor.Models
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "SoftwareListRef", null);
             XmlAttribute id = d.CreateAttribute("Id");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             id.Value = Id;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(id);
+            if (string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             return output;
         }

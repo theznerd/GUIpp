@@ -6,20 +6,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.ViewModels.Actions.Children;
 
 namespace UI__Editor.Models
 {
-    public class Match : PropertyChangedBase, IElement
+    public class Match : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Match"; } }
+        public string[] ValidChildren { get; set; } = { "" };
+        public string[] ValidParents { get; set; } = { "SoftwareDiscovery" };
         public string DisplayName { get; set; } // required
         public string Variable { get; set; } // required
         public string Version { get; set; }
         public string VersionOperator { get; set; }
         public string Condition { get; set; }
+
+        public Match(IParentElement parent)
+        {
+            Parent = parent;
+            ViewModel = new MatchViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -32,6 +41,7 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

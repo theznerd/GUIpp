@@ -10,14 +10,15 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class SoftwareDiscovery : PropertyChangedBase, IElement, IAction
+    public class SoftwareDiscovery : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Software Discovery";
-        public ObservableCollection<Match> SubChildren { get; set; }
+        public string[] ValidChildren { get; set; } = { "Match" };
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -35,6 +36,7 @@ namespace UI__Editor.Models.ActionClasses
         {
             EventAggregator = eventAggregator;
             ViewModel = new ViewModels.Actions.SoftwareDiscoveryViewModel(this);
+            SubChildren = new ObservableCollection<IChildElement>();
         }
 
         public XmlNode GenerateXML()

@@ -9,14 +9,17 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class Text : PropertyChangedBase, IElement
+    public class Text : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Text"; } }
+        public string[] ValidChildren { get; set; } = { "" };
+        public string[] ValidParents { get; set; } = { "DefaultValues" };
         public string Type { get; set; }
         public string Value { get; set; }
+        public string Condition { get; set; }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -29,6 +32,13 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        public Text(IParentElement p)
+        {
+            Parent = p;
+            ViewModel = new ViewModels.Actions.Children.TextViewModel(this);
+        }
+
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes
@@ -36,10 +46,12 @@ namespace UI__Editor.Models
             XmlNode output = d.CreateNode("element", "Text", null);
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute value = d.CreateAttribute("Value");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign Attribute Values
             type.Value = Type;
             value.Value = Value;
+            condition.Value = Condition;
 
             // Append Attributes
             if (!string.IsNullOrEmpty(Type))
@@ -49,6 +61,10 @@ namespace UI__Editor.Models
             if (!string.IsNullOrEmpty(Value))
             {
                 output.Attributes.Append(value);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

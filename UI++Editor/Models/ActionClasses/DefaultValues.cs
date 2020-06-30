@@ -11,16 +11,17 @@ using System.Collections.ObjectModel;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class DefaultValues : PropertyChangedBase, IElement, IAction
+    public class DefaultValues : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public IElement Parent { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public bool HasSubChildren { get { return true; } }
+        public string[] ValidChildren { get; set; } = { "Text" };
         public string ActionType { get; } = "Default Values";
         public bool? ShowProgress { get; set; } = true;
         public string Condition { get; set; }
-        public ObservableCollection<IInput> SubChildren { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -74,6 +75,7 @@ namespace UI__Editor.Models.ActionClasses
                 new ValueType(){ Name = "VM" }
             };
             ViewModel = new ViewModels.Actions.DefaultValuesViewModel(this);
+            SubChildren = new ObservableCollection<IChildElement>();
         }
 
         public string GenerateValueTypes()
@@ -124,7 +126,7 @@ namespace UI__Editor.Models.ActionClasses
             }
 
             // Append Children
-            foreach (IInput input in SubChildren)
+            foreach (IChildElement input in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(input.GenerateXML(), true);
                 output.AppendChild(importNode);
