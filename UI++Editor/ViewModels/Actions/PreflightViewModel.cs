@@ -1,9 +1,13 @@
 ﻿using Caliburn.Micro;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
+using UI__Editor.Interfaces;
+using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels.Preview;
 using UI__Editor.Views.Actions;
@@ -49,6 +53,7 @@ namespace UI__Editor.ViewModels.Actions
             SelectedSize = string.IsNullOrEmpty(pf.Size) ? "Regular" : pf.Size;
             (PreviewViewModel as Preview.PreflightViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
             (PreviewViewModel as Preview.PreflightViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
+            (PreviewViewModel as Preview.PreflightViewModel).parent = pf;
         }
 
         public string Title

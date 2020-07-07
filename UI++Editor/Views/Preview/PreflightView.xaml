@@ -15,6 +15,11 @@
         <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,-5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
             <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
         </Viewbox>
+        <ItemsControl Grid.Row="1" x:Name="Checks" Margin="22,0,29,0">
+            
+        </ItemsControl>
+        <!-- This was poor planning... bask in my failures -->
+        <!--
         <Grid Grid.Row="1" Margin="25,0,15,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="29" />
@@ -107,6 +112,7 @@
                 </Border.Background>
             </Border>
         </Grid>
-        <Label x:Name="ResultText" FontFamily="{Binding Font}" Margin="25,3,0,0" Padding="0" Grid.Row="2" Foreground="Red" FontSize="16" Height="29" VerticalAlignment="Center">Please check and correct the failed checks above.</Label>
+        -->
+        <Label x:Name="ResultText" FontFamily="{Binding Font}" Margin="25,3,0,0" Padding="0" Grid.Row="2" Foreground="{Binding ResultColor}" FontSize="16" Height="29" VerticalAlignment="Center" />
     </Grid>
 </UserControl>

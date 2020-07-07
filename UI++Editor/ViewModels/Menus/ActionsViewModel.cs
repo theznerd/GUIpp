@@ -273,6 +273,7 @@ namespace UI__Editor.ViewModels.Menus
                 default:
                     break;
             }
+            _eventAggregator.BeginPublishOnUIThread(new ChangeUI("PreviewChange", null));
         }
 
         public string SubElementsVisibliltyConverter
@@ -902,6 +903,7 @@ namespace UI__Editor.ViewModels.Menus
                 }
             }
             SubDialogIsVisible = false;
+            _eventAggregator.BeginPublishOnUIThread(new ChangeUI("PreviewChange", null));
         }
 
         public void AddSubActionCancel()

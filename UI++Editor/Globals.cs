@@ -10,5 +10,13 @@ namespace UI__Editor
     {
         public static string BaseXMLPath;
         public static string DisplayFont;
+        public static string COMPUTEREXISTS;
+        public static string COMPUTEREXISTSWARNING;
+        public static string USERDOESNOTEXIST;
+        public static string USERDOESNOTEXISTWARNING;
+        public static string AUTHENTICATING;
+        public static string PREFLIGHTFAILED;
+        public static string PREFLIGHTPASSED;
+        public static string PREFLIGHTPASSEDWITHWARNING;
     }
 }

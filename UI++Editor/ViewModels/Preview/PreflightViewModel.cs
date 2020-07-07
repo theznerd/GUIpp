@@ -1,16 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using UI__Editor.EventAggregators;
+using UI__Editor.Interfaces;
+using UI__Editor.Models;
+using UI__Editor.Models.ActionClasses;
+using UI__Editor.ViewModels.Actions.Children;
+using UI__Editor.ViewModels.Preview.Children;
 using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Preview
 {
-    class PreflightViewModel : PropertyChangedBase, IPreview
+    class PreflightViewModel : PropertyChangedBase, IPreview, IHandle<ChangeUI>
     {
-        public IEventAggregator EventAggregator { get; set; }
+        private IEventAggregator _EventAggregator;
+        public IEventAggregator EventAggregator
+        {
+            get { return _EventAggregator; }
+            set
+            {
+                _EventAggregator = value;
+                EventAggregator.Subscribe(this);
+            }
+        }
         public string WindowHeight { get; set; } = "Regular";
         public string Font { get; set; } = "Tahoma";
         public bool HasCustomPreview { get; } = false;
@@ -61,9 +77,93 @@ namespace UI__Editor.ViewModels.Preview
                 NotifyOfPropertyChange(() => CenterTitleConverter);
             }
         }
+
         public string CenterTitleConverter
         {
             get { return CenterTitle ? "Center" : "Left"; }
+        }
+
+        private Preflight _parent;
+        public Preflight parent
+        {
+            get { return _parent; }
+            set
+            {
+                _parent = value;
+                NotifyOfPropertyChange(() => parent);
+                NotifyOfPropertyChange(() => Checks);
+            }
+        }
+
+        public List<IPreview> Checks
+        {
+            get
+            {
+                List<IPreview> returnList = new List<IPreview>();
+                if(null != parent.SubChildren)
+                {
+                    foreach (IChildElement c in parent.SubChildren)
+                    {
+                        returnList.Add((c as Check).ViewModel.PreviewViewModel);
+                        (c as Check).ViewModel.PreviewViewModel.EventAggregator = EventAggregator;
+                    }
+                }
+                return returnList;
+            }
+        }
+
+        public string ResultColor
+        {
+            get
+            {
+                string returnText = "Black";
+                foreach (IPreview c in Checks)
+                {
+                    if ((c as Children.CheckViewModel).PreviewAs == "Fail")
+                    {
+                        returnText = "Red";
+                        break;
+                    }
+                    else if ((c as Children.CheckViewModel).PreviewAs == "Warn")
+                    {
+                        returnText = "#e9b51a";
+                    }
+                }
+                return returnText;
+            }
+        }
+
+        public string ResultText
+        {
+            get
+            {
+                string returnText = Globals.PREFLIGHTPASSED;
+                foreach(IPreview c in Checks)
+                {
+                    if((c as Children.CheckViewModel).PreviewAs == "Fail")
+                    {
+                        returnText = Globals.PREFLIGHTFAILED;
+                        break;
+                    }
+                    else if ((c as Children.CheckViewModel).PreviewAs == "Warn")
+                    {
+                        returnText = Globals.PREFLIGHTPASSEDWITHWARNING;
+                    }
+                }
+                return returnText;
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "PreviewChange":
+                    NotifyOfPropertyChange(() => Checks);
+                    NotifyOfPropertyChange(() => ResultText);
+                    NotifyOfPropertyChange(() => ResultColor);
+                    break;
+            }
         }
     }
 }

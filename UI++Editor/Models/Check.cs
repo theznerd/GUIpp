@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.Models.ActionClasses;
 
 namespace UI__Editor.Models
 {
-    public class Check : PropertyChangedBase, IElement
+    public class Check : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Case"; } }
+        public string ActionType { get { return "Check"; } }
+        public string[] ValidParents { get; set; } = { "Preflight" };
+        public string[] ValidChildren { get; set; }
         public string CheckCondition { get; set; } // required
         public string Description { get; set; }
         public string ErrorDescription { get; set; }
@@ -25,6 +28,12 @@ namespace UI__Editor.Models
         public string WarnCondition { get; set; }
         public string WarnDescription { get; set; }
         public string Condition { get; set; }
+
+        public Check(Preflight p)
+        {
+            Parent = p;
+            ViewModel = new ViewModels.Actions.Children.CheckViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;

@@ -8,10 +8,11 @@ using System.Xml;
 using UI__Editor.Interfaces;
 using Caliburn.Micro;
 using System.Management.Instrumentation;
+using UI__Editor.EventAggregators;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class Preflight : PropertyChangedBase, IElement, IAction
+    public class Preflight : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
@@ -27,8 +28,20 @@ namespace UI__Editor.Models.ActionClasses
         public string TimeoutAction { get; set; } // default is Continue | Continue, ContinueOnWarning, Cance, or custom (cancel + exitcode)
         public bool CenterTitle = false;
         public int TimeoutReturnCode { get; set; }
-        public ObservableCollection<Check> SubChildren { get; set; }
+        public string[] ValidChildren { get; set; } = { "Check" };
         public string Condition { get; set; }
+
+        // Because there is a preview, we need to notify of changes downstream
+        private ObservableCollection<IChildElement> _SubChildren;
+        public ObservableCollection<IChildElement> SubChildren
+        {
+            get { return _SubChildren; }
+            set
+            {
+                _SubChildren = value;
+                NotifyOfPropertyChange(() => SubChildren);
+            }
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -44,6 +57,7 @@ namespace UI__Editor.Models.ActionClasses
         public Preflight(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
+            SubChildren = new ObservableCollection<IChildElement>();
             ViewModel = new ViewModels.Actions.PreflightViewModel(this);
         }
 
