@@ -18,9 +18,9 @@ namespace UI__Editor.Views.Preview.Children
     /// <summary>
     /// Interaction logic for ChoiceInput.xaml
     /// </summary>
-    public partial class ChoiceInputView : UserControl
+    public partial class InputChoiceView : UserControl
     {
-        public ChoiceInputView()
+        public InputChoiceView()
         {
             InitializeComponent();
         }

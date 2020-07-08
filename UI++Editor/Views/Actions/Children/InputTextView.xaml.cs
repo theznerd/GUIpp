@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace UI__Editor.Views.Actions.Children
 {
     /// <summary>
-    /// Interaction logic for ChoiceInputView.xaml
+    /// Interaction logic for TextInputView.xaml
     /// </summary>
-    public partial class ChoiceInputView : UserControl
+    public partial class InputTextView : UserControl
     {
-        public ChoiceInputView()
+        public InputTextView()
         {
             InitializeComponent();
         }

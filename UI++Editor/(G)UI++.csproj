@@ -227,11 +227,11 @@
     <Compile Include="Models\Messages.cs" />
     <Compile Include="Models\Package.cs" />
     <Compile Include="Models\ChoiceList.cs" />
-    <Compile Include="Models\ChoiceInput.cs" />
+    <Compile Include="Models\InputChoice.cs" />
     <Compile Include="Models\Choice.cs" />
     <Compile Include="Models\Check.cs" />
     <Compile Include="Models\Case.cs" />
-    <Compile Include="Models\CheckboxInput.cs" />
+    <Compile Include="Models\InputCheckbox.cs" />
     <Compile Include="Models\SoftwareRef.cs" />
     <Compile Include="Models\Variable.cs" />
     <Compile Include="Models\Field.cs" />
@@ -244,26 +244,30 @@
     <Compile Include="Models\SoftwareListRef.cs" />
     <Compile Include="Models\SoftwareSets.cs" />
     <Compile Include="Models\Text.cs" />
-    <Compile Include="Models\TextInput.cs" />
+    <Compile Include="Models\InputText.cs" />
     <Compile Include="Models\UIpp.cs" />
     <Compile Include="Models\_Template.cs" />
     <Compile Include="Controllers\ConfigMgrScanner.cs" />
     <Compile Include="Controllers\XMLToClassModel.cs" />
     <Compile Include="Converters\AvailableApplicationsListConverter.cs" />
     <Compile Include="Interfaces\IAction.cs" />
-    <Compile Include="Interfaces\IChoice.cs" />
     <Compile Include="Interfaces\IElement.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Controllers\BrowserBehavior.cs" />
     <Compile Include="Converters\TreeViewLineConverter.cs" />
     <Compile Include="EventAggregators\ChangeUI.cs" />
     <Compile Include="EventAggregators\SendMessage.cs" />
-    <Compile Include="Interfaces\IInput.cs" />
     <Compile Include="Interfaces\IRootElement.cs" />
     <Compile Include="Interfaces\ISoftware.cs" />
     <Compile Include="Interfaces\ISoftwareRef.cs" />
     <Compile Include="ViewModels\Actions\Children\CaseViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\CheckViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\ChoiceListViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\ChoiceViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\InputCheckboxViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\InputChoiceViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\InputInfoViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\InputTextViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\MatchViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\PropertyViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\SoftwareListRefViewModel.cs" />
@@ -304,10 +308,10 @@
     <Compile Include="ViewModels\Menus\StatusMessageViewModel.cs" />
     <Compile Include="ViewModels\Preview\AppTreeViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\CheckViewModel.cs" />
-    <Compile Include="ViewModels\Preview\Children\TextInputViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\InputTextViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\InputInfoViewModel.cs" />
-    <Compile Include="ViewModels\Preview\Children\ChoiceInputViewModel.cs" />
-    <Compile Include="ViewModels\Preview\Children\CheckBoxInputViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\InputChoiceViewModel.cs" />
+    <Compile Include="ViewModels\Preview\Children\InputCheckboxViewModel.cs" />
     <Compile Include="ViewModels\Preview\Children\_IChild.cs" />
     <Compile Include="ViewModels\Preview\ErrorInfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\InfoFullScreenViewModel.cs" />
@@ -317,6 +321,12 @@
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\_IPreview.cs" />
     <Compile Include="ViewModels\Preview\_NoPreviewViewModel.cs" />
+    <Compile Include="Views\Actions\Children\ChoiceListView.xaml.cs">
+      <DependentUpon>ChoiceListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Actions\Children\ChoiceView.xaml.cs">
+      <DependentUpon>ChoiceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\Children\MatchView.xaml.cs">
       <DependentUpon>MatchView.xaml</DependentUpon>
     </Compile>
@@ -362,11 +372,11 @@
     <Compile Include="Views\Actions\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Actions\Children\CheckBoxInputView.xaml.cs">
-      <DependentUpon>CheckBoxInputView.xaml</DependentUpon>
+    <Compile Include="Views\Actions\Children\InputCheckboxView.xaml.cs">
+      <DependentUpon>InputCheckboxView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Actions\Children\ChoiceInputView.xaml.cs">
-      <DependentUpon>ChoiceInputView.xaml</DependentUpon>
+    <Compile Include="Views\Actions\Children\InputChoiceView.xaml.cs">
+      <DependentUpon>InputChoiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Actions\Children\InputInfoView.xaml.cs">
       <DependentUpon>InputInfoView.xaml</DependentUpon>
@@ -389,8 +399,8 @@
     <Compile Include="Views\Actions\Children\SwitchCaseView.xaml.cs">
       <DependentUpon>SwitchCaseView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Actions\Children\TextInputView.xaml.cs">
-      <DependentUpon>TextInputView.xaml</DependentUpon>
+    <Compile Include="Views\Actions\Children\InputTextView.xaml.cs">
+      <DependentUpon>InputTextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Actions\Children\UserAuthFieldView.xaml.cs">
       <DependentUpon>UserAuthFieldView.xaml</DependentUpon>
@@ -464,20 +474,20 @@
     <Compile Include="Views\Preview\AppTreeView.xaml.cs">
       <DependentUpon>AppTreeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\CheckBoxInputView.xaml.cs">
-      <DependentUpon>CheckBoxInputView.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\InputCheckboxView.xaml.cs">
+      <DependentUpon>InputCheckboxView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\Children\CheckView.xaml.cs">
       <DependentUpon>CheckView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\ChoiceInputView.xaml.cs">
-      <DependentUpon>ChoiceInputView.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\InputChoiceView.xaml.cs">
+      <DependentUpon>InputChoiceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\Children\InputInfoView.xaml.cs">
       <DependentUpon>InputInfoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Preview\Children\TextInputView.xaml.cs">
-      <DependentUpon>TextInputView.xaml</DependentUpon>
+    <Compile Include="Views\Preview\Children\InputTextView.xaml.cs">
+      <DependentUpon>InputTextView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Preview\ErrorInfoView.xaml.cs">
       <DependentUpon>ErrorInfoView.xaml</DependentUpon>
@@ -549,6 +559,14 @@
     <Resource Include="Images\warn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Actions\Children\ChoiceListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Actions\Children\ChoiceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Actions\Children\MatchView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -609,11 +627,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Actions\Children\CheckBoxInputView.xaml">
+    <Page Include="Views\Actions\Children\InputCheckboxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Actions\Children\ChoiceInputView.xaml">
+    <Page Include="Views\Actions\Children\InputChoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -645,7 +663,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Actions\Children\TextInputView.xaml">
+    <Page Include="Views\Actions\Children\InputTextView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -745,7 +763,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\CheckBoxInputView.xaml">
+    <Page Include="Views\Preview\Children\InputCheckboxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -753,7 +771,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\ChoiceInputView.xaml">
+    <Page Include="Views\Preview\Children\InputChoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -761,7 +779,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Preview\Children\TextInputView.xaml">
+    <Page Include="Views\Preview\Children\InputTextView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

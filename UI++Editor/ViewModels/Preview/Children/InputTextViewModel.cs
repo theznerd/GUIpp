@@ -7,8 +7,16 @@ using Caliburn.Micro;
 
 namespace UI__Editor.ViewModels.Preview.Children
 {
-    class TextInputViewModel : PropertyChangedBase, IChild
+    class InputTextViewModel : PropertyChangedBase, IChild, IPreview
     {
+        public IEventAggregator EventAggregator { get; set; }
+        public bool PreviewRefreshButtonVisible { get { return false; } }
+        public bool PreviewBackButtonVisible { get { return false; } }
+        public bool PreviewCancelButtonVisible { get { return false; } }
+        public bool PreviewAcceptButtonVisible { get { return false; } }
+        public bool HasCustomPreview { get { return false; } }
+        public string WindowHeight { get; set; }
+
         private bool _ReadOnly;
         public bool ReadOnly
         {
@@ -20,14 +28,32 @@ namespace UI__Editor.ViewModels.Preview.Children
             }
         }
 
-        private string _Font;
         public string Font
         {
-            get { return _Font; }
-            set
+            get { return Globals.DisplayFont; }
+        }
+
+        public string PasswordVisibility
+        {
+            get
             {
-                _Font = value;
-                NotifyOfPropertyChange(() => Font);
+                return Password ? "Visible" : "Collapsed";
+            }
+        }
+
+        public string TextBoxVisibility
+        {
+            get
+            {
+                return Password ? "Collapsed" : "Visible";
+            }
+        }
+
+        public string PromptVisibility
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Default) ? "Visible" : "Hidden";
             }
         }
 
@@ -39,6 +65,18 @@ namespace UI__Editor.ViewModels.Preview.Children
             {
                 _Default = value;
                 NotifyOfPropertyChange(() => Default);
+                NotifyOfPropertyChange(() => PromptVisibility);
+            }
+        }
+
+        private string _CharCasing;
+        public string CharCasing
+        {
+            get { return _CharCasing; }
+            set
+            {
+                _CharCasing = value;
+                NotifyOfPropertyChange(() => CharCasing);
             }
         }
 

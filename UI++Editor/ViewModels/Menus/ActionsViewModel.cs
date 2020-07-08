@@ -438,6 +438,7 @@ namespace UI__Editor.ViewModels.Menus
 
         private List<string> FontFamilies;
 
+
         private string _Font;
         public string Font
         {
@@ -454,11 +455,6 @@ namespace UI__Editor.ViewModels.Menus
                 }
                 
                 NotifyOfPropertyChange(() => Font);
-                if(null != SelectedActionsTreeView)
-                {
-                    if(FontFamilies.Contains(value))
-                        SelectedActionsTreeView.ViewModel.PreviewViewModel.Font = value;
-                }
             }
         }
 
@@ -467,7 +463,6 @@ namespace UI__Editor.ViewModels.Menus
             get {
                 if(null != SelectedActionsTreeView)
                 {
-                    SelectedActionsTreeView.ViewModel.PreviewViewModel.Font = Font;
                     return SelectedActionsTreeView.ViewModel.PreviewViewModel;
                 }
                 else
@@ -869,6 +864,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 (SelectedSubActionsTreeView.Parent as IParentElement).SubChildren.Remove(SelectedSubActionsTreeView);
             }
+            _eventAggregator.BeginPublishOnUIThread(new ChangeUI("PreviewChange", null));
         }
                
         public void AddSubActionOk()

@@ -6,28 +6,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.Models.ActionClasses;
 
 namespace UI__Editor.Models
 {
-    public class TextInput : PropertyChangedBase, IElement, IInput
+    public class InputText : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
-        // public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Text Input"; } }
-        public bool? ADValidate { get; set; } // default is false
+        public string ActionType { get { return "InputText"; } }
+        public string[] ValidChildren { get; set; }
+        public string[] ValidParents { get; set; } = { "Input" };
         public string Default { get; set; }
         public string ForceCase { get; set; }
         public string Hint { get; set; }
-        public bool? HScroll { get; set; } // default is false
-        public bool? Password { get; set; } // default is false
+        public bool HScroll { get; set; } = false; // default is false
+        public bool Password { get; set; } = false; // default is false
         public string Prompt { get; set; }
         public string Question { get; set; } // required
         public string RegEx { get; set; }
-        public string Required { get; set; } // default is true, True,False,Yes,No
+        public bool Required { get; set; } // default is true, True,False,Yes,No
         public string Variable { get; set; } // required
+        public string ADValidate { get; set; }
         public string Condition { get; set; }
+
+        public InputText(Input i)
+        {
+            Parent = i;
+            ViewModel = new ViewModels.Actions.Children.InputTextViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -59,7 +67,7 @@ namespace UI__Editor.Models
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
-            adValidate.Value = ADValidate.ToString();
+            adValidate.Value = ADValidate;
             _default.Value = Default;
             forceCase.Value = ForceCase;
             hint.Value = Hint;
@@ -68,12 +76,12 @@ namespace UI__Editor.Models
             prompt.Value = Prompt;
             question.Value = Question;
             regEx.Value = RegEx;
-            required.Value = Required;
+            required.Value = Required.ToString();
             variable.Value = Variable;
             condition.Value = Condition;
 
             // Append Attributes
-            if (null != ADValidate)
+            if (!string.IsNullOrEmpty(ADValidate))
             {
                 output.Attributes.Append(adValidate);
             }
@@ -109,7 +117,7 @@ namespace UI__Editor.Models
             {
                 output.Attributes.Append(regEx);
             }
-            if (!string.IsNullOrEmpty(Required))
+            if (null != Required)
             {
                 output.Attributes.Append(required);
             }

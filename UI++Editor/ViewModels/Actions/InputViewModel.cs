@@ -12,7 +12,7 @@ namespace UI__Editor.ViewModels.Actions
 {
     class InputViewModel : PropertyChangedBase, IAction
     {
-        public IPreview PreviewViewModel { get; set; } = new Preview.InputViewModel();
+        public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "Input"; } }
         public IEventAggregator EventAggregator;
@@ -31,11 +31,13 @@ namespace UI__Editor.ViewModels.Actions
         public InputViewModel(Input input)
         {
             ModelClass = input;
+            PreviewViewModel = new Preview.InputViewModel(ModelClass as Input);
             EventAggregator = input.EventAggregator;
             PreviewViewModel.EventAggregator = input.EventAggregator;
             SelectedSize = string.IsNullOrEmpty(input.Size) ? "Regular" : input.Size;
             (PreviewViewModel as Preview.InputViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
             (PreviewViewModel as Preview.InputViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
+
         }
 
         public string Title

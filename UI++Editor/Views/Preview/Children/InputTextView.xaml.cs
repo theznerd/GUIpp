@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace UI__Editor.Views.Preview.Children
 {
     /// <summary>
-    /// Interaction logic for CheckBoxInput.xaml
+    /// Interaction logic for TextInput.xaml
     /// </summary>
-    public partial class CheckBoxInputView : UserControl
+    public partial class InputTextView : UserControl
     {
-        public CheckBoxInputView()
+        public InputTextView()
         {
             InitializeComponent();
         }

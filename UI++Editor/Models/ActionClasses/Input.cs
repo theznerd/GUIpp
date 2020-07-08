@@ -10,13 +10,14 @@ using Caliburn.Micro;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class Input : PropertyChangedBase, IElement, IAction
+    public class Input : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "Input";
+        public string[] ValidChildren { get; set; } = { "InputCheckbox","InputChoice","InputInfo","InputText" };
         public bool? ShowBack { get; set; } = false;
         public bool? ShowCancel { get; set; } = false;
         public bool? ADValidate { get; set; } = false;
@@ -24,7 +25,7 @@ namespace UI__Editor.Models.ActionClasses
         public string Size { get; set; } // default is Regular | Regular, Tall
         public bool CenterTitle = false;
         public string Title { get; set; }
-        public ObservableCollection<IInput> SubChildren { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -42,6 +43,7 @@ namespace UI__Editor.Models.ActionClasses
         {
             EventAggregator = ea;
             ViewModel = new ViewModels.Actions.InputViewModel(this);
+            SubChildren = new ObservableCollection<IChildElement>();
         }
 
         public XmlNode GenerateXML()
@@ -103,7 +105,7 @@ namespace UI__Editor.Models.ActionClasses
             output.Attributes.Append(centerTitle);
 
             // Append Children
-            foreach (IInput input in SubChildren)
+            foreach (IChildElement input in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(input.GenerateXML(), true);
                 output.AppendChild(importNode);

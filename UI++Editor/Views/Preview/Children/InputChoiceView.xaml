@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="UI__Editor.Views.Preview.Children.TextInputView"
+﻿<UserControl x:Class="UI__Editor.Views.Preview.Children.InputChoiceView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3">Question</Label>
-        <TextBox Padding="0,-3,0,0" FontFamily="{Binding Font}" IsReadOnly="{Binding ReadOnly}" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9">Prompt</TextBox>
+        <Label x:Name="Question" FontFamily="{Binding Font}" FontSize="16" Padding="0,0,0,3"></Label>
+        <ComboBox Padding="0,-3,0,0" FontFamily="Tahoma" FontSize="16" Grid.Row="1" Height="15" Margin="0,0,0,9" />
     </Grid>
 </UserControl>

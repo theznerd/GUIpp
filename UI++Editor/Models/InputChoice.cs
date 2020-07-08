@@ -8,26 +8,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.Models.ActionClasses;
 
 namespace UI__Editor.Models
 {
-    public class ChoiceInput : PropertyChangedBase, IInput, IElement
+    public class InputChoice : PropertyChangedBase, IElement, IParentElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
-        // public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Choice Input"; } }
-        public string AlternateValue { get; set; }
+        public string ActionType { get { return "InputChoice"; } }
+        public string[] ValidChildren { get; set; } = { "Choice", "ChoiceList" };
+        public string[] ValidParents { get; set; } = { "Input" };
+        public string AlternateVariable { get; set; }
         public bool AutoComplete { get; set; } = false;
         public string Default { get; set; }
         public int DropDownSize { get; set; } = 5;
         public string Question { get; set; } // required
-        public bool? Required { get; set; }
+        public bool Required { get; set; } = false;
         public bool Sort { get; set; } = true;
         public string Variable { get; set; } // required
-        public ObservableCollection<IChoice> Choices { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        public InputChoice(Input i)
+        {
+            Parent = i;
+            SubChildren = new ObservableCollection<IChildElement>();
+            ViewModel = new ViewModels.Actions.Children.InputChoiceViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -45,7 +54,7 @@ namespace UI__Editor.Models
             // Create XML Node and Attributes
             XmlDocument d = new XmlDocument();
             XmlNode output = d.CreateNode("element", "InputChoice", null);
-            XmlAttribute alternateValue = d.CreateAttribute("AlternateValue");
+            XmlAttribute alternateVariable = d.CreateAttribute("AlternateVariable");
             XmlAttribute autoComplete = d.CreateAttribute("AutoComplete");
             XmlAttribute _default = d.CreateAttribute("Default");
             XmlAttribute dropDownSize = d.CreateAttribute("DropDownSize");
@@ -56,7 +65,7 @@ namespace UI__Editor.Models
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute values
-            alternateValue.Value = AlternateValue;
+            alternateVariable.Value = AlternateVariable;
             autoComplete.Value = AutoComplete.ToString();
             _default.Value = Default;
             dropDownSize.Value = DropDownSize.ToString();
@@ -67,9 +76,9 @@ namespace UI__Editor.Models
             condition.Value = Condition;
 
             // Append Attributes
-            if (!string.IsNullOrEmpty(AlternateValue))
+            if (!string.IsNullOrEmpty(AlternateVariable))
             {
-                output.Attributes.Append(alternateValue);
+                output.Attributes.Append(alternateVariable);
             }
             output.Attributes.Append(autoComplete);
             if(!string.IsNullOrEmpty(Default))
@@ -90,7 +99,7 @@ namespace UI__Editor.Models
             }
 
             // Append Children
-            foreach (IChoice choice in Choices)
+            foreach (IChildElement choice in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(choice.GenerateXML(), true);
                 output.AppendChild(importNode);

@@ -12,15 +12,24 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class ChoiceList : PropertyChangedBase, IElement, IChoice
+    public class ChoiceList : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Choice List"; } }
+        public string ActionType { get { return "ChoiceList"; } }
+        public string[] ValidParents { get; set; } = { "InputChoice" };
+        public string[] ValidChildren { get; set; }
         public string AlternateValueList { get; set; }
         public string OptionList { get; set; }
         public string ValueList { get; set; }
+        public string Condition { get; set; }
+
+        public ChoiceList(IElement p)
+        {
+            Parent = p;
+            ViewModel = new ViewModels.Actions.Children.ChoiceListViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -41,14 +50,16 @@ namespace UI__Editor.Models
             XmlAttribute optionList = d.CreateAttribute("OptionList");
             XmlAttribute valueList = d.CreateAttribute("ValueList");
             XmlAttribute alternateValueList = d.CreateAttribute("AlternateValueList");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             optionList.Value = OptionList;
             valueList.Value = ValueList;
             alternateValueList.Value = AlternateValueList;
+            condition.Value = Condition;
 
             // Append Attribute
-            if(!string.IsNullOrEmpty(OptionList))
+            if (!string.IsNullOrEmpty(OptionList))
             {
                 output.Attributes.Append(optionList);
             }
@@ -59,6 +70,10 @@ namespace UI__Editor.Models
             if(!string.IsNullOrEmpty(AlternateValueList))
             {
                 output.Attributes.Append(alternateValueList);
+            }
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
             }
 
             return output;

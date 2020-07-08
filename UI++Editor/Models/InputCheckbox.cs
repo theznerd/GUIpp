@@ -6,21 +6,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.Models.ActionClasses;
 
 namespace UI__Editor.Models
 {
-    public class CheckboxInput : PropertyChangedBase, IInput, IElement
+    public class InputCheckbox : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
-        // public ViewModels.Actions.Children.IInput ChildViewModel { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Checkbox Input"; } }
+        public string ActionType { get { return "InputCheckbox"; } }
+        public string[] ValidChildren { get; set; }
+        public string[] ValidParents { get; set; } = { "Input" };
         public string CheckedValue { get; set; } = "True";
         public string Default { get; set; }
         public string Question { get; set; } // required
         public string Variable { get; set; } // required
         public string UncheckedValue { get; set; } = "False";
+        public string Condition { get; set; }
+
+        public InputCheckbox(Input i)
+        {
+            Parent = i;
+            ViewModel = new ViewModels.Actions.Children.InputCheckboxViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -43,6 +52,7 @@ namespace UI__Editor.Models
             XmlAttribute question = d.CreateAttribute("Question");
             XmlAttribute variable = d.CreateAttribute("Variable");
             XmlAttribute uncheckedValue = d.CreateAttribute("UncheckedValue");
+            XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Set Attribute Values
             checkedValue.Value = CheckedValue;
@@ -50,6 +60,7 @@ namespace UI__Editor.Models
             question.Value = Question;
             variable.Value = Variable;
             uncheckedValue.Value = UncheckedValue;
+            condition.Value = Condition;
 
             // Append Attributes
             output.Attributes.Append(checkedValue);
@@ -60,6 +71,10 @@ namespace UI__Editor.Models
             output.Attributes.Append(question);
             output.Attributes.Append(variable);
             output.Attributes.Append(uncheckedValue);
+            if (!string.IsNullOrEmpty(Condition))
+            {
+                output.Attributes.Append(condition);
+            }
 
             return output;
         }

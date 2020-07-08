@@ -12,16 +12,24 @@ using UI__Editor.Interfaces;
 
 namespace UI__Editor.Models
 {
-    public class Choice : PropertyChangedBase, IElement, IChoice
+    public class Choice : PropertyChangedBase, IElement, IChildElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Choice"; } }
+        public string[] ValidParents { get; set; } = { "InputChoice" };
+        public string[] ValidChildren { get; set; }
         public string Option { get; set; } // required
         public string Value { get; set; }
         public string AlternateValue { get; set; }
         public string Condition { get; set; }
+
+        public Choice(IElement p)
+        {
+            Parent = p;
+            ViewModel = new ViewModels.Actions.Children.ChoiceViewModel(this);
+        }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
