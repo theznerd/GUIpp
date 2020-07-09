@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,6 @@ namespace UI__Editor
         public static string PREFLIGHTFAILED;
         public static string PREFLIGHTPASSED;
         public static string PREFLIGHTPASSEDWITHWARNING;
+        public static IEventAggregator EventAggregator;
     }
 }

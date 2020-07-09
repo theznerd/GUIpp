@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using UI__Editor.Models;
 using UI__Editor.ViewModels.Elements;
 using UI__Editor.ViewModels.Preview;
+using UI__Editor.ViewModels.Preview.Children;
+using UI__Editor.Views.Preview.Children;
 
 namespace UI__Editor.ViewModels.Actions.Children
 {
@@ -23,7 +25,8 @@ namespace UI__Editor.ViewModels.Actions.Children
         public InputChoiceViewModel(InputChoice i)
         {
             ModelClass = i;
-            PreviewViewModel = new ViewModels.Preview.Children.InputChoiceViewModel();
+            PreviewViewModel = new Preview.Children.InputChoiceViewModel();
+            (PreviewViewModel as Preview.Children.InputChoiceViewModel).SubChildren = i.SubChildren;
         }
 
         public string AlternateVariable
@@ -59,6 +62,7 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as InputChoice).DropDownSize = value;
+                (PreviewViewModel as Preview.Children.InputChoiceViewModel).DropDownSize = value;
             }
         }
 
@@ -68,6 +72,7 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as InputChoice).Question = value;
+                (PreviewViewModel as Preview.Children.InputChoiceViewModel).Question = value;
             }
         }
 
@@ -86,6 +91,7 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as InputChoice).Sort = value;
+                (PreviewViewModel as Preview.Children.InputChoiceViewModel).Sort = value;
             }
         }
 

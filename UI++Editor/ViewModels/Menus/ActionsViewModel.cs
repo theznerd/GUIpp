@@ -425,6 +425,7 @@ namespace UI__Editor.ViewModels.Menus
         {
             _eventAggregator = ea;
             _eventAggregator.Subscribe(this);
+            Globals.EventAggregator = ea;
             UIpp = uipp;
 
             FontFamilies = new List<string>();

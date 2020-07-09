@@ -20,7 +20,6 @@ namespace UI__Editor.Models.ActionClasses
         public string[] ValidChildren { get; set; } = { "InputCheckbox","InputChoice","InputInfo","InputText" };
         public bool? ShowBack { get; set; } = false;
         public bool? ShowCancel { get; set; } = false;
-        public bool? ADValidate { get; set; } = false;
         public string Name { get; set; }
         public string Size { get; set; } // default is Regular | Regular, Tall
         public bool CenterTitle = false;
@@ -54,7 +53,6 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute showBack = d.CreateAttribute("ShowBack");
             XmlAttribute showCancel = d.CreateAttribute("ShowCancel");
-            XmlAttribute adValidate = d.CreateAttribute("ADValidate");
             XmlAttribute name = d.CreateAttribute("Name");
             XmlAttribute size = d.CreateAttribute("Size");
             XmlAttribute title = d.CreateAttribute("Title");
@@ -65,7 +63,6 @@ namespace UI__Editor.Models.ActionClasses
             type.Value = ActionType;
             showBack.Value = ShowBack.ToString();
             showCancel.Value = ShowCancel.ToString();
-            adValidate.Value = ADValidate.ToString();
             name.Value = Name;
             size.Value = Size;
             title.Value = Title;
@@ -81,10 +78,6 @@ namespace UI__Editor.Models.ActionClasses
             if(null != ShowCancel)
             {
                 output.Attributes.Append(showCancel);
-            }
-            if (null != ADValidate)
-            {
-                output.Attributes.Append(adValidate);
             }
             if (!string.IsNullOrEmpty(Name))
             {

@@ -27,7 +27,8 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <CheckBox x:Name="ADValidate" Margin="10,5" Grid.Row="0" IsChecked="False" Grid.ColumnSpan="3">AD Validate</CheckBox>
+        <Label Margin="10,5,5,5">AD Validate:</Label>
+        <ComboBox x:Name="ADValidations" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5,5,5" Grid.Row="1">Default Value:</Label>
         <TextBox x:Name="Default" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5,5,5" Grid.Row="2">Force Case:</Label>

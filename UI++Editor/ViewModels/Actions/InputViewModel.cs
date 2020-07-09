@@ -23,7 +23,6 @@ namespace UI__Editor.ViewModels.Actions
             {
                 string ha;
                 ha = "Name: " + Name;
-                ha += "\r\nAD Validation: " + ADValidate;
                 return ha;
             }
         }
@@ -56,17 +55,6 @@ namespace UI__Editor.ViewModels.Actions
             set
             {
                 (ModelClass as Input).Name = value;
-                NotifyOfPropertyChange(() => HiddenAttributes);
-                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
-            }
-        }
-
-        public bool? ADValidate
-        {
-            get { return (ModelClass as Input).ADValidate; }
-            set
-            {
-                (ModelClass as Input).ADValidate = value;
                 NotifyOfPropertyChange(() => HiddenAttributes);
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
             }

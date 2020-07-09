@@ -26,6 +26,35 @@ namespace UI__Editor.ViewModels.Actions.Children
             PreviewViewModel = new Preview.Children.InputTextViewModel();
         }
 
+        private List<string> _ADValidations = new List<string>()
+        {
+            "",
+            "Computer",
+            "ComputerWarning",
+            "User",
+            "UserWarning"
+        };
+        public List<string> ADValidations
+        {
+            get { return _ADValidations; }
+            set
+            {
+                _ADValidations = value;
+                NotifyOfPropertyChange(() => ADValidations);
+            }
+        }
+
+        private string _SelectedADValidation;
+        public string SelectedADValidation
+        {
+            get { return _SelectedADValidation; }
+            set
+            {
+                _SelectedADValidation = value;
+                ADValidate = value;
+            }
+        }
+
         public string ADValidate
         {
             get { return (ModelClass as InputText).ADValidate; }

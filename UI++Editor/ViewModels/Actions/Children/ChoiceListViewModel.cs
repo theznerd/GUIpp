@@ -26,6 +26,7 @@ namespace UI__Editor.ViewModels.Actions.Children
         public ChoiceListViewModel(ChoiceList c)
         {
             ModelClass = c;
+            EventAggregator = Globals.EventAggregator;
         }
 
         public string OptionList
@@ -34,6 +35,7 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as ChoiceList).OptionList = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("PreviewChange", null));
             }
         }
 
