@@ -10,18 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 
-namespace UI__Editor.Views
+namespace UI__Editor.Views.Actions.Children
 {
     /// <summary>
-    /// Interaction logic for MainWindowView.xaml
+    /// Interaction logic for CheckBoxInputView.xaml
     /// </summary>
-    public partial class MainWindowView : MetroWindow
+    public partial class SetView : UserControl
     {
-        public MainWindowView()
+        public SetView()
         {
             InitializeComponent();
         }

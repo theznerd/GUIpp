@@ -7,17 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.ViewModels.Actions.Children;
 
 namespace UI__Editor.Models
 {
-    public class Set : PropertyChangedBase, IElement
+    public class Set : PropertyChangedBase, IElement, IChildElement, IParentElement
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "Set"; } }
+        public string[] ValidChildren { get; set; } = { "SoftwareGroup", "SoftwareRef" };
+        public string[] ValidParents { get; set; } = { "AppTree" };
         public string Name { get; set; } // required
-        public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; } // SoftwareGroup, SoftwareRef
+        public ObservableCollection<IChildElement> SubChildren { get; set; } // SoftwareGroup, SoftwareRef
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -31,6 +34,14 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        public Set(IElement parent)
+        {
+            Parent = parent;
+            SubChildren = new ObservableCollection<IChildElement>();
+            ViewModel = new SetViewModel(this);
+        }
+
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes
@@ -44,7 +55,7 @@ namespace UI__Editor.Models
             condition.Value = Condition;
 
             // Append Children
-            foreach (ISoftwareRef softwareRef in SoftwareRefs)
+            foreach (ISoftwareRef softwareRef in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(softwareRef.GenerateXML(), true);
                 output.AppendChild(importNode);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,17 +12,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 
-namespace UI__Editor.Views
+namespace UI__Editor.Views.Dialogs
 {
     /// <summary>
-    /// Interaction logic for MainWindowView.xaml
+    /// Interaction logic for AppSearchDialog.xaml
     /// </summary>
-    public partial class MainWindowView : MetroWindow
+    public partial class AppSearchDialog : CustomDialog
     {
-        public MainWindowView()
+        public AppSearchDialog()
         {
             InitializeComponent();
         }

@@ -32,6 +32,7 @@ namespace UI__Editor.ViewModels
             _loadSaveViewModel = new Menus.LoadSaveViewModel(_eventAggregator);
             NewXML();
             _eventAggregator.Subscribe(this);
+            Globals.MainWindowViewModel = this;
         }
 
         private MahApps.Metro.Controls.HamburgerMenuGlyphItem _hamburgerMenuItem;
@@ -162,6 +163,7 @@ namespace UI__Editor.ViewModels
             _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
             _configurationViewModel = new Menus.ConfigurationViewModel(_eventAggregator, uipp);
             _softwareViewModel = new Menus.SoftwareViewModel(uipp, _settingsViewModel);
+            Globals.SoftwareViewModel = _softwareViewModel;
             _statusMessageViewModel = new Menus.StatusMessageViewModel(uipp);
             _softwareViewModel.RefreshSoftwareList();
             _configurationViewModel.RefreshConfiguration();

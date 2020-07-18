@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:UI__Editor.Views.Actions.Children"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -23,14 +24,37 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <CheckBox x:Name="Hidden" Margin="10,5" Grid.Row="0" IsChecked="False" Grid.ColumnSpan="3">Hidden</CheckBox>
         <Label Margin="10,5,5,5" Grid.Row="1">Id:</Label>
         <TextBox x:Name="Id" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <CheckBox x:Name="Default" Margin="10,5" Grid.Row="2" IsChecked="False" Grid.ColumnSpan="3">Default</CheckBox>
-        <CheckBox x:Name="Required" Margin="10,5" Grid.Row="3" IsChecked="False" Grid.ColumnSpan="3">Required</CheckBox>
+        <Button x:Name="GetSoftwareList" Margin="5,5" Grid.Row="1" Grid.Column="2">...</Button>
+        <Grid Grid.Row="2" Margin="10,5,5,5" Grid.ColumnSpan="3" Visibility="{Binding AppSearchVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <TextBox x:Name="SoftwareSearcher" Margin="0,5,0,0" controls:TextBoxHelper.Watermark="Search..." controls:TextBoxHelper.ClearTextButton="True" />
+            <ListBox x:Name="FilteredXMLSoftware" Grid.Row="1" Margin="0,5" BorderThickness="1" Width="250">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding Type}" Padding="0,5" />
+                            <Label Padding="0,5">:</Label>
+                            <Label Content="{Binding Label}" />
+                            <Label Foreground="Gray" Padding="0,5">[ID:</Label>
+                            <Label Foreground="Gray" Padding="0,5" Content="{Binding Id}" />
+                            <Label Foreground="Gray" Padding="0,5">]</Label>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <CheckBox x:Name="Default" Margin="10,5" Grid.Row="3" IsChecked="False" Grid.ColumnSpan="3">Default</CheckBox>
+        <CheckBox x:Name="Required" Margin="10,5" Grid.Row="4" IsChecked="False" Grid.ColumnSpan="3">Required</CheckBox>
         <Label Margin="10,5" Grid.Row="6">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="6" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="6" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

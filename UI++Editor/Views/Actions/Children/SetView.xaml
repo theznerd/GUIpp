@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="UI__Editor.Views.Actions.Children.SoftwareGroupView"
+﻿<UserControl x:Class="UI__Editor.Views.Actions.Children.SetView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,13 +25,9 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <CheckBox x:Name="Default" Margin="10,5" Grid.Row="0" IsChecked="False" Grid.ColumnSpan="3">Default</CheckBox>
-        <Label Margin="10,5,5,5" Grid.Row="1">Id:</Label>
-        <TextBox x:Name="Id" Margin="0,5" Grid.Row="1" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
-        <Label Margin="10,5" Grid.Row="2">Label:</Label>
-        <TextBox x:Name="Label" Grid.Row="2" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
-        <CheckBox x:Name="Required" Margin="10,5" Grid.Row="3" IsChecked="False" Grid.ColumnSpan="3">Required</CheckBox>
-        <Label Margin="10,5" Grid.Row="5">Condition:</Label>
-        <TextBox x:Name="Condition" Grid.Row="5" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <Label Margin="10,5,5,5">Name:</Label>
+        <TextBox x:Name="Name" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <Label Margin="10,5" Grid.Row="3">Condition:</Label>
+        <TextBox x:Name="Condition" Grid.Row="3" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150" />
     </Grid>
 </UserControl>

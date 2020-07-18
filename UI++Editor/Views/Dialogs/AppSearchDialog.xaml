@@ -1,0 +1,87 @@
+﻿<dialogs:CustomDialog x:Class="UI__Editor.Views.Dialogs.AppSearchDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI__Editor.Views.Dialogs"
+        xmlns:cal="http://www.caliburnproject.org"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+        mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="600" Height="400">
+
+    <Grid FocusManager.FocusedElement="{Binding ElementName=PART_NegativeButton}">
+        <!--  Content area  -->
+        <Grid Margin="0 10 0 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="Applications/Packages Available"
+                       HorizontalAlignment="Center"
+                       FontSize="24"
+                       FontFamily="Segoe UI Light"
+                       TextWrapping="Wrap" />
+
+            <Grid Grid.Row="1" Margin="0 10 0 20">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBox x:Name="SoftwareSearcher" Margin="0,5,0,0" controls:TextBoxHelper.Watermark="Search..." controls:TextBoxHelper.ClearTextButton="True" />
+                    <ListBox x:Name="FilteredXMLSoftware" Grid.Row="1" Margin="0,5" BorderBrush="Black" BorderThickness="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Type}" Padding="0,5" />
+                                    <Label Padding="0,5">:</Label>
+                                    <Label Content="{Binding Label}" />
+                                    <Label Foreground="Gray" Padding="0,5">[ID:</Label>
+                                    <Label Foreground="Gray" Padding="0,5" Content="{Binding Id}" />
+                                    <Label Foreground="Gray" Padding="0,5">]</Label>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="PART_AffirmativeButton"
+                            Grid.Column="0"
+                            Margin="5 0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Command="{Binding DialogCommand}"
+                            CommandParameter="{x:Static dialogs:MessageDialogResult.Affirmative}"
+                            Content="Select"
+                            FontSize="16" />
+                    <Button x:Name="PART_NegativeButton"
+                            Grid.Column="1"
+                            Margin="5 0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Command="{Binding DialogCommand}"
+                            CommandParameter="{x:Static dialogs:MessageDialogResult.Negative}"
+                            Content="Cancel"
+                            FontSize="16" />
+                </Grid>
+            </Grid>
+           
+        </Grid>
+
+    </Grid>
+</dialogs:CustomDialog>

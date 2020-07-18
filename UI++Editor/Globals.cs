@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.ViewModels;
+using UI__Editor.ViewModels.Menus;
 
 namespace UI__Editor
 {
@@ -20,5 +22,7 @@ namespace UI__Editor
         public static string PREFLIGHTPASSED;
         public static string PREFLIGHTPASSEDWITHWARNING;
         public static IEventAggregator EventAggregator;
+        public static SoftwareViewModel SoftwareViewModel;
+        public static MainWindowViewModel MainWindowViewModel;
     }
 }

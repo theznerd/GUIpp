@@ -7,21 +7,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.ViewModels.Actions.Children;
 
 namespace UI__Editor.Models
 {
-    public class SoftwareGroup : PropertyChangedBase, IElement, ISoftwareRef
+    public class SoftwareGroup : PropertyChangedBase, IElement, ISoftwareRef, IChildElement, IParentElement, IAppTreeSubChild
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Software Group"; } }
-        public bool? Default { get; set; } // default is false
+        public string ActionType { get { return "SoftwareGroup"; } }
+        public string[] ValidChildren { get; set; } = { "SoftwareGroup", "SoftwareRef" };
+        public string[] ValidParents { get; set; } = { "Set", "SoftwareGroup" };
+        public bool Default { get; set; } = false; // default is false
         public string Id { get; set; } // required
         public string Label { get; set; } // required
-        public bool? Required { get; set; } // default is false
-        public ObservableCollection<ISoftwareRef> SoftwareRefs { get; set; }
+        public bool Required { get; set; } = false; // default is false
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
+
+        // TreeView Specifics
+        public Enums.AppTreeEnum.CheckStyle CheckStyle { get; set; } = Enums.AppTreeEnum.CheckStyle.Unchecked;
+        public Enums.AppTreeEnum.IconStyle IconStyle { get; set; } = Enums.AppTreeEnum.IconStyle.Folder;
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -34,6 +41,14 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        public SoftwareGroup(IElement parent)
+        {
+            Parent = parent;
+            SubChildren = new ObservableCollection<IChildElement>();
+            ViewModel = new SoftwareGroupViewModel(this);
+        }
+
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes
@@ -69,7 +84,7 @@ namespace UI__Editor.Models
             }
 
             // Append Children
-            foreach (ISoftwareRef softwareRef in SoftwareRefs)
+            foreach (ISoftwareRef softwareRef in SubChildren)
             {
                 XmlNode importNode = d.ImportNode(softwareRef.GenerateXML(), true);
                 output.AppendChild(importNode);

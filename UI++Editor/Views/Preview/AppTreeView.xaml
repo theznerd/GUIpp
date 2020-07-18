@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:src="clr-namespace:UI__Editor.Interfaces"
              xmlns:local="clr-namespace:UI__Editor.Views.Preview"
+             xmlns:con="clr-namespace:UI__Editor.Converters"
              xmlns:tv="clr-namespace:UI__Editor.Converters" xmlns:s="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <con:AppTreeCheckConverter x:Key="CheckConverter" />
+        <con:AppTreeTypeConverter x:Key="TypeConverter" />
         <tv:LastItemTreeViewLineConverter x:Key="LastItemLineConverter" />
         <tv:FirstItemTreeViewLineConverter x:Key="FirstItemLineConverter" />
         <tv:FirstItemTreeViewHeightConverter x:Key="FirstItemTreeViewHeightConverter" />
@@ -53,6 +57,7 @@
             </Setter>
         </Style>
         <Style x:Key="{x:Type TreeViewItem}" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -82,18 +87,18 @@
                                 <StackPanel Orientation="Horizontal">
                                     <Image Stretch="None">
                                         <Image.Source>
-                                            <CroppedBitmap Source="pack://application:,,,/Images/checkStyle.png" SourceRect="16,0,16,16" />
+                                            <CroppedBitmap Source="pack://application:,,,/Images/checkStyle.png" SourceRect="{Binding CheckStyle, Converter={StaticResource CheckConverter}}" />
                                         </Image.Source>
                                     </Image>
                                     <Image Margin="0,0,4,0" Width="18">
                                         <Image.Source>
-                                            <CroppedBitmap Source="pack://application:,,,/Images/appStyle.png" SourceRect="36,0,18,18" />
+                                            <CroppedBitmap Source="pack://application:,,,/Images/appStyle.png" SourceRect="{Binding IconStyle, Converter={StaticResource TypeConverter}}" />
                                         </Image.Source>
                                     </Image>
                                     <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" MinWidth="20">
                                         <ContentPresenter.ContentTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding}" FontSize="12" FontFamily="Segoe UI" />
+                                                <TextBlock Text="{Binding Label}" FontSize="12" FontFamily="Segoe UI" />
                                             </DataTemplate>
                                         </ContentPresenter.ContentTemplate>
                                     </ContentPresenter>
@@ -133,27 +138,18 @@
         <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Margin="7,10,69,5" HorizontalAlignment="{Binding CenterTitleConverter}" VerticalAlignment="Center" Height="50">
             <Label x:Name="Title" FontSize="32" FontFamily="{Binding Font}" FontWeight="Black" />
         </Viewbox>
-        <TreeView x:Name="TreeView" Grid.Row="1" Margin="30,0,10,40" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0"  >
-            <TreeViewItem Header="Hello" IsExpanded="False">
-                <TreeViewItem Header="Hello" />
-                <TreeViewItem Header="Hello" />
-                <TreeViewItem Header="Hello" />
-                <TreeViewItem Header="Hello" />
-                <TreeViewItem Header="Hello" />
-                <TreeViewItem Header="Hello" />
-            </TreeViewItem>
-            <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" />
-            </TreeViewItem>
-            <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" />
-            </TreeViewItem>
-            <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" />
-            </TreeViewItem>
-            <TreeViewItem Header="Hello" IsExpanded="True">
-                <TreeViewItem Header="Hello" />
-            </TreeViewItem>
+        <TreeView x:Name="TreeView" Grid.Row="1" Margin="30,0,10,40" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" >
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate  DataType="{x:Type src:IElement}" ItemsSource="{Binding SubChildren}">
+                    <TextBlock Text="{Binding ActionType}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                    <EventSetter Event="RequestBringIntoView" Handler="TreeViewItem_RequestBringIntoView"/>
+                    <EventSetter Event="Selected" Handler="OnSelected"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
         </TreeView>
     </Grid>
 </UserControl>

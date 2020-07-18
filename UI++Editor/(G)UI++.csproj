@@ -196,7 +196,10 @@
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\TreeViewSelectionBehavior.cs" />
+    <Compile Include="Converters\AppTreeIconConverter.cs" />
+    <Compile Include="Enums\AppTreeEnum.cs" />
     <Compile Include="Globals.cs" />
+    <Compile Include="Interfaces\IAppTreeSubChild.cs" />
     <Compile Include="Interfaces\IChildElement.cs" />
     <Compile Include="Interfaces\IParentElement.cs" />
     <Compile Include="Models\ActionClasses\DefaultValues.cs" />
@@ -270,7 +273,10 @@
     <Compile Include="ViewModels\Actions\Children\InputTextViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\MatchViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\PropertyViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\SetViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\SoftwareGroupViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\SoftwareListRefViewModel.cs" />
+    <Compile Include="ViewModels\Actions\Children\SoftwareRefViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\TextViewModel.cs" />
     <Compile Include="ViewModels\Actions\Children\VariableViewModel.cs" />
     <Compile Include="ViewModels\Actions\InfoFullScreenViewModel.cs" />
@@ -297,6 +303,7 @@
     <Compile Include="ViewModels\Actions\RegWriteViewModel.cs" />
     <Compile Include="ViewModels\Actions\RegReadViewModel.cs" />
     <Compile Include="ViewModels\Actions\_IAction.cs" />
+    <Compile Include="ViewModels\Dialogs\AppSearchDialogViewModel.cs" />
     <Compile Include="ViewModels\Elements\_IElement.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Menus\AboutViewModel.cs" />
@@ -321,6 +328,9 @@
     <Compile Include="ViewModels\Preview\InfoViewModel.cs" />
     <Compile Include="ViewModels\Preview\_IPreview.cs" />
     <Compile Include="ViewModels\Preview\_NoPreviewViewModel.cs" />
+    <Compile Include="Views\Actions\Children\SetView.xaml.cs">
+      <DependentUpon>SetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Actions\Children\ChoiceListView.xaml.cs">
       <DependentUpon>ChoiceListView.xaml</DependentUpon>
     </Compile>
@@ -356,6 +366,9 @@
     </Compile>
     <Compile Include="Views\Actions\SoftwareDiscoveryView.xaml.cs">
       <DependentUpon>SoftwareDiscoveryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Dialogs\AppSearchDialog.xaml.cs">
+      <DependentUpon>AppSearchDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
@@ -559,6 +572,10 @@
     <Resource Include="Images\warn.png" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Actions\Children\SetView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Actions\Children\ChoiceListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -606,6 +623,10 @@
     <Page Include="Views\Actions\SoftwareDiscoveryView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Dialogs\AppSearchDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainWindowView.xaml">
       <SubType>Designer</SubType>

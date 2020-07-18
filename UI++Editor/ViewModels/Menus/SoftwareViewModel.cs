@@ -18,6 +18,7 @@ namespace UI__Editor.ViewModels.Menus
     {
         private UIpp UIpp;
         XmlDocument SynchronizationInfo;
+        IEventAggregator eventAggregator;
         SettingsViewModel SV;
 
         public SoftwareViewModel(UIpp uipp, SettingsViewModel sv)
@@ -27,6 +28,8 @@ namespace UI__Editor.ViewModels.Menus
             ConfigMgrServer = SV.SettingsCMFQDN + " (" + SV.SettingsSiteCode + ")";
             AvailableSoftwareViewSource = new CollectionViewSource();
             AvailableSoftwareViewSource.Filter += AvailableApplicationsFilter;
+            Globals.SoftwareViewModel = this;
+            eventAggregator = Globals.EventAggregator;
 
             RefreshSynchronizationData();
         }
@@ -318,6 +321,7 @@ namespace UI__Editor.ViewModels.Menus
             }
             CanToggleType = true;
             AddVisibleBool = false;
+            eventAggregator.BeginPublishOnUIThread(new EventAggregators.ChangeUI("SoftwareChange", null));
         }
 
         public void AddSoftware()

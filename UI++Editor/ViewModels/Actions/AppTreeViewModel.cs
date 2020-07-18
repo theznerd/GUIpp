@@ -11,7 +11,7 @@ namespace UI__Editor.ViewModels.Actions
 {
     public class AppTreeViewModel : PropertyChangedBase, IAction
     {
-        public IPreview PreviewViewModel { get; set; } = new Preview.AppTreeViewModel();
+        public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "AppTree"; } }
 
@@ -26,6 +26,7 @@ namespace UI__Editor.ViewModels.Actions
         public AppTreeViewModel(AppTree appTree)
         {
             ModelClass = appTree;
+            PreviewViewModel = new Preview.AppTreeViewModel(appTree, appTree.EventAggregator);
         }
 
         public string ApplicationVariableBase
@@ -41,27 +42,38 @@ namespace UI__Editor.ViewModels.Actions
             get { return (ModelClass as AppTree).PackageVariableBase; }
             set { (ModelClass as AppTree).PackageVariableBase = value; }
         }
-        public bool? ShowBack
+        public bool ShowBack
         {
             get { return (ModelClass as AppTree).ShowBack; }
-            set { (ModelClass as AppTree).ShowBack = value; }
+            set 
+            { 
+                (ModelClass as AppTree).ShowBack = value;
+                (PreviewViewModel as Preview.AppTreeViewModel).PreviewBackButtonVisible = value;
+            }
         }
-        public bool? ShowCancel
+        public bool ShowCancel
         {
             get { return (ModelClass as AppTree).ShowCancel; }
-            set { (ModelClass as AppTree).ShowCancel = value; }
+            set 
+            { 
+                (ModelClass as AppTree).ShowCancel = value;
+                (PreviewViewModel as Preview.AppTreeViewModel).PreviewCancelButtonVisible = value;
+            }
         }
         public string Title
         {
             get { return (ModelClass as AppTree).Title; }
-            set { (ModelClass as AppTree).Title = value; }
+            set { 
+                (ModelClass as AppTree).Title = value;
+                (PreviewViewModel as Preview.AppTreeViewModel).Title = value;
+            }
         }
         public string Size
         {
             get { return (ModelClass as AppTree).Size; }
             set { (ModelClass as AppTree).Size = value; }
         }
-        public bool? Expanded
+        public bool Expanded
         {
             get { return (ModelClass as AppTree).Expanded; }
             set { (ModelClass as AppTree).Expanded = value; }

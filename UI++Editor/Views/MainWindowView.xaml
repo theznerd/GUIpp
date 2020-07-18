@@ -7,6 +7,7 @@
         xmlns:cal="http://www.caliburnproject.org"
         xmlns:local="clr-namespace:UI__Editor.Views"
         mc:Ignorable="d"
+        ma:DialogParticipation.Register="{Binding}"
         Title="(G)UI++" Height="800" Width="1024" MinHeight="800" MinWidth="1024"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>

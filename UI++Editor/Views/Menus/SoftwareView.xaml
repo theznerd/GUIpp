@@ -90,7 +90,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <TextBlock FontSize="24" FontFamily="Segoe UI Light" Padding="0,5" HorizontalAlignment="Center">Select Application/Package</TextBlock>
-                    <TextBox x:Name="SASearcher" Grid.Row="1" ma:TextBoxHelper.Watermark="Search..." Margin="5"/>
+                    <TextBox x:Name="SASearcher" Grid.Row="1" ma:TextBoxHelper.Watermark="Search..." Margin="5" ma:TextBoxHelper.ClearTextButton="True" />
                     <ListBox x:Name="AvailableSoftwareView" Grid.Row="2" Margin="5" BorderBrush="LightGray" BorderThickness="1" ItemsSource="{Binding AvailableSoftwareView}" SelectedItem="{Binding SelectedAvailableSoftware}" cal:Message.Attach="[Event MouseDoubleClick] = [Action SADoubleClick]">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

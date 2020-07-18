@@ -6,20 +6,28 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
+using UI__Editor.ViewModels.Actions.Children;
 
 namespace UI__Editor.Models
 {
-    public class SoftwareRef : PropertyChangedBase, IElement, ISoftwareRef
+    public class SoftwareRef : PropertyChangedBase, IElement, ISoftwareRef, IChildElement, IAppTreeSubChild
     {
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
-        public string ActionType { get { return "Software Ref"; } }
+        public string ActionType { get { return "SoftwareRef"; } }
+        public string[] ValidChildren { get; set; }
+        public string[] ValidParents { get; set; } = { "Set", "SoftwareGroup" };
         public string Id { get; set; } // required
-        public bool? Hidden { get; set; } // default is false
-        public bool? Default { get; set; } // default is false
-        public bool? Required { get; set; } // default is false
+        public bool Hidden { get; set; } = false; // default is false
+        public bool Default { get; set; } = false; // default is false
+        public bool Required { get; set; } = false; // default is false
         public string Condition { get; set; }
+
+        // TreeView Specifics
+        public Enums.AppTreeEnum.CheckStyle CheckStyle { get; set; } = Enums.AppTreeEnum.CheckStyle.Unchecked;
+        public Enums.AppTreeEnum.IconStyle IconStyle { get; set; } = Enums.AppTreeEnum.IconStyle.App;
+        public string Label { get; set; }
 
         // Code to handle TreeView Selection
         private bool _TVSelected = false;
@@ -32,6 +40,13 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        public SoftwareRef(IElement parent)
+        {
+            Parent = parent;
+            ViewModel = new SoftwareRefViewModel(this);
+        }
+
         public XmlNode GenerateXML()
         {
             // Create XML Node and Attributes

@@ -26,21 +26,21 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Label Margin="10,5">Title:</Label>
-        <TextBox x:Name="AppTreeTitle" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="Title" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Margin="10,5" Grid.Row="1">App Variable Base:</Label>
-        <TextBox x:Name="AppTreeAppVar" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="AppVar" Grid.Row="1" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="2" Margin="10,5">Pkg Variable Base:</Label>
-        <TextBox x:Name="AppTreePkgVar" Grid.Row="2" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
+        <TextBox x:Name="PkgVar" Grid.Row="2" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1" />
         <Label Grid.Row="3" Margin="10,5">Dialog Size:</Label>
-        <ComboBox x:Name="AppTreeSize" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
+        <ComboBox x:Name="Size" Grid.Row="3" Margin="0,5" HorizontalAlignment="Left" Width="150" Grid.Column="1">
             <ComboBoxItem Content="Regular" />
             <ComboBoxItem Content="Tall" />
         </ComboBox>
-        <CheckBox x:Name="AppTreeExpanded" Margin="10,5" Grid.Row="4" IsChecked="True" Grid.ColumnSpan="3">Expand Tree at Launch</CheckBox>
-        <CheckBox x:Name="AppTreeShowBack" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Show Back Button</CheckBox>
-        <CheckBox x:Name="AppTreeShowCancel" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
+        <CheckBox x:Name="Expanded" Margin="10,5" Grid.Row="4" IsChecked="True" Grid.ColumnSpan="3">Expand Tree at Launch</CheckBox>
+        <CheckBox x:Name="ShowBack" Margin="10,5" Grid.Row="5" Grid.ColumnSpan="3">Show Back Button</CheckBox>
+        <CheckBox x:Name="ShowCancel" Margin="10,5" Grid.Row="6" Grid.ColumnSpan="3">Show Cancel Button</CheckBox>
         <CheckBox x:Name="CenterTitle" Margin="10,5" Grid.Row="7" Grid.ColumnSpan="3">Center Title</CheckBox>
         <Label Margin="10,5" Grid.Row="8">Condition:</Label>
-        <TextBox x:Name="ConditionString" Grid.Row="8" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
+        <TextBox x:Name="Condition" Grid.Row="8" Grid.Column="1" Margin="0,5" HorizontalAlignment="Left" Width="150"></TextBox>
     </Grid>
 </UserControl>

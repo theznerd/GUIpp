@@ -6,25 +6,27 @@ using System.Threading.Tasks;
 using System.Xml;
 using UI__Editor.Interfaces;
 using Caliburn.Micro;
+using System.Collections.ObjectModel;
 
 namespace UI__Editor.Models.ActionClasses
 {
-    public class AppTree : PropertyChangedBase, IElement, IAction
+    public class AppTree : PropertyChangedBase, IElement, IAction, IParentElement
     {
         public IEventAggregator EventAggregator { get; set; }
         public ViewModels.Actions.IAction ViewModel { get; set; }
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return true; } }
         public string ActionType { get; } = "App Tree";
+        public string[] ValidChildren { get; set; } = { "Set" };
         public string ApplicationVariableBase { get; set; }
         public string PackageVariableBase { get; set; }
-        public bool? ShowBack { get; set; } // default is false
-        public bool? ShowCancel { get; set; } // default is false
+        public bool ShowBack { get; set; } = false; // default is false
+        public bool ShowCancel { get; set; } = false; // default is false
         public string Title { get; set; }
         public string Size { get; set; } // default is regular | regular, tall, and extratall
-        public bool? Expanded { get; set; } // default is true
+        public bool Expanded { get; set; } = true; // default is true
         public bool CenterTitle = false;
-        public SoftwareSets Sets { get; set; }
+        public ObservableCollection<IChildElement> SubChildren { get; set; }
         public string Condition { get; set; }
 
         // Code to handle TreeView Selection
@@ -41,6 +43,7 @@ namespace UI__Editor.Models.ActionClasses
         public AppTree(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
+            SubChildren = new ObservableCollection<IChildElement>();
             ViewModel = new ViewModels.Actions.AppTreeViewModel(this);
         }
 
@@ -108,9 +111,14 @@ namespace UI__Editor.Models.ActionClasses
             }
             output.Attributes.Append(centerTitle);
 
-            // Append Child
-            XmlNode importNode = d.ImportNode(Sets.GenerateXML(), true);
-            output.AppendChild(importNode);
+            // Add all child nodes to the group
+            XmlNode SoftwareSetsNode = d.CreateNode("element", "SoftwareSets", "");
+            foreach (IElement sets in SubChildren)
+            {
+                XmlNode importNode = d.ImportNode(sets.GenerateXML(), true);
+                SoftwareSetsNode.AppendChild(importNode);
+            }
+            output.AppendChild(SoftwareSetsNode);
 
             return output;
         }
