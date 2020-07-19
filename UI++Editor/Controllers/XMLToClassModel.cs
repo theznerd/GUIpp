@@ -94,7 +94,7 @@ namespace UI__Editor.Controllers
             }
         }
 
-        private static IElement NewAction(XmlNode xmlNode)
+        private static IElement NewAction(XmlNode xmlNode, IElement parent = null)
         {
             IElement element = null;
             IElement ne = null; // child elements
@@ -123,7 +123,7 @@ namespace UI__Editor.Controllers
                             appTree.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
                         foreach (XmlNode x in importNode.ChildNodes)
                         {
-                            ne = NewAction(x);
+                            ne = NewAction(x, appTree);
                             if(ne is IChildElement)
                             {
                                 appTree.SubChildren.Add(ne as IChildElement);
@@ -151,42 +151,320 @@ namespace UI__Editor.Controllers
                         element = defaultValues;
                         break;
                     case "ErrorInfo":
+                        ErrorInfo errorInfo = new ErrorInfo(Globals.EventAggregator)
+                        {
+                            Image = importNode.GetAttribute("Image"),
+                            InfoImage = importNode.GetAttribute("InfoImage"),
+                            Name = importNode.GetAttribute("Name"),
+                            Title = importNode.GetAttribute("Title"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("CenterTitle")))
+                            errorInfo.CenterTitle = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("CenterTitle")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowBack")))
+                            errorInfo.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowCancel")))
+                            errorInfo.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
+                        element = errorInfo;
                         break;
                     case "ExternalCall":
+                        ExternalCall externalCall = new ExternalCall(Globals.EventAggregator)
+                        {
+                            ExitCodeVariable = importNode.GetAttribute("ExitCodeVariable"),
+                            Title = importNode.GetAttribute("Title"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ExitCodeVariable")))
+                            externalCall.ExitCodeVariable = importNode.GetAttribute("ExitCodeVariable");
+                        element = externalCall;
+                        // 
+                        // Handle the content tag (CDATA parser)
+                        // 
                         break;
                     case "FileRead":
+                        FileRead fileRead = new FileRead(Globals.EventAggregator)
+                        {
+                            FileName = importNode.GetAttribute("Filename"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DeleteLine")))
+                            fileRead.DeleteLine = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DeleteLine")));
+                        element = fileRead;
                         break;
                     case "Info":
+                        Info info = new Info(Globals.EventAggregator)
+                        {
+                            Image = importNode.GetAttribute("Image"),
+                            InfoImage = importNode.GetAttribute("InfoImage"),
+                            Name = importNode.GetAttribute("Name"),
+                            Title = importNode.GetAttribute("Title"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowBack")))
+                            info.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowCancel")))
+                            info.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
+                        if (int.TryParse(importNode.GetAttribute("Timeout"), out int infoTimeout))
+                            info.Timeout = infoTimeout;
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("TimeoutAction")))
+                            info.TimeoutAction = importNode.GetAttribute("TimeoutAction");
+                        // 
+                        // Handle the content tag (CDATA parser)
+                        // 
+                        element = info;
                         break;
                     case "InfoFullScreen":
+                        InfoFullScreen infoFullScreen = new InfoFullScreen(Globals.EventAggregator)
+                        {
+                            Image = importNode.GetAttribute("Image")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("BackgroundColor")))
+                            infoFullScreen.BackgroundColor = importNode.GetAttribute("BackgroundColor");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("TextColor")))
+                            infoFullScreen.TextColor = importNode.GetAttribute("TextColor");
+                        // 
+                        // Handle the content tag (CDATA parser)
+                        // 
                         break;
                     case "Input":
+                        Input input = new Input(Globals.EventAggregator)
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Title = importNode.GetAttribute("Title"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Size")))
+                            input.Size = importNode.GetAttribute("Size");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowBack")))
+                            input.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowCancel")))
+                            input.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("CenterTitle")))
+                            input.CenterTitle = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("CenterTitle")));
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, input);
+                            if (ne is IChildElement)
+                            {
+                                input.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = input;
                         break;
                     case "Preflight":
+                        Preflight preflight = new Preflight(Globals.EventAggregator)
+                        {
+                            Title = importNode.GetAttribute("Title"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Size")))
+                            preflight.Size = importNode.GetAttribute("Size");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowBack")))
+                            preflight.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowCancel")))
+                            preflight.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("CenterTitle")))
+                            preflight.CenterTitle = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("CenterTitle")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowOnFailureOnly")))
+                            preflight.CenterTitle = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowOnFailureOnly")));
+                        if (int.TryParse(importNode.GetAttribute("Timeout"), out int preflightTimeout))
+                            preflight.Timeout = preflightTimeout;
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("TimeoutAction")))
+                            preflight.TimeoutAction = importNode.GetAttribute("TimeoutAction");
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, preflight);
+                            if (ne is IChildElement)
+                            {
+                                preflight.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = preflight;
                         break;
                     case "RandomString":
+                        RandomString randomString = new RandomString(Globals.EventAggregator)
+                        {
+                            Variable = importNode.GetAttribute("Variable"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("AllowedChars")))
+                            randomString.AllowedChars = importNode.GetAttribute("AllowedChars");
+                        if (int.TryParse(importNode.GetAttribute("Length"), out int randomLength))
+                            randomString.Length = randomLength;
+                        element = randomString;
                         break;
                     case "RegRead":
+                        RegRead regRead = new RegRead(Globals.EventAggregator)
+                        {
+                            Default = importNode.GetAttribute("Default"),
+                            Key = importNode.GetAttribute("Key"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Value = importNode.GetAttribute("Value"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Reg64")))
+                            regRead.Reg64 = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Reg64")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Hive")))
+                            regRead.Hive = importNode.GetAttribute("Hive");
+                        element = regRead;
                         break;
                     case "RegWrite":
+                        RegWrite regWrite = new RegWrite(Globals.EventAggregator)
+                        {
+                            Key = importNode.GetAttribute("Key"),
+                            Value = importNode.GetAttribute("Value"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Reg64")))
+                            regWrite.Reg64 = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Reg64")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Type")))
+                            regWrite.ValueType = importNode.GetAttribute("Type");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Hive")))
+                            regWrite.Hive = importNode.GetAttribute("Hive");
+                        element = regWrite;
                         break;
                     case "SaveItems":
+                        SaveItems saveItems = new SaveItems(Globals.EventAggregator)
+                        {
+                            Items = importNode.GetAttribute("Items"),
+                            Path = importNode.GetAttribute("Path"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = saveItems;
                         break;
                     case "SoftwareDiscovery":
+                        SoftwareDiscovery softwareDiscovery = new SoftwareDiscovery(Globals.EventAggregator)
+                        {
+                            Condition = importNode.GetAttribute("Condition"),
+                        };
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, softwareDiscovery);
+                            if (ne is IChildElement)
+                            {
+                                softwareDiscovery.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = softwareDiscovery;
                         break;
                     case "Switch":
+                        Switch switchClass = new Switch(Globals.EventAggregator)
+                        {
+                            OnValue = importNode.GetAttribute("OnValue"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DontEval")))
+                            switchClass.DontEval = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DontEval")));
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, switchClass);
+                            if (ne is IChildElement)
+                            {
+                                switchClass.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = switchClass;
                         break;
                     case "TSVar":
+                        TSVar tsVar = new TSVar(Globals.EventAggregator)
+                        {
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DontEval")))
+                            tsVar.DontEval = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DontEval")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Name")))
+                            tsVar.Variable = importNode.GetAttribute("Name");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Variable")))
+                            tsVar.Variable = importNode.GetAttribute("Variable");
+                        // 
+                        // Handle the content tag (CDATA parser)
+                        //
+                        element = tsVar;
                         break;
                     case "TSVarList":
+                        TSVarList tsVarList = new TSVarList(Globals.EventAggregator)
+                        {
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ApplicationVariableBase")))
+                            tsVarList.ApplicationVariableBase = importNode.GetAttribute("ApplicationVariableBase");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("PackageVariableBase")))
+                            tsVarList.PackageVariableBase = importNode.GetAttribute("PackageVariableBase");
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, tsVarList);
+                            if (ne is IChildElement)
+                            {
+                                tsVarList.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = tsVarList;
                         break;
                     case "UserAuth":
+                        UserAuth userAuth = new UserAuth(Globals.EventAggregator)
+                        {
+                            Attributes = importNode.GetAttribute("Attributes"),
+                            Domain = importNode.GetAttribute("Domain"),
+                            DomainController = importNode.GetAttribute("DomainController"),
+                            Group = importNode.GetAttribute("Group"),
+                            Title = importNode.GetAttribute("Title")
+                        };
+                        if (int.TryParse(importNode.GetAttribute("MaxRetryCount"), out int uaMaxRetryCount))
+                            userAuth.MaxRetryCount = uaMaxRetryCount;
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DisableCancel")))
+                            userAuth.DisableCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DisableCancel")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DoNotFallback")))
+                            userAuth.DoNotFallback = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DoNotFallback")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("GetGroups")))
+                            userAuth.GetGroups = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("GetGroups")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowBack")))
+                            userAuth.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
+                        element = userAuth;
                         break;
                     case "Vars":
+                        Vars vars = new Vars(Globals.EventAggregator)
+                        {
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Direction")))
+                            vars.Direction = importNode.GetAttribute("Direction");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Filename")))
+                            vars.Filename = importNode.GetAttribute("Filename");
+                        element = vars;
                         break;
                     case "WMIRead":
+                        WMIRead wmiRead = new WMIRead(Globals.EventAggregator)
+                        {
+                            Class = importNode.GetAttribute("Class"),
+                            Default = importNode.GetAttribute("Default"),
+                            KeyQualifier = importNode.GetAttribute("KeyQualifier"),
+                            Property = importNode.GetAttribute("Property"),
+                            Query = importNode.GetAttribute("Query"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Namespace")))
+                            wmiRead.Namespace = importNode.GetAttribute("Namespace");
+                        element = wmiRead;
                         break;
                     case "WMIWrite":
+                        WMIWrite wmiWrite = new WMIWrite(Globals.EventAggregator)
+                        {
+                            Class = importNode.GetAttribute("Class"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Namespace")))
+                            wmiWrite.Namespace = importNode.GetAttribute("Namespace");
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, wmiWrite);
+                            if (ne is IChildElement)
+                            {
+                                wmiWrite.SubChildren.Add(ne as IChildElement);
+                            }
+                        }
+                        element = wmiWrite;
                         break;
                 }
             }
@@ -195,7 +473,6 @@ namespace UI__Editor.Controllers
                 switch (xmlNode.Name)
                 {
                     case "ActionGroup":
-                        
                         break;
                     case "Case":
                         break;
@@ -218,6 +495,29 @@ namespace UI__Editor.Controllers
                         break;
                     case "InputText":
                     case "TextInput":
+                        InputText inputText = new InputText(parent as Input)
+                        {
+                            Default = importNode.GetAttribute("Default"),
+                            Hint = importNode.GetAttribute("Hint"),
+                            Prompt = importNode.GetAttribute("Prompt"),
+                            Question = importNode.GetAttribute("Question"),
+                            RegEx = importNode.GetAttribute("RegEx"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ADValidate")))
+                            inputText.ADValidate = importNode.GetAttribute("ADValidate");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ForceCase")))
+                            inputText.ForceCase = importNode.GetAttribute("ForceCase");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("HScroll")))
+                            inputText.HScroll = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("HScroll")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Password")))
+                            inputText.Password = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Password")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ReadOnly")))
+                            inputText.ReadOnly = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ReadOnly")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Required")))
+                            inputText.Required = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Required")));
+                        element = inputText;
                         break;
                     case "Match":
                         break;

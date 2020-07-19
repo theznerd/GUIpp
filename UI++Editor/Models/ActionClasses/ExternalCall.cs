@@ -17,6 +17,7 @@ namespace UI__Editor.Models.ActionClasses
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get; } = "External Call";
         public int? MaxRunTime { get; set; }
+        public string ExitCodeVariable { get; set; }
         public string Title { get; set; } // Shown in log and progress bar
         public string Content { get; set; }
         public string Condition { get; set; }
@@ -45,6 +46,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlNode output = d.CreateNode("element", "Action", null);
             XmlAttribute type = d.CreateAttribute("Type");
             XmlAttribute maxRunTime = d.CreateAttribute("MaxRunTime");
+            XmlAttribute exitCodeVariable = d.CreateAttribute("ExitCodeVariable");
             XmlAttribute title = d.CreateAttribute("Title");
             XmlAttribute condition = d.CreateAttribute("Condition");
 
@@ -53,6 +55,7 @@ namespace UI__Editor.Models.ActionClasses
             maxRunTime.Value = MaxRunTime.ToString();
             title.Value = Title;
             condition.Value = Condition;
+            exitCodeVariable.Value = ExitCodeVariable;
 
             // Append Attributes
             output.Attributes.Append(type);
@@ -63,6 +66,10 @@ namespace UI__Editor.Models.ActionClasses
             if (!string.IsNullOrEmpty(Title))
             {
                 output.Attributes.Append(title);
+            }
+            if (!string.IsNullOrEmpty(ExitCodeVariable))
+            {
+                output.Attributes.Append(exitCodeVariable);
             }
             if (!string.IsNullOrEmpty(Condition))
             {

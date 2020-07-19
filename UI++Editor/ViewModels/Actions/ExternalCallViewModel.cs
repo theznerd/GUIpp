@@ -21,6 +21,7 @@ namespace UI__Editor.ViewModels.Actions
             {
                 string output = "";
                 output += "Title: " + Title;
+                output += "Exit Code Variable: " + ExitCodeVariable;
                 output += "\r\nCommand Line: " + CommandLine;
                 output += "\r\nMax Runtime: " + MaxRuntime + " seconds";
                 return output;
@@ -31,6 +32,16 @@ namespace UI__Editor.ViewModels.Actions
         {
             ModelClass = ec;
             EventAggregator = (ec as ExternalCall).EventAggregator;
+        }
+
+        public string ExitCodeVariable
+        {
+            get { return (ModelClass as ExternalCall).ExitCodeVariable; }
+            set
+            {
+                (ModelClass as ExternalCall).ExitCodeVariable = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("AttributeChange", null));
+            }
         }
 
         public string Title

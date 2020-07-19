@@ -26,6 +26,7 @@ namespace UI__Editor.Models
         public string Prompt { get; set; }
         public string Question { get; set; } // required
         public string RegEx { get; set; }
+        public bool ReadOnly { get; set; } = false;
         public bool Required { get; set; } // default is true, True,False,Yes,No
         public string Variable { get; set; } // required
         public string ADValidate { get; set; }
