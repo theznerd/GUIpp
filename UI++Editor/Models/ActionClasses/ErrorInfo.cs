@@ -59,7 +59,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "ErrorInfo";
             showBack.Value = ShowBack.ToString();
             showCancel.Value = ShowCancel.ToString();
             name.Value = Name;

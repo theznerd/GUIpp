@@ -52,7 +52,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "TSVarList";
             applicationVariableBase.Value = ApplicationVariableBase;
             packageVariableBase.Value = PackageVariableBase;
             condition.Value = Condition;

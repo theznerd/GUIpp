@@ -58,7 +58,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "WMIRead";
             _class.Value = Class;
             property.Value = Property;
             variable.Value = Variable;

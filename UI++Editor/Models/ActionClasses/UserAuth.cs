@@ -61,7 +61,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "UserAuth";
             showBack.Value = ShowBack.ToString();
             disableCancel.Value = DisableCancel.ToString();
             attributes.Value = Attributes;

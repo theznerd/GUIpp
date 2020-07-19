@@ -51,7 +51,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "FileRead";
             deleteLine.Value = DeleteLine.ToString();
             fileName.Value = FileName;
             variable.Value = Variable;

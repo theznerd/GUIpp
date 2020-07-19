@@ -49,7 +49,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "TSVar";
             variable.Value = Variable;
             dontEval.Value = DontEval.ToString();
             condition.Value = Condition;

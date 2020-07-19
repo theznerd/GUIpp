@@ -51,7 +51,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "RandomString";
             allowedChars.Value = AllowedChars;
             length.Value = Length.ToString();
             variable.Value = Variable;

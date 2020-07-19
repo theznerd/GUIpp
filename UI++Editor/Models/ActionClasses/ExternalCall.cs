@@ -49,7 +49,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "ExternalCall";
             maxRunTime.Value = MaxRunTime.ToString();
             title.Value = Title;
             condition.Value = Condition;

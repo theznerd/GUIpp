@@ -56,7 +56,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "RegWrite";
             hive.Value = Hive;
             key.Value = Key;
             reg64.Value = Reg64.ToString();

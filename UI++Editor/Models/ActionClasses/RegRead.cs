@@ -57,7 +57,7 @@ namespace UI__Editor.Models.ActionClasses
             XmlAttribute condition = d.CreateAttribute("Condition");
 
             // Assign attribute values
-            type.Value = ActionType;
+            type.Value = "RegRead";
             _default.Value = Default;
             hive.Value = Hive;
             key.Value = Key;
