@@ -14,6 +14,7 @@ namespace UI__Editor.Interfaces
         IElement Parent { get; set; }
         ViewModels.Actions.IAction ViewModel { get; set; }
         bool TVSelected { get; set; } // for the tree view, not optimal
+        bool TVIsExpanded { get; set; } // for the tree view, not optimal
         XmlNode GenerateXML();
     }
 }

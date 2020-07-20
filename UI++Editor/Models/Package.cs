@@ -23,8 +23,19 @@ namespace UI__Editor.Models
             {
                 _Id = value;
                 NotifyOfPropertyChange(() => Id);
-            } 
-        } 
+            }
+        }
+
+        private bool _TVIsExpanded = true;
+        public bool TVIsExpanded
+        {
+            get { return _TVIsExpanded; }
+            set
+            {
+                _TVIsExpanded = value;
+                NotifyOfPropertyChange(() => TVIsExpanded);
+            }
+        }
         public string IncludeID { get; set; }
         private string _Label;
         public string Label // required

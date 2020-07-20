@@ -33,6 +33,17 @@ namespace UI__Editor.Models
             }
         }
 
+        private bool _TVIsExpanded = true;
+        public bool TVIsExpanded
+        {
+            get { return _TVIsExpanded; }
+            set
+            {
+                _TVIsExpanded = value;
+                NotifyOfPropertyChange(() => TVIsExpanded);
+            }
+        }
+
         public Text(IParentElement p)
         {
             Parent = p;

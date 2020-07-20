@@ -48,6 +48,7 @@
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding TVSelected}" />
+                        <Setter Property="IsExpanded" Value="{Binding TVIsExpanded}" />
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>
@@ -84,6 +85,7 @@
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
                         <Setter Property="IsSelected" Value="{Binding TVSelected}" />
+                        <Setter Property="IsExpanded" Value="{Binding TVIsExpanded}" />
                     </Style>
                 </TreeView.ItemContainerStyle>
                 <TreeView.ItemTemplate>

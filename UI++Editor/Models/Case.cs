@@ -37,6 +37,17 @@ namespace UI__Editor.Models
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        private bool _TVIsExpanded = true;
+        public bool TVIsExpanded
+        {
+            get { return _TVIsExpanded; }
+            set
+            {
+                _TVIsExpanded = value;
+                NotifyOfPropertyChange(() => TVIsExpanded);
+            }
+        }
         public Case()
         {
             ViewModel = new CaseViewModel(this);

@@ -54,6 +54,17 @@ namespace UI__Editor.Models.ActionClasses
                 NotifyOfPropertyChange(() => TVSelected);
             }
         }
+
+        private bool _TVIsExpanded = true;
+        public bool TVIsExpanded
+        {
+            get { return _TVIsExpanded; }
+            set
+            {
+                _TVIsExpanded = value;
+                NotifyOfPropertyChange(() => TVIsExpanded);
+            }
+        }
         public Preflight(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
