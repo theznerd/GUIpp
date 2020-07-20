@@ -73,7 +73,7 @@ namespace UI__Editor.ViewModels.Preview
             get
             {
                 ObservableCollection<IChildElement> treeview = new ObservableCollection<IChildElement>();
-                foreach(Models.Set s in TreeViewContent)
+                foreach(Models.Set s in appTree.SubChildren)
                 {
                     foreach(IChildElement c in s.SubChildren)
                     {
@@ -117,7 +117,7 @@ namespace UI__Editor.ViewModels.Preview
             appTree = a;
             EventAggregator = ea;
             EventAggregator.Subscribe(this);
-            TreeViewContent = appTree.SubChildren;
+            // TreeViewContent = appTree.SubChildren;
         }
     }
 }

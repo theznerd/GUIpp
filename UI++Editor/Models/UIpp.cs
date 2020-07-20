@@ -16,10 +16,10 @@ namespace UI__Editor.Models
         public IElement Parent { get; set; }
         public bool HasSubChildren { get { return false; } }
         public string ActionType { get { return "UI++ Element"; } }
-        public bool? AlwaysOnTop { get; set; }
+        public bool? AlwaysOnTop { get; set; } = true;
         public string Color { get; set; }
-        public bool? DialogSidebar { get; set; }
-        public bool? Flat { get; set; }
+        public bool? DialogSidebar { get; set; } = true;
+        public bool? Flat { get; set; } = false;
         public string Icon { get; set; }
         public string Title { get; set; }
         public string RootXMLPath { get; set; }

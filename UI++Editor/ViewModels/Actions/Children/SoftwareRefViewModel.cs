@@ -22,7 +22,6 @@ namespace UI__Editor.ViewModels.Actions.Children
     public class SoftwareRefViewModel : PropertyChangedBase, IAction, IHandle<EventAggregators.ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
-        private SoftwareViewModel svm;
 
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "Software Ref"; } }
@@ -37,7 +36,6 @@ namespace UI__Editor.ViewModels.Actions.Children
             ModelClass = r;
             eventAggregator = Globals.EventAggregator;
             eventAggregator.Subscribe(this);
-            svm = Globals.SoftwareViewModel;
         }
 
         public bool Hidden
@@ -209,7 +207,7 @@ namespace UI__Editor.ViewModels.Actions.Children
         {
             get
             {
-                return svm.XMLSoftware.ToList();
+                return Globals.SoftwareViewModel.XMLSoftware.ToList();
             }
         }
 

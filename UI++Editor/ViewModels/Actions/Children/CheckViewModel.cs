@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management.Instrumentation;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
 using UI__Editor.Models;
 using UI__Editor.ViewModels.Elements;
 using UI__Editor.ViewModels.Preview;
@@ -12,7 +13,7 @@ using UI__Editor.ViewModels.Preview.Children;
 
 namespace UI__Editor.ViewModels.Actions.Children
 {
-    public class CheckViewModel : PropertyChangedBase, IAction
+    public class CheckViewModel : PropertyChangedBase, IAction, IHandle<ChangeUI>
     {
         public IEventAggregator EventAggregator { get; set; }
         public IPreview PreviewViewModel { get; set; }
@@ -27,6 +28,8 @@ namespace UI__Editor.ViewModels.Actions.Children
         {
             ModelClass = c;
             PreviewViewModel = new Preview.Children.CheckViewModel();
+            EventAggregator = Globals.EventAggregator;
+            EventAggregator.Subscribe(this);
         }
 
         private List<string> _PreviewAs = new List<string>()
@@ -120,6 +123,19 @@ namespace UI__Editor.ViewModels.Actions.Children
             {
                 (ModelClass as Check).Text = value;
                 (PreviewViewModel as Preview.Children.CheckViewModel).Text = value;
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.Children.CheckViewModel).Description = Description;
+                    (PreviewViewModel as Preview.Children.CheckViewModel).ErrorDescription = ErrorDescription;
+                    (PreviewViewModel as Preview.Children.CheckViewModel).Text = Text;
+                    (PreviewViewModel as Preview.Children.CheckViewModel).WarnDescription = WarnDescription;
+                    break;
             }
         }
     }

@@ -548,6 +548,7 @@ namespace UI__Editor.ViewModels.Menus
             {
                 _XMLSoftware = value;
                 NotifyOfPropertyChange(() => XMLSoftware);
+                Globals.SoftwareViewModel = this;
             }
         }
 

@@ -7,12 +7,16 @@ using System.Xml;
 using UI__Editor.Models;
 using UI__Editor.Interfaces;
 using UI__Editor.Models.ActionClasses;
+using Caliburn.Micro;
+using System.Web.Compilation;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace UI__Editor.Controllers
 {
     public static class XMLToClassModel
     {
-        public static UIpp GenerateUIpp(XmlDocument xmlDoc)
+        public static UIpp GenerateUIpp(XmlDocument xmlDoc, string path)
         {
             UIpp uipp = new UIpp();
 
@@ -41,10 +45,17 @@ namespace UI__Editor.Controllers
             }
             else
             {
-                uipp.DialogSidebar = false;
+                uipp.Flat = false;
             }
             uipp.Icon = uippNode.GetAttribute("Icon");
-            uipp.RootXMLPath = uippNode.GetAttribute("RootXMLPath");
+            if (!string.IsNullOrEmpty(uippNode.GetAttribute("RootXMLPath")))
+            {
+                uipp.RootXMLPath = uippNode.GetAttribute("RootXMLPath");
+            }
+            else
+            {
+                uipp.RootXMLPath = Path.GetDirectoryName(path);
+            }
             uipp.Title = uippNode.GetAttribute("Title");
 
             // Add Messages Node
@@ -94,6 +105,16 @@ namespace UI__Editor.Controllers
             }
         }
 
+        private static string CDATARemover(string s)
+        {
+            if (s.StartsWith("<![CDATA["))
+            {
+                s = s.Replace("<![CDATA[", "");
+                s = s.Substring(0, s.Length - 3);
+            }
+            return s;
+        }
+
         private static IElement NewAction(XmlNode xmlNode, IElement parent = null)
         {
             IElement element = null;
@@ -121,13 +142,16 @@ namespace UI__Editor.Controllers
                             appTree.ShowBack = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowBack")));
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("ShowCancel")))
                             appTree.ShowCancel = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ShowCancel")));
+                        
                         foreach (XmlNode x in importNode.ChildNodes)
                         {
                             ne = NewAction(x, appTree);
+                            /* This is handled by the only valid subelement in AppTree (SoftwareSets)
                             if(ne is IChildElement)
                             {
                                 appTree.SubChildren.Add(ne as IChildElement);
                             }
+                            */
                         }
                         element = appTree;
                         break;
@@ -176,10 +200,11 @@ namespace UI__Editor.Controllers
                         };
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("ExitCodeVariable")))
                             externalCall.ExitCodeVariable = importNode.GetAttribute("ExitCodeVariable");
+                        if(!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            externalCall.Content = CDATARemover(importNode.InnerXml);
+                        }
                         element = externalCall;
-                        // 
-                        // Handle the content tag (CDATA parser)
-                        // 
                         break;
                     case "FileRead":
                         FileRead fileRead = new FileRead(Globals.EventAggregator)
@@ -209,9 +234,10 @@ namespace UI__Editor.Controllers
                             info.Timeout = infoTimeout;
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("TimeoutAction")))
                             info.TimeoutAction = importNode.GetAttribute("TimeoutAction");
-                        // 
-                        // Handle the content tag (CDATA parser)
-                        // 
+                        if (!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            info.Content = CDATARemover(importNode.InnerXml);
+                        }
                         element = info;
                         break;
                     case "InfoFullScreen":
@@ -223,9 +249,10 @@ namespace UI__Editor.Controllers
                             infoFullScreen.BackgroundColor = importNode.GetAttribute("BackgroundColor");
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("TextColor")))
                             infoFullScreen.TextColor = importNode.GetAttribute("TextColor");
-                        // 
-                        // Handle the content tag (CDATA parser)
-                        // 
+                        if (!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            infoFullScreen.Content = CDATARemover(importNode.InnerXml);
+                        }
                         break;
                     case "Input":
                         Input input = new Input(Globals.EventAggregator)
@@ -377,9 +404,10 @@ namespace UI__Editor.Controllers
                             tsVar.Variable = importNode.GetAttribute("Name");
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("Variable")))
                             tsVar.Variable = importNode.GetAttribute("Variable");
-                        // 
-                        // Handle the content tag (CDATA parser)
-                        //
+                        if (!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            tsVar.Content = CDATARemover(importNode.InnerXml);
+                        }
                         element = tsVar;
                         break;
                     case "TSVarList":
@@ -473,25 +501,130 @@ namespace UI__Editor.Controllers
                 switch (xmlNode.Name)
                 {
                     case "ActionGroup":
+                        ActionGroup actionGroup = new ActionGroup(Globals.EventAggregator)
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x);
+                            actionGroup.Children.Add(ne);
+                        }
+                        element = actionGroup;
                         break;
                     case "Case":
+                        Case caseClass = new Case(parent)
+                        {
+                            RegEx = importNode.GetAttribute("RegEx"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("CaseInsensitive")))
+                            caseClass.CaseInsensitive = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("CaseInsensitive")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DontEval")))
+                            caseClass.DontEval = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DontEval")));
+                        element = caseClass;
                         break;
                     case "Check":
+                        Check check = new Check(parent as Preflight)
+                        {
+                            CheckCondition = importNode.GetAttribute("CheckCondition"),
+                            Description = importNode.GetAttribute("Description"),
+                            ErrorDescription = importNode.GetAttribute("ErrorDescription"),
+                            Text = importNode.GetAttribute("Text"),
+                            WarnCondition = importNode.GetAttribute("WarnCondition"),
+                            WarnDescription = importNode.GetAttribute("WarnDescription"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = check;
                         break;
                     case "Choice":
+                        Choice choice = new Choice(parent)
+                        {
+                            Option = importNode.GetAttribute("Option"),
+                            Value = importNode.GetAttribute("Value"),
+                            AlternateValue = importNode.GetAttribute("AlternateValue"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = choice;
                         break;
                     case "ChoiceList":
+                        ChoiceList choiceList = new ChoiceList(parent)
+                        {
+                            OptionList = importNode.GetAttribute("OptionList"),
+                            ValueList = importNode.GetAttribute("ValueList"),
+                            AlternateValueList = importNode.GetAttribute("AlternateValueList"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = choiceList;
                         break;
                     case "Field":
+                        Field field = new Field()
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Hint = importNode.GetAttribute("Hint"),
+                            List = importNode.GetAttribute("List"),
+                            Prompt = importNode.GetAttribute("Prompt"),
+                            Question = importNode.GetAttribute("Question"),
+                            RegEx = importNode.GetAttribute("RegEx")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("ReadOnly")))
+                            field.ReadOnly = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("ReadOnly")));
+                        element = field;
                         break;
                     case "InputCheckbox":
                     case "CheckboxInput":
+                        InputCheckbox inputCheckbox = new InputCheckbox(parent as Input)
+                        {
+                            CheckedValue = importNode.GetAttribute("CheckedValue"),
+                            Default = importNode.GetAttribute("Default"),
+                            Question = importNode.GetAttribute("Question"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            UncheckedValue = importNode.GetAttribute("UncheckedValue"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = inputCheckbox;
                         break;
                     case "InputChoice":
                     case "ChoiceInput":
+                        InputChoice inputChoice = new InputChoice(parent as Input)
+                        {
+                            AlternateVariable = importNode.GetAttribute("AlternateValue"),
+                            Default = importNode.GetAttribute("Default"),
+                            Question = importNode.GetAttribute("Question"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("AutoComplete")))
+                            inputChoice.AutoComplete = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("AutoComplete")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Required")))
+                            inputChoice.Required = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Required")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Sort")))
+                            inputChoice.Sort = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Sort")));
+                        if (int.TryParse(importNode.GetAttribute("DropDownSize"), out int inputChoiceDropDownSize))
+                            inputChoice.DropDownSize = inputChoiceDropDownSize;
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, inputChoice);
+                            inputChoice.SubChildren.Add(ne as IChildElement);
+                        }
+                        element = inputChoice;
                         break;
                     case "InputInfo":
                     case "InfoInput":
+                        InputInfo inputInfo = new InputInfo(parent as Input)
+                        {
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Color")))
+                            inputInfo.Color = importNode.GetAttribute("Color");
+                        if (int.TryParse(importNode.GetAttribute("DropDownSize"), out int inputInfoNumberOfLines))
+                            inputInfo.NumberOfLines = inputInfoNumberOfLines;
+                        if (!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            inputInfo.Content = CDATARemover(importNode.InnerXml);
+                        }
+                        element = inputInfo;
                         break;
                     case "InputText":
                     case "TextInput":
@@ -520,22 +653,116 @@ namespace UI__Editor.Controllers
                         element = inputText;
                         break;
                     case "Match":
+                        Match match = new Match(parent as IParentElement)
+                        {
+                            DisplayName = importNode.GetAttribute("DisplayName"),
+                            Variable = importNode.GetAttribute("Variable"),
+                            Version = importNode.GetAttribute("Version"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("VersionOperator")))
+                            match.VersionOperator = importNode.GetAttribute("VersionOperator");
+                        element = match;
                         break;
                     case "Property":
+                        Property property = new Property(parent)
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Value = importNode.GetAttribute("Value"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Type")))
+                            property.Type = importNode.GetAttribute("Type");
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Key")))
+                            property.Key = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Key")));
+                        element = property;
                         break;
                     case "Set":
+                        Set set = new Set(parent)
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, set);
+                            set.SubChildren.Add(ne as IChildElement);
+                        }
+                        element = set;
                         break;
                     case "SoftwareGroup":
+                        SoftwareGroup softwareGroup = new SoftwareGroup(parent)
+                        {
+                            Id = importNode.GetAttribute("Id"),
+                            Label = importNode.GetAttribute("Label"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Default")))
+                            softwareGroup.Default = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Default")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Required")))
+                            softwareGroup.Required = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Required")));
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, softwareGroup);
+                            softwareGroup.SubChildren.Add(ne as IChildElement);
+                        }
+                        element = softwareGroup;
                         break;
                     case "SoftwareListRef":
+                        SoftwareListRef softwareListRef = new SoftwareListRef(parent as IParentElement)
+                        {
+                            Id = importNode.GetAttribute("Id"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = softwareListRef;
                         break;
                     case "SoftwareRef":
+                        SoftwareRef softwareRef = new SoftwareRef(parent)
+                        {
+                            Id = importNode.GetAttribute("Id"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Hidden")))
+                            softwareRef.Hidden = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Hidden")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Default")))
+                            softwareRef.Default = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Default")));
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("Required")))
+                            softwareRef.Required = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("Required")));
+                        element = softwareRef;
                         break;
                     case "SoftwareSets":
+                        AppTree at = parent as AppTree;
+                        ObservableCollection<IChildElement> e = new ObservableCollection<IChildElement>();
+                        foreach (XmlNode x in importNode.ChildNodes)
+                        {
+                            ne = NewAction(x, at);
+                            e.Add(ne as IChildElement);
+                        }
+                        at.SubChildren = e;
+                        element = null;
                         break;
                     case "Text":
+                        Text text = new Text(parent as IParentElement)
+                        {
+                            Type = importNode.GetAttribute("Type"),
+                            Value = importNode.GetAttribute("Value"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        element = text;
                         break;
                     case "Variable":
+                        Variable variable = new Variable(parent)
+                        {
+                            Name = importNode.GetAttribute("Name"),
+                            Condition = importNode.GetAttribute("Condition")
+                        };
+                        if (!string.IsNullOrEmpty(importNode.GetAttribute("DontEval")))
+                            variable.DontEval = Convert.ToBoolean(StringToBoolString(importNode.GetAttribute("DontEval")));
+                        if (!string.IsNullOrEmpty(importNode.InnerXml))
+                        {
+                            variable.Content = CDATARemover(importNode.InnerXml);
+                        }
+                        element = variable;
                         break;
                 }
             }
@@ -549,8 +776,8 @@ namespace UI__Editor.Controllers
             if(null != xmlNode)
             {
                 XmlNodeList messagesList = xmlNode.ChildNodes;
-                List<Message> xmlMessages = GetMessages(messagesList);
-                foreach (Message m in xmlMessages)
+                List<Models.Message> xmlMessages = GetMessages(messagesList);
+                foreach (Models.Message m in xmlMessages)
                 {
                     messages.MessageCollection.Where(x => x.Id == m.Id).FirstOrDefault().Content = m.Content;
                 }
@@ -558,12 +785,12 @@ namespace UI__Editor.Controllers
             return messages;
         }
 
-        private static List<Message> GetMessages(XmlNodeList messages)
+        private static List<Models.Message> GetMessages(XmlNodeList messages)
         {
-            List<Message> returnMessages = new List<Message>();
+            List<Models.Message> returnMessages = new List<Models.Message>();
             foreach(XmlElement message in messages)
             {
-                Message m = new Message()
+                Models.Message m = new Models.Message()
                 {
                     Id = message.GetAttribute("Id"),
                     Content = message.InnerText

@@ -14,7 +14,7 @@ using UI__Editor.Views.Actions;
 
 namespace UI__Editor.ViewModels.Actions
 {
-    class PreflightViewModel : PropertyChangedBase, IAction
+    class PreflightViewModel : PropertyChangedBase, IAction, IHandle<EventAggregators.ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; } = new Preview.PreflightViewModel();
         public object ModelClass { get; set; }
@@ -50,10 +50,14 @@ namespace UI__Editor.ViewModels.Actions
             ModelClass = pf;
             EventAggregator = pf.EventAggregator;
             PreviewViewModel.EventAggregator = pf.EventAggregator;
+            EventAggregator.Subscribe(this);
             SelectedSize = string.IsNullOrEmpty(pf.Size) ? "Regular" : pf.Size;
             (PreviewViewModel as Preview.PreflightViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
             (PreviewViewModel as Preview.PreflightViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
             (PreviewViewModel as Preview.PreflightViewModel).parent = pf;
+            (PreviewViewModel as Preview.PreflightViewModel).CenterTitle = CenterTitle;
+            (PreviewViewModel as Preview.PreflightViewModel).Title = Title;
+            (PreviewViewModel as Preview.PreflightViewModel).WindowHeight = SelectedSize;
         }
 
         public string Title
@@ -200,6 +204,20 @@ namespace UI__Editor.ViewModels.Actions
             {
                 (ModelClass as Preflight).Condition = value;
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ConditionChange", null));
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.PreflightViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+                    (PreviewViewModel as Preview.PreflightViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
+                    (PreviewViewModel as Preview.PreflightViewModel).CenterTitle = CenterTitle;
+                    (PreviewViewModel as Preview.PreflightViewModel).Title = Title;
+                    (PreviewViewModel as Preview.PreflightViewModel).WindowHeight = SelectedSize;
+                    break;
             }
         }
     }

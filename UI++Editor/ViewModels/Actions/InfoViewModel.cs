@@ -5,12 +5,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels.Preview;
 
 namespace UI__Editor.ViewModels.Actions
 {
-    public class InfoViewModel : PropertyChangedBase, IAction
+    public class InfoViewModel : PropertyChangedBase, IAction, IHandle<EventAggregators.ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
@@ -35,11 +36,16 @@ namespace UI__Editor.ViewModels.Actions
         {
             ModelClass = info;
             EventAggregator = info.EventAggregator;
+            EventAggregator.Subscribe(this);
             PreviewViewModel = new Preview.InfoViewModel(info.EventAggregator);
             (PreviewViewModel as Preview.InfoViewModel).InfoViewText = Content;
             (PreviewViewModel as Preview.InfoViewModel).Title = Title;
             (PreviewViewModel as Preview.InfoViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
             (PreviewViewModel as Preview.InfoViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
+            (PreviewViewModel as Preview.InfoViewModel).CenterTitle = CenterTitle;
+            (PreviewViewModel as Preview.InfoViewModel).Image = Image;
+            (PreviewViewModel as Preview.InfoViewModel).InfoImage = InfoImage;
+            (PreviewViewModel as Preview.InfoViewModel).InfoViewText = Content;
         }
 
         public bool? ShowBack
@@ -183,6 +189,23 @@ namespace UI__Editor.ViewModels.Actions
             { 
                 (ModelClass as Info).Condition = value;
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ConditionChange", null));
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.InfoViewModel).InfoViewText = Content;
+                    (PreviewViewModel as Preview.InfoViewModel).Title = Title;
+                    (PreviewViewModel as Preview.InfoViewModel).PreviewBackButtonVisible = ShowBack == true ? true : false;
+                    (PreviewViewModel as Preview.InfoViewModel).PreviewCancelButtonVisible = ShowCancel == true ? true : false;
+                    (PreviewViewModel as Preview.InfoViewModel).CenterTitle = CenterTitle;
+                    (PreviewViewModel as Preview.InfoViewModel).Image = Image;
+                    (PreviewViewModel as Preview.InfoViewModel).InfoImage = InfoImage;
+                    (PreviewViewModel as Preview.InfoViewModel).InfoViewText = Content;
+                    break;
             }
         }
     }

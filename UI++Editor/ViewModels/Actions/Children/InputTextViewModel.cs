@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
 using UI__Editor.Models;
 using UI__Editor.ViewModels.Elements;
 using UI__Editor.ViewModels.Preview;
 
 namespace UI__Editor.ViewModels.Actions.Children
 {
-    public class InputTextViewModel : PropertyChangedBase, IAction
+    public class InputTextViewModel : PropertyChangedBase, IAction, IHandle<ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
@@ -24,6 +25,7 @@ namespace UI__Editor.ViewModels.Actions.Children
         {
             ModelClass = i;
             PreviewViewModel = new Preview.Children.InputTextViewModel();
+            Globals.EventAggregator.Subscribe(this);
         }
 
         private List<string> _ADValidations = new List<string>()
@@ -206,6 +208,20 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as InputText).Condition = value;
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.Children.InputTextViewModel).Default = Default;
+                    (PreviewViewModel as Preview.Children.InputTextViewModel).Hint = Hint;
+                    (PreviewViewModel as Preview.Children.InputTextViewModel).Password = Password;
+                    (PreviewViewModel as Preview.Children.InputTextViewModel).Prompt = Prompt;
+                    (PreviewViewModel as Preview.Children.InputTextViewModel).Question = Question;
+                    break;
             }
         }
     }

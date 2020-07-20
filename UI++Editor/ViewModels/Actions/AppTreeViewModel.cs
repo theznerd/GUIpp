@@ -6,14 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using UI__Editor.ViewModels.Preview;
 using UI__Editor.Models.ActionClasses;
+using UI__Editor.EventAggregators;
 
 namespace UI__Editor.ViewModels.Actions
 {
-    public class AppTreeViewModel : PropertyChangedBase, IAction
+    public class AppTreeViewModel : PropertyChangedBase, IAction, IHandle<EventAggregators.ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
         public string ActionTitle { get { return "AppTree"; } }
+        public IEventAggregator EventAggregator;
 
         public string HiddenAttributes
         {
@@ -26,7 +28,18 @@ namespace UI__Editor.ViewModels.Actions
         public AppTreeViewModel(AppTree appTree)
         {
             ModelClass = appTree;
+            EventAggregator = Globals.EventAggregator;
+            EventAggregator.Subscribe(this);
             PreviewViewModel = new Preview.AppTreeViewModel(appTree, appTree.EventAggregator);
+            SelectedSize = string.IsNullOrEmpty(appTree.Size) ? "Regular" : appTree.Size;
+            (PreviewViewModel as Preview.AppTreeViewModel).PreviewBackButtonVisible = ShowBack;
+            (PreviewViewModel as Preview.AppTreeViewModel).PreviewCancelButtonVisible = ShowCancel;
+            (PreviewViewModel as Preview.AppTreeViewModel).Title = Title;
+            (PreviewViewModel as Preview.AppTreeViewModel).CenterTitle = CenterTitle;
+            if(null != SelectedSize)
+            {
+                (PreviewViewModel as Preview.AppTreeViewModel).WindowHeight = SelectedSize;
+            }
         }
 
         public string ApplicationVariableBase
@@ -68,10 +81,46 @@ namespace UI__Editor.ViewModels.Actions
                 (PreviewViewModel as Preview.AppTreeViewModel).Title = value;
             }
         }
-        public string Size
+
+        public string WindowHeight
         {
             get { return (ModelClass as AppTree).Size; }
-            set { (ModelClass as AppTree).Size = value; }
+            set
+            {
+                (ModelClass as AppTree).Size = value;
+                (PreviewViewModel as Preview.AppTreeViewModel).WindowHeight = value;
+                NotifyOfPropertyChange(() => Size);
+            }
+        }
+
+        private string _SelectedSize;
+        public string SelectedSize
+        {
+            get { return _SelectedSize; }
+            set
+            {
+                _SelectedSize = value;
+                PreviewViewModel.WindowHeight = value;
+                (ModelClass as AppTree).Size = value;
+                EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("SizeChange", value));
+                NotifyOfPropertyChange(() => SelectedSize);
+            }
+        }
+
+        private List<string> _Size = new List<string>()
+        {
+            "Regular",
+            "Tall",
+            "ExtraTall"
+        };
+        public List<string> Size
+        {
+            get { return _Size; }
+            set
+            {
+                _Size = value;
+                NotifyOfPropertyChange(() => Size);
+            }
         }
         public bool Expanded
         {
@@ -93,6 +142,23 @@ namespace UI__Editor.ViewModels.Actions
         {
             get { return (ModelClass as AppTree).Condition; }
             set { (ModelClass as AppTree).Condition = value; }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.AppTreeViewModel).PreviewBackButtonVisible = ShowBack;
+                    (PreviewViewModel as Preview.AppTreeViewModel).PreviewCancelButtonVisible = ShowCancel;
+                    (PreviewViewModel as Preview.AppTreeViewModel).Title = Title;
+                    (PreviewViewModel as Preview.AppTreeViewModel).CenterTitle = CenterTitle;
+                    if (null != SelectedSize)
+                    {
+                        (PreviewViewModel as Preview.AppTreeViewModel).WindowHeight = SelectedSize;
+                    }
+                    break;
+            }
         }
     }
 }

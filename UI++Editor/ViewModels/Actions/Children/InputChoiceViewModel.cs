@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
 using UI__Editor.Models;
 using UI__Editor.ViewModels.Elements;
 using UI__Editor.ViewModels.Preview;
@@ -12,7 +13,7 @@ using UI__Editor.Views.Preview.Children;
 
 namespace UI__Editor.ViewModels.Actions.Children
 {
-    public class InputChoiceViewModel : IAction
+    public class InputChoiceViewModel : IAction, IHandle<ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
         public object ModelClass { get; set; }
@@ -27,6 +28,7 @@ namespace UI__Editor.ViewModels.Actions.Children
             ModelClass = i;
             PreviewViewModel = new Preview.Children.InputChoiceViewModel();
             (PreviewViewModel as Preview.Children.InputChoiceViewModel).SubChildren = i.SubChildren;
+            Globals.EventAggregator.Subscribe(this);
         }
 
         public string AlternateVariable
@@ -110,6 +112,18 @@ namespace UI__Editor.ViewModels.Actions.Children
             set
             {
                 (ModelClass as InputChoice).Condition = value;
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.Children.InputChoiceViewModel).DropDownSize = DropDownSize;
+                    (PreviewViewModel as Preview.Children.InputChoiceViewModel).Question = Question;
+                    (PreviewViewModel as Preview.Children.InputChoiceViewModel).Sort = Sort;
+                    break;
             }
         }
     }

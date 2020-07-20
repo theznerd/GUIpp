@@ -10,6 +10,7 @@ using UI__Editor.Controllers;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using UI__Editor.EventAggregators;
 
 namespace UI__Editor.ViewModels
 {
@@ -157,7 +158,7 @@ namespace UI__Editor.ViewModels
             load.Load(path);
 
             // Convert XML to UIpp
-            uipp = XMLToClassModel.GenerateUIpp(load);
+            uipp = XMLToClassModel.GenerateUIpp(load, path);
 
             // Reload Children
             _actionsViewModel = new Menus.ActionsViewModel(_eventAggregator, uipp);
@@ -167,6 +168,9 @@ namespace UI__Editor.ViewModels
             _statusMessageViewModel = new Menus.StatusMessageViewModel(uipp);
             _softwareViewModel.RefreshSoftwareList();
             _configurationViewModel.RefreshConfiguration();
+            Globals.EventAggregator.BeginPublishOnUIThread(new ChangeUI("ImportComplete", null));
+            Globals.EventAggregator.BeginPublishOnUIThread(new ChangeUI("SoftwareChange", null));
+            Globals.EventAggregator.BeginPublishOnUIThread(new ChangeUI("AppTreeChange", null));
         }
 
         private void SaveXML(string path)

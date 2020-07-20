@@ -5,13 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UI__Editor.EventAggregators;
 using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels.Preview;
 
 namespace UI__Editor.ViewModels.Actions
 {
-    public class UserAuthViewModel : PropertyChangedBase, IAction
+    public class UserAuthViewModel : PropertyChangedBase, IAction, IHandle<EventAggregators.ChangeUI>
     {
         public IPreview PreviewViewModel { get; set; }
         public IEventAggregator EventAggregator;
@@ -35,9 +36,12 @@ namespace UI__Editor.ViewModels.Actions
         {
             ModelClass = t;
             EventAggregator = t.EventAggregator;
+            EventAggregator.Subscribe(this);
             PreviewViewModel = new Preview.UserAuthViewModel(EventAggregator);
             (PreviewViewModel as Preview.UserAuthViewModel).PreviewBackButtonVisible = ShowBack;
             (PreviewViewModel as Preview.UserAuthViewModel).PreviewCancelButtonVisible = DisableCancel;
+            (PreviewViewModel as Preview.UserAuthViewModel).Domain = Domain;
+            (PreviewViewModel as Preview.UserAuthViewModel).Title = Title;
         }
 
         public string Attributes
@@ -157,6 +161,19 @@ namespace UI__Editor.ViewModels.Actions
             {
                 (ModelClass as UserAuth).Condition = value;
                 EventAggregator.BeginPublishOnUIThread(new EventAggregators.SendMessage("ConditionChange", null));
+            }
+        }
+
+        public void Handle(ChangeUI message)
+        {
+            switch (message.Type)
+            {
+                case "ImportComplete":
+                    (PreviewViewModel as Preview.UserAuthViewModel).PreviewBackButtonVisible = ShowBack;
+                    (PreviewViewModel as Preview.UserAuthViewModel).PreviewCancelButtonVisible = DisableCancel;
+                    (PreviewViewModel as Preview.UserAuthViewModel).Domain = Domain;
+                    (PreviewViewModel as Preview.UserAuthViewModel).Title = Title;
+                    break;
             }
         }
     }
