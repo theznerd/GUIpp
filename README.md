@@ -1,5 +1,5 @@
 # GUIpp
-A WYSIWYG editor for [UI++](https://uiplusplus.configmgrftw.com) (Currently in Alpha)
+A WYSIWYG editor for [UI++](http://uiplusplus.configmgrftw.com) (Currently in Alpha)
 
 Well, we're finally here... the alpha release. I guarantee there are still quite a few bugs that I have not teased out yet,
 so if you find something of issue track it in issues. Please include the following with your issue:
