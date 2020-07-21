@@ -15,6 +15,8 @@ using UI__Editor.Models;
 using UI__Editor.Models.ActionClasses;
 using UI__Editor.ViewModels;
 using UI__Editor.ViewModels.Preview;
+using System.Collections.Specialized;
+using System.Collections;
 
 namespace UI__Editor.ViewModels.Menus
 {
@@ -102,177 +104,301 @@ namespace UI__Editor.ViewModels.Menus
             get { return null != SelectedSubActionsTreeView; }
         }
 
-        private IParentElement findNewParent(IParentElement root, IChildElement child, bool searchUp = false, bool searchFromRoot = false)
+        private List<IChildElement> GetChildElements(IParentElement p)
         {
-            if(searchFromRoot)
+            List<IChildElement> childElements = new List<IChildElement>();
+            foreach(IChildElement c in p.SubChildren)
             {
-                List<IChildElement> rootChildren;
-                if (searchUp)
+                childElements.Add(c);
+                if(c is IParentElement)
                 {
-                    rootChildren = root.SubChildren.Reverse().ToList();
+                    foreach(IChildElement rc in GetChildElements(c as IParentElement))
+                    {
+                        childElements.Add(rc);
+                    }
+                }
+            }
+            return childElements;
+        }
+
+        private List<IElement> GetParentElements(IElement c)
+        {
+            List<IElement> parentElements = new List<IElement>();
+            if(null != c && null != c.Parent)
+            {
+                parentElements.Add(c.Parent);
+                if (c.Parent is IAction)
+                {
+                    return parentElements;
                 }
                 else
                 {
-                    rootChildren = root.SubChildren.ToList();
-                }
-                foreach(IChildElement rootChild in rootChildren)
-                {
-                    if (rootChild is IParentElement)
+                    List<IElement> recurseParents = GetParentElements(c.Parent);
+                    foreach (IElement rp in recurseParents)
                     {
-                        if (rootChild.ValidChildren.Contains(child.ActionType))
+                        parentElements.Add(rp);
+                    }
+                }
+            }
+            return parentElements;
+        }
+
+        private IParentElement findNewParent(IParentElement searchRoot, IChildElement child, bool searchUp = false)
+        {
+            // if searchroot is a valid parent, return it
+            if (searchRoot.ValidChildren.Contains(child.ActionType))
+            {
+                return searchRoot;
+            }
+            // otherwise find the topmost or bottommost parent
+            if (searchUp)
+            {
+                // start from the top and move down
+                foreach (IChildElement c in searchRoot.SubChildren)
+                {
+                    if (c is IParentElement)
+                    {
+                        // if the parent is valid, return it, otherwise recurse down the 
+                        // parent's subchildren for other parents
+                        if (c.ValidChildren.Contains(child.ActionType))
                         {
-                            return (rootChild as IParentElement);
+                            return (c as IParentElement);
                         }
                         else
                         {
-                            IParentElement recurse = findNewParent((rootChild as IParentElement), child, searchUp, true);
-                            if(null != recurse) { return recurse; }
-                        }
-                    }
-                }
-                return null; // Couldn't find a parent element from root
-            }
-            else
-            {
-                if(child.Parent is IAction)
-                {
-                    // this "child" is at the root of the Action, therefore it's parent will always be the Action
-                    return (child.Parent as IParentElement);
-                }
-                else
-                {
-                    int parentIndex = (child.Parent.Parent as IParentElement).SubChildren.IndexOf(child.Parent as IChildElement); // get the index of the parent to search from
-
-                    int[] indexesToSearch;
-                    if (searchUp)
-                    {
-                        indexesToSearch = Enumerable.Range(0, parentIndex).Reverse().ToArray();
-                    }
-                    else
-                    {
-                        indexesToSearch = Enumerable.Range(parentIndex + 1, (child.Parent.Parent as IParentElement).SubChildren.Count - 1).ToArray();
-                    }
-                    foreach(int indexToSearch in indexesToSearch)
-                    {
-                        if(indexToSearch < (child.Parent.Parent as IParentElement).SubChildren.Count) // hacky bug fix to logic... should fix this
-                        {
-                            if ((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] is IParentElement)
+                            foreach (IChildElement rc in (c as IParentElement).SubChildren)
                             {
-                                if (searchUp)
+                                if (rc is IParentElement)
                                 {
-                                    // search through index and return first valid parent, else return index if it is a valid parent
-                                    IParentElement recurse = findNewParent((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement, child, searchUp, true);
-                                    if (null != recurse) { return recurse; }
-                                    else if (((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement).ValidChildren.Contains(child.ActionType))
+                                    IParentElement rp = findNewParent(rc as IParentElement, child, true);
+                                    if (null != rp)
                                     {
-                                        return (child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement;
-                                    }
-                                }
-                                else
-                                {
-                                    if (((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement).ValidChildren.Contains(child.ActionType))
-                                    {
-                                        return (child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement;
-                                    }
-                                    else
-                                    {
-                                        IParentElement recurse = findNewParent((child.Parent.Parent as IParentElement).SubChildren[indexToSearch] as IParentElement, child, searchUp, true);
-                                        if (null != recurse) { return recurse; }
+                                        return rp;
                                     }
                                 }
                             }
                         }
                     }
                 }
+                return null; // couldn't find a parent (this technically should never return null, because by definition the child exists in a parent somewhere)
             }
-            return null; // Couldn't find a new parent element
+            else
+            {
+                // start from the bottom and move up
+                foreach (IChildElement c in searchRoot.SubChildren.Reverse())
+                {
+                    if (c.ValidChildren.Contains(child.ActionType))
+                    {
+                        return (c as IParentElement);
+                    }
+                    if (c is IParentElement)
+                    {
+                        foreach (IChildElement rc in (c as IParentElement).SubChildren.Reverse())
+                        {
+                            if (rc is IParentElement)
+                            {
+                                IParentElement rp = findNewParent(rc as IParentElement, child, false);
+                                if (null != rp)
+                                {
+                                    return rp;
+                                }
+                            }
+                        }
+                    }
+                }
+                return null; // couldn't find a parent (this technically should never return null, because by definition the child exists in a parent somewhere) 
+            }
+        }
+
+        private IParentElement findParentWithinParent(IParentElement parentToSearch, IChildElement child, bool searchUp)
+        {
+            if (parentToSearch.ValidChildren.Contains(child.ActionType))
+            {
+                // the parent we're searching is a valid parent, just return it
+                return parentToSearch;
+            }
+            else
+            {
+                if (searchUp)
+                {
+                    foreach(IChildElement c in parentToSearch.SubChildren.Reverse())
+                    {
+                        if(c is IParentElement)
+                        {
+                            IParentElement rp = findParentWithinParent(c as IParentElement, child, searchUp);
+                            if (null != rp)
+                                return rp;
+                        }
+                    }
+                }
+                else
+                {
+                    // enumerate the parent's children, and search them too
+                    foreach(IChildElement c in parentToSearch.SubChildren)
+                    {
+                        if(c is IParentElement)
+                        {
+                            IParentElement rp = findParentWithinParent(c as IParentElement, child, searchUp);
+                            if (null != rp)
+                                return rp;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private IParentElement findParentInGrandparent(IParentElement grandParentToSearch, IChildElement child, bool searchUp, int startIndex)
+        {
+            if (grandParentToSearch.ValidChildren.Contains(child.ActionType))
+            {
+                // grandparent is a valid parent... return the grandparent
+                return grandParentToSearch;
+            }
+            else
+            {
+                int[] rangeToSearch;
+                if (searchUp)
+                {
+                    if(startIndex > 0)
+                    {
+                        rangeToSearch = Enumerable.Range(0, startIndex - 1).ToArray();
+                    }
+                    else
+                    {
+                        rangeToSearch = new int[] { 0 };
+                    }
+                }
+                else
+                {
+                    rangeToSearch = Enumerable.Range(startIndex + 1, grandParentToSearch.SubChildren.Count - 1).ToArray();
+                }
+                foreach(int i in rangeToSearch)
+                {
+                    if(grandParentToSearch.SubChildren[i] is IParentElement)
+                    {
+                        IParentElement rp = findParentWithinParent(grandParentToSearch.SubChildren[i] as IParentElement, child, searchUp);
+                        if (null != rp)
+                            return rp;
+                    }
+                }
+            }
+            if(!(grandParentToSearch is IAction))
+            {
+                // can you take me hiiiiiigher...
+                IParentElement ggp = findParentInGrandparent(grandParentToSearch.Parent as IParentElement, child, searchUp, grandParentToSearch.SubChildren.IndexOf(grandParentToSearch as IChildElement));
+                if (null != ggp)
+                {
+                    return ggp;
+                }
+            }
+            return null;
         }
 
         public void MoveSub(string direction)
         {
-
-            IChildElement selectedElement = SelectedSubActionsTreeView;
-            int currentIndex = (selectedElement.Parent as IParentElement).SubChildren.IndexOf(selectedElement);
-            int parentCount = (selectedElement.Parent as IParentElement).SubChildren.Count;
-            switch (direction)
+            IChildElement childElement = SelectedSubActionsTreeView;
+            int childIndex = (childElement.Parent as IParentElement).SubChildren.IndexOf(childElement);
+            int parentCount = (childElement.Parent as IParentElement).SubChildren.Count;
+            switch(direction)
             {
                 case "top":
-                    if((SelectedActionsTreeView as IParentElement).ValidChildren.Contains(SelectedSubActionsTreeView.ActionType))
-                    {
-                        (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                        SubActionsTreeView.Insert(0, selectedElement);
-                        selectedElement.Parent = SelectedActionsTreeView;
-                        SubActionsTreeView[0].TVSelected = true;               
-                    }
-                    else
-                    {
-                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, false, true);
-                        if(null != newParent)
-                        {
-                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                            newParent.SubChildren.Insert(0, selectedElement);
-                            selectedElement.Parent = newParent;
-                            selectedElement.TVSelected = true;
-                        }
-                    }
+                    IParentElement topParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, true);
+                    (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                    topParent.SubChildren.Insert(0, childElement);
+                    childElement.Parent = topParent;
                     break;
                 case "bottom":
-                    if ((SelectedActionsTreeView as IParentElement).ValidChildren.Contains(SelectedSubActionsTreeView.ActionType))
+                    IParentElement bottomParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, false);
+                    (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                    bottomParent.SubChildren.Add(childElement);
+                    childElement.Parent = bottomParent;
+                    break;
+                case "down":
+                    if(childIndex == parentCount - 1)
                     {
-                        (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                        SubActionsTreeView.Add(selectedElement);
-                        selectedElement.Parent = SelectedActionsTreeView;
-                        SubActionsTreeView[(SubActionsTreeView.Count - 1)].TVSelected = true;
+                        // if the parent is the action, we're as far down as we can go
+                        if(!(childElement.Parent is IAction))
+                        {
+                            IParentElement nextParent = findParentInGrandparent((childElement.Parent.Parent as IParentElement), childElement, false, (childElement.Parent.Parent as IParentElement).SubChildren.IndexOf((childElement.Parent as IChildElement)) + 1);
+                            if(null != nextParent)
+                            {
+                                (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                                nextParent.SubChildren.Insert((childElement.Parent.Parent as IParentElement).SubChildren.IndexOf((childElement.Parent as IChildElement)) + 1, childElement);
+                                childElement.Parent = nextParent;
+                            }
+                        }
+                    }
+                    else if((childElement.Parent as IParentElement).SubChildren[childIndex + 1] is IParentElement)
+                    {
+                        // the next element after the child is a parent element, look for parents within
+                        IParentElement nextParent = findParentWithinParent((childElement.Parent as IParentElement).SubChildren[childIndex + 1] as IParentElement, childElement, false);
+                        if (null != nextParent)
+                        {
+                            (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                            nextParent.SubChildren.Insert(0, childElement);
+                            childElement.Parent = nextParent;
+                        }
+                        else
+                        {
+                            // the next element isn't a valid parent, and has no valid parents... NEXT
+                            (childElement.Parent as IParentElement).SubChildren.Move(childIndex, childIndex + 1);
+                        }
                     }
                     else
                     {
-                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, SelectedSubActionsTreeView, true, true);
-                        if(null != newParent)
-                        {
-                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                            newParent.SubChildren.Add(selectedElement);
-                            selectedElement.Parent = newParent;
-                            selectedElement.TVSelected = true;
-                        }
+                        // it's not at the end, and the next element isn't a parent, so move it
+                        (childElement.Parent as IParentElement).SubChildren.Move(childIndex, childIndex + 1);
                     }
                     break;
                 case "up":
-                    if(currentIndex > 0)
+                    if(childIndex == 0)
                     {
-                        (selectedElement.Parent as IParentElement).SubChildren.Move(currentIndex, currentIndex - 1);
+                        if (!(childElement.Parent is IAction))
+                        {
+                            IParentElement nextParent = findParentInGrandparent((childElement.Parent.Parent as IParentElement), childElement, true, (childElement.Parent.Parent as IParentElement).SubChildren.IndexOf((childElement.Parent as IChildElement)));
+                            if (null != nextParent)
+                            {
+                                (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                                nextParent.SubChildren.Insert((childElement.Parent.Parent as IParentElement).SubChildren.IndexOf((childElement.Parent as IChildElement)), childElement);
+                                childElement.Parent = nextParent;
+                            }
+                        }
+                    }
+                    else if((childElement.Parent as IParentElement).SubChildren[childIndex - 1] is IParentElement)
+                    {
+                        // the previous element is a parent element, look for parents within
+                        IParentElement previousParent = findParentWithinParent((childElement.Parent as IParentElement).SubChildren[childIndex - 1] as IParentElement, childElement, true);
+                        if(null != previousParent)
+                        {
+                            (childElement.Parent as IParentElement).SubChildren.Remove(childElement);
+                            previousParent.SubChildren.Add(childElement);
+                            childElement.Parent = previousParent;
+                        }
+                        else
+                        {
+                            // the previous element isn't a valid parent, and has no valid parents... PREVIOUS!
+                            (childElement.Parent as IParentElement).SubChildren.Move(childIndex, childIndex - 1);
+                        }
                     }
                     else
                     {
-                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, selectedElement, true, false);
-                        if(null != newParent)
-                        {
-                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                            newParent.SubChildren.Add(selectedElement);
-                            selectedElement.Parent = newParent;
-                            selectedElement.TVSelected = true;
-                        }
+                        // it's not at the beginning, and the previous isn't a parent, so move it
+                        (childElement.Parent as IParentElement).SubChildren.Move(childIndex, childIndex - 1);
                     }
-                    break;
-                case "down":
-                    if (currentIndex == parentCount - 1) // last element in parent
-                    {
-                        IParentElement newParent = findNewParent(SelectedActionsTreeView as IParentElement, selectedElement, false, false);
-                        if (null != newParent)
-                        {
-                            (selectedElement.Parent as IParentElement).SubChildren.Remove(selectedElement);
-                            newParent.SubChildren.Insert(0, selectedElement);
-                            selectedElement.Parent = newParent;
-                            selectedElement.TVSelected = true;
-                        }
-                    }
-                    else
-                    {
-                        (selectedElement.Parent as IParentElement).SubChildren.Move(currentIndex, currentIndex + 1);
-                    }
-                    break;
-                default:
+                    // find previous parent
                     break;
             }
+            foreach (IChildElement c in GetChildElements(SelectedActionsTreeView as IParentElement))
+            {
+                c.TVSelected = false;
+            }
+            foreach(IElement c in GetParentElements(childElement))
+            {
+                c.TVIsExpanded = true;
+            }
+            SelectedSubActionsTreeView = childElement;
+            childElement.TVSelected = true;
             _eventAggregator.BeginPublishOnUIThread(new ChangeUI("PreviewChange", null));
         }
 
@@ -687,6 +813,46 @@ namespace UI__Editor.ViewModels.Menus
             }
         }
 
+        public IAction GetActionGrandparent(IAction child)
+        {
+            return null;
+        }
+
+        public List<IAction> GetChildActions(ActionGroup ag)
+        {
+            List<IAction> actions = new List<IAction>();
+            foreach(IAction a in ag.Children)
+            {
+                actions.Add(a);
+                if(a is ActionGroup)
+                {
+                    List<IAction> recursiveActions = new List<IAction>();
+                    foreach(IAction ra in GetChildActions(a as ActionGroup))
+                    {
+                        actions.Add(ra);
+                    }
+                }
+            }
+            return actions;
+        }
+
+        public List<IAction> GetAllActions()
+        {
+            List<IAction> actions = new List<IAction>();
+            foreach(IAction a in ActionsTreeView)
+            {
+                actions.Add(a);
+                if(a is ActionGroup)
+                {
+                    foreach(IAction ra in GetChildActions(a as ActionGroup))
+                    {
+                        actions.Add(ra);
+                    }
+                }
+            }
+            return actions;
+        }
+
         public void MoveAction(string position)
         {
             // TODO: Fix movements across groups. Movements are a touch buggy still
@@ -696,92 +862,164 @@ namespace UI__Editor.ViewModels.Menus
             int actionIndex;
             int parentCount;
             int actionCount = ActionsTreeView.Count;
+            IElement selectedAction = SelectedActionsTreeView;
 
-            if (isChild)
+            switch(position)
             {
-                parentIndex = ActionsTreeView.IndexOf(SelectedActionsTreeView.Parent);
-                actionIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(SelectedActionsTreeView);
-                parentCount = (SelectedActionsTreeView.Parent as ActionGroup).Children.Count;
-                switch (position)
-                {
-                    case "top":
-                        ActionsTreeView.Insert(0, SelectedActionsTreeView);
-                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
-                        break;
-                    case "bottom":
-                        ActionsTreeView.Add(SelectedActionsTreeView);
-                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
-                        break;
-                    case "up":
-                        if (actionIndex == 0)
+                case "top":
+                    if (isChild)
+                    {
+                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(selectedAction);
+                        ActionsTreeView.Insert(0, selectedAction);
+                    }
+                    else
+                    {
+                        actionIndex = ActionsTreeView.IndexOf(selectedAction);
+                        ActionsTreeView.Move(actionIndex, 0);
+                    }
+                    break;
+                case "bottom":
+                    if (isChild)
+                    {
+                        (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(selectedAction);
+                        ActionsTreeView.Add(selectedAction);
+                    }
+                    else
+                    {
+                        actionIndex = ActionsTreeView.IndexOf(selectedAction);
+                        ActionsTreeView.Move(actionIndex, ActionsTreeView.Count - 1);
+                    }
+                    break;
+                case "up":
+                    if (isChild)
+                    {
+                        actionIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(selectedAction);
+                        if(actionIndex == 0)
                         {
-                            ActionsTreeView.Insert(parentIndex, SelectedActionsTreeView);
-                            (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                            // move to the grandparent
+                            if(SelectedActionsTreeView.Parent.Parent is ActionGroup)
+                            {
+                                parentIndex = (selectedAction.Parent.Parent as ActionGroup).Children.IndexOf(selectedAction.Parent);
+                                ActionGroup newParent = selectedAction.Parent.Parent as ActionGroup;
+                                newParent.Children.Insert(parentIndex, selectedAction);
+                                (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                                selectedAction.Parent = newParent;
+                            }
+                            else
+                            {
+                                parentIndex = ActionsTreeView.IndexOf(selectedAction.Parent);
+                                ActionsTreeView.Insert(parentIndex, selectedAction);
+                                (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                                selectedAction.Parent = null;
+                            }
+                        }
+                        else if((SelectedActionsTreeView.Parent as ActionGroup).Children[actionIndex - 1] is ActionGroup)
+                        {
+                            // next child up is an action group... stuff it in there
+                            ActionGroup newParent = (selectedAction.Parent as ActionGroup).Children[actionIndex - 1] as ActionGroup;
+                            newParent.Children.Add(selectedAction);
+                            (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                            selectedAction.Parent = newParent;
                         }
                         else
                         {
+                            // we can just move the action up
                             (SelectedActionsTreeView.Parent as ActionGroup).Children.Move(actionIndex, actionIndex - 1);
                         }
-                        break;
-                    case "down":
-                        if (actionIndex == parentCount - 1)
+                    }
+                    else
+                    {
+                        actionIndex = ActionsTreeView.IndexOf(selectedAction);
+                        if(actionIndex == 0)
                         {
-                            ActionsTreeView.Insert(parentIndex + 1, SelectedActionsTreeView);
-                            (SelectedActionsTreeView.Parent as ActionGroup).RemoveChild(SelectedActionsTreeView);
+                            // we're as high as we can go...
+                        }
+                        else if (ActionsTreeView[actionIndex - 1] is ActionGroup)
+                        {
+                            // if the next child up is an action group
+                            ActionGroup newParent = (ActionsTreeView[actionIndex - 1] as ActionGroup);
+                            newParent.Children.Add(selectedAction);
+                            ActionsTreeView.Remove(selectedAction);
+                            selectedAction.Parent = newParent;
                         }
                         else
                         {
+                            // we can just move the action up
+                            ActionsTreeView.Move(actionIndex, actionIndex - 1);
+                        }
+                    }
+                    break;
+                case "down":
+                    if (isChild)
+                    {
+                        actionIndex = (SelectedActionsTreeView.Parent as ActionGroup).Children.IndexOf(selectedAction);
+                        parentCount = (SelectedActionsTreeView.Parent as ActionGroup).Children.Count;
+                        if (actionIndex == parentCount - 1)
+                        {
+                            // move to the grandparent
+                            if (SelectedActionsTreeView.Parent.Parent is ActionGroup)
+                            {
+                                parentIndex = (selectedAction.Parent.Parent as ActionGroup).Children.IndexOf(selectedAction.Parent);
+                                ActionGroup newParent = selectedAction.Parent.Parent as ActionGroup;
+                                newParent.Children.Insert(parentIndex + 1, selectedAction);
+                                (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                                selectedAction.Parent = newParent;
+                            }
+                            else
+                            {
+                                parentIndex = ActionsTreeView.IndexOf(selectedAction.Parent);
+                                ActionsTreeView.Insert(parentIndex + 1, selectedAction);
+                                (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                                selectedAction.Parent = null;
+                            }
+                        }
+                        else if ((SelectedActionsTreeView.Parent as ActionGroup).Children[actionIndex + 1] is ActionGroup)
+                        {
+                            // next child down is an action group... stuff it in there
+                            ActionGroup newParent = (selectedAction.Parent as ActionGroup).Children[actionIndex + 1] as ActionGroup;
+                            newParent.Children.Insert(0, selectedAction);
+                            (selectedAction.Parent as ActionGroup).Children.Remove(selectedAction);
+                            selectedAction.Parent = newParent;
+                        }
+                        else
+                        {
+                            // we can just move the action down
                             (SelectedActionsTreeView.Parent as ActionGroup).Children.Move(actionIndex, actionIndex + 1);
                         }
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    else
+                    {
+                        actionIndex = ActionsTreeView.IndexOf(selectedAction);
+                        parentCount = ActionsTreeView.Count;
+                        if (actionIndex == parentCount - 1)
+                        {
+                            // we're as low as we can go...
+                        }
+                        else if (ActionsTreeView[actionIndex + 1] is ActionGroup)
+                        {
+                            // if the next child up is an action group
+                            ActionGroup newParent = (ActionsTreeView[actionIndex + 1] as ActionGroup);
+                            newParent.Children.Insert(0, selectedAction);
+                            ActionsTreeView.Remove(selectedAction);
+                            selectedAction.Parent = newParent;
+                        }
+                        else
+                        {
+                            // we can just move the action up
+                            ActionsTreeView.Move(actionIndex, actionIndex + 1);
+                        }
+                    }
+                    break;
             }
-            else
+            foreach (IElement e in GetAllActions())
             {
-                actionIndex = ActionsTreeView.IndexOf(SelectedActionsTreeView);
-                switch (position)
-                {
-                    case "top":
-                        ActionsTreeView.Move(actionIndex, 0);
-                        break;
-                    case "bottom":
-                        ActionsTreeView.Move(actionIndex, actionCount - 1);
-                        break;
-                    case "up":
-                        if(actionIndex != 0)
-                        {
-                            IElement previousAction = ActionsTreeView[actionIndex - 1];
-                            if(previousAction.ActionType == "Action Group")
-                            {
-                                (previousAction as ActionGroup).AddChild(SelectedActionsTreeView);
-                                ActionsTreeView.Remove(SelectedActionsTreeView);
-                            }
-                            else
-                            {
-                                ActionsTreeView.Move(actionIndex, actionIndex - 1);
-                            }
-                        }
-                        break;
-                    case "down":
-                        if(actionIndex != actionCount - 1)
-                        {
-                            IElement nextAction = ActionsTreeView[actionIndex + 1];
-                            if(nextAction.ActionType == "Action Group")
-                            {
-                                (nextAction as ActionGroup).AddChild(SelectedActionsTreeView, -1);
-                                ActionsTreeView.Remove(SelectedActionsTreeView);
-                            }
-                            else
-                            {
-                                ActionsTreeView.Move(actionIndex, actionIndex + 1);
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                e.TVSelected = false;
+            }
+            selectedAction.TVSelected = true;
+            SelectedActionsTreeView = selectedAction;
+            foreach (IElement c in GetParentElements(SelectedActionsTreeView))
+            {
+                c.TVIsExpanded = true;
             }
         }
 

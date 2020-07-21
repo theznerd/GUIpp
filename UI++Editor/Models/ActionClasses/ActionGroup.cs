@@ -65,7 +65,7 @@ namespace UI__Editor.Models.ActionClasses
         public void AddChild(IElement element, int index)
         {
             element.Parent = this;
-            Children.Insert(index + 1, element);
+            Children.Insert(index, element);
             NotifyOfPropertyChange(() => Children);
         }
 
