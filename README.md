@@ -3,8 +3,9 @@ A WYSIWYG editor for UI++ (Currently in Alpha)
 
 Well, we're finally here... the alpha release. I guarantee there are still quite a few bugs that I have not teased out yet,
 so if you find something of issue track it in issues. Please include the following with your issue:
+ - What specifically you're having trouble with
  - What you were doing when you encountered the issue
- - Steps to reproduce
+ - Steps to reproduce (if you can replicate)
  - If you're comfortable, send me a copy of your XML to guipp@z-nerd.com
  
 ## Notes on Use
