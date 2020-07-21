@@ -12,8 +12,8 @@ so if you find something of issue track it in issues. Please include the followi
 Right now (G)UI++ supports the beta version of UI++. Please review the [changelog](https://beta.uiplusplus.configmgrftw.com/download/) for applicable changes.
 Here are some of the known... features... of (G)UI++
  - When creating an AppTree, you'll notice you don't have the option to add a SoftwareSets element (and if you import, it's missing). This is because
-   the SoftwareSets element has no attributes (e.g. cannot add a condition), and therefore only serves as a container for the AppTree elements, like Set,
-   SoftwareGroup, and SoftwareRef. Don't worry, I'm handling the addition of the SoftwareSets element in the code.
+   the SoftwareSets element has no attributes (e.g. cannot add a condition), and therefore only serves as a container for the AppTree Set elements.
+   Don't worry, I'm handling the addition of the SoftwareSets element in the code, you don't have to do it.
  - All inputs are updated to their new type:
    - TextInput, ChoiceInput, and CheckboxInput have all been renamed to InputCheckbox, InputChoice, and InputText. This is not compatible with UI++ < 3.0
  - Comments are not maintained
