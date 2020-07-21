@@ -20,6 +20,13 @@ namespace UI__Editor.Controllers
         {
             UIpp uipp = new UIpp();
 
+            // Strip Comments
+            XmlNodeList allComments = xmlDoc.SelectNodes("//comment()");
+            foreach(XmlNode c in allComments)
+            {
+                c.ParentNode.RemoveChild(c);
+            }
+
             // Set Attributes
             XmlElement uippNode = xmlDoc.DocumentElement;
             if (!string.IsNullOrEmpty(uippNode.GetAttribute("AlwaysOnTop")))
@@ -30,7 +37,16 @@ namespace UI__Editor.Controllers
             {
                 uipp.AlwaysOnTop = true;
             }
-            uipp.Color = uippNode.GetAttribute("Color");
+
+            if (uippNode.GetAttribute("Color").StartsWith("#"))
+            {
+                uipp.Color = uippNode.GetAttribute("Color");
+            }
+            else if(!string.IsNullOrEmpty(uippNode.GetAttribute("Color")))
+            {
+                uipp.Color = "#" + uippNode.GetAttribute("Color");
+            }
+
             if (!string.IsNullOrEmpty(uippNode.GetAttribute("DialogSidebar")))
             {
                 uipp.DialogSidebar = Convert.ToBoolean(uippNode.GetAttribute("DialogSidebar"));
