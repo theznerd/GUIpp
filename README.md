@@ -8,6 +8,9 @@ so if you find something of issue track it in issues. Please include the followi
  - Steps to reproduce (if you can replicate)
  - If you're comfortable, send me a copy of your XML to guipp@z-nerd.com
  
+## Download
+You can get the latest version of the application here: https://github.com/theznerd/GUIpp/releases
+ 
 ## Notes on Use
 Right now (G)UI++ supports the beta version of UI++ (3.0). Please review the [changelog](https://beta.uiplusplus.configmgrftw.com/download/) for applicable changes.
 Here are some of the known... features... of (G)UI++
@@ -26,9 +29,6 @@ Here are some of the known... features... of (G)UI++
  - InnerText for elements that use it for the value of the element do not wrap in CDATA right now. Currently any unsupported characters are converted 
    to their escaped versions in the xml. This is fully supported by the XML parser used for UI++, but decreases readbility of the XML. Weigh in on this
    discussion here: https://github.com/theznerd/GUIpp/issues/10
- 
- ## Download
- You can get the latest version of the application here: https://github.com/theznerd/GUIpp/releases
  
  ## Changelog
  0.1.1.0-alpha
