@@ -25,3 +25,11 @@ Here are some of the known... features... of (G)UI++
  
  ## Download
  You can get the latest version of the application here: https://github.com/theznerd/GUIpp/releases
+ 
+ ## Changelog
+ 0.1.1.0-alpha
+  - Fixes importing UI++ XML with comments
+  - Fixes color import for UI++ XML color attributes without leading #
+  - Changes XML output to use single-quote as default
+ 0.1.0.0-alpha
+  - Initial Release
