@@ -182,7 +182,13 @@ namespace UI__Editor.ViewModels
             XmlNode importNode = xml.ImportNode(rootNode, true);
             xml.AppendChild(importNode); // add UIpp
             xml.InsertBefore(dec, importNode); // add the declaration
-            xml.Save(path);
+            using (XmlTextWriter xmlWriter = new XmlTextWriter(path, System.Text.Encoding.UTF8))
+            {
+                xmlWriter.QuoteChar = '\'';
+                xmlWriter.Formatting = Formatting.Indented;
+                xml.Save(xmlWriter);
+            }
+            // xml.Save(path);
         }
     }
 }
