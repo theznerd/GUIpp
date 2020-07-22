@@ -31,5 +31,6 @@ Here are some of the known... features... of (G)UI++
   - Fixes importing UI++ XML with comments
   - Fixes color import for UI++ XML color attributes without leading #
   - Changes XML output to use single-quote as default
+  
  0.1.0.0-alpha
   - Initial Release
