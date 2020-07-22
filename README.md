@@ -9,7 +9,7 @@ so if you find something of issue track it in issues. Please include the followi
  - If you're comfortable, send me a copy of your XML to guipp@z-nerd.com
  
 ## Notes on Use
-Right now (G)UI++ supports the beta version of UI++. Please review the [changelog](https://beta.uiplusplus.configmgrftw.com/download/) for applicable changes.
+Right now (G)UI++ supports the beta version of UI++ (3.0). Please review the [changelog](https://beta.uiplusplus.configmgrftw.com/download/) for applicable changes.
 Here are some of the known... features... of (G)UI++
  - When creating an AppTree, you'll notice you don't have the option to add a SoftwareSets element (and if you import, it's missing). This is because
    the SoftwareSets element has no attributes (e.g. cannot add a condition), and therefore only serves as a container for the AppTree Set elements.
@@ -22,6 +22,10 @@ Here are some of the known... features... of (G)UI++
  - A handful of features (as documented in the UI++ 3.0 beta changelog) in (G)UI++ are only supported by UI++ 3.0. If you're not using UI++
    3.0, then you might have a bad time.
  - 4k monitor support is still touchy. The Info and ErrorInfo actions especially. Feel free to track this issue here: https://github.com/theznerd/GUIpp/issues/5
+ - Export uses single-quotes for attributes rather than double quotes. Without a large re-write of code, we can't pick and choose between both single and double quotes.
+ - InnerText for elements that use it for the value of the element do not wrap in CDATA right now. Currently any unsupported characters are converted 
+   to their escaped versions in the xml. This is fully supported by the XML parser used for UI++, but decreases readbility of the XML. Weigh in on this
+   discussion here: https://github.com/theznerd/GUIpp/issues/10
  
  ## Download
  You can get the latest version of the application here: https://github.com/theznerd/GUIpp/releases
