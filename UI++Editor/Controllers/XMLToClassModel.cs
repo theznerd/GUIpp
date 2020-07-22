@@ -16,6 +16,20 @@ namespace UI__Editor.Controllers
 {
     public static class XMLToClassModel
     {
+        private static string ColorConverter(string s)
+        {
+            if(s.StartsWith("#"))
+            { return s; }
+            else if (!string.IsNullOrEmpty(s))
+            {
+                return "#" + s;
+            }
+            else
+            {
+                return s;
+            }
+        }
+
         public static UIpp GenerateUIpp(XmlDocument xmlDoc, string path)
         {
             UIpp uipp = new UIpp();
@@ -37,16 +51,9 @@ namespace UI__Editor.Controllers
             {
                 uipp.AlwaysOnTop = true;
             }
-
-            if (uippNode.GetAttribute("Color").StartsWith("#"))
-            {
-                uipp.Color = uippNode.GetAttribute("Color");
-            }
-            else if(!string.IsNullOrEmpty(uippNode.GetAttribute("Color")))
-            {
-                uipp.Color = "#" + uippNode.GetAttribute("Color");
-            }
-
+            
+            uipp.Color = ColorConverter(uippNode.GetAttribute("Color"));
+            
             if (!string.IsNullOrEmpty(uippNode.GetAttribute("DialogSidebar")))
             {
                 uipp.DialogSidebar = Convert.ToBoolean(uippNode.GetAttribute("DialogSidebar"));
@@ -262,9 +269,9 @@ namespace UI__Editor.Controllers
                             Image = importNode.GetAttribute("Image")
                         };
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("BackgroundColor")))
-                            infoFullScreen.BackgroundColor = importNode.GetAttribute("BackgroundColor");
+                            infoFullScreen.BackgroundColor = ColorConverter(importNode.GetAttribute("BackgroundColor"));
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("TextColor")))
-                            infoFullScreen.TextColor = importNode.GetAttribute("TextColor");
+                            infoFullScreen.TextColor = ColorConverter(importNode.GetAttribute("TextColor"));
                         if (!string.IsNullOrEmpty(importNode.InnerXml))
                         {
                             infoFullScreen.Content = CDATARemover(importNode.InnerXml);
@@ -633,7 +640,7 @@ namespace UI__Editor.Controllers
                             Condition = importNode.GetAttribute("Condition")
                         };
                         if (!string.IsNullOrEmpty(importNode.GetAttribute("Color")))
-                            inputInfo.Color = importNode.GetAttribute("Color");
+                            inputInfo.Color = ColorConverter(importNode.GetAttribute("Color"));
                         if (int.TryParse(importNode.GetAttribute("DropDownSize"), out int inputInfoNumberOfLines))
                             inputInfo.NumberOfLines = inputInfoNumberOfLines;
                         if (!string.IsNullOrEmpty(importNode.InnerXml))
