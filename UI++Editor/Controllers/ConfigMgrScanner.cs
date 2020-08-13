@@ -122,7 +122,7 @@ namespace UI__Editor.Controllers
             ManagementScope scope = new ManagementScope("\\\\" + CMServer + "\\root\\SMS\\site_" + CMSiteCode);
 
             // Get All Applications
-            ObjectQuery query = new ObjectQuery("select LocalizedDisplayName from SMS_Application");
+            ObjectQuery query = new ObjectQuery("select LocalizedDisplayName from SMS_ApplicationLatest");
             ManagementObjectSearcher searcher = new ManagementObjectSearcher(scope, query);
             ManagementObjectCollection apps = searcher.Get();
 
